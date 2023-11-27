@@ -1,15 +1,24 @@
-import Hello from "@components/Hello/Hello";
-import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import DifferentScreen from "@screens/DifferentScreen/DifferentScreen";
+import HelloScreen from "@screens/HelloScreen/HelloScreen";
 import { type FC } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+
+const Stack = createNativeStackNavigator();
 
 const App: FC = () => {
   return (
-    <View style={styles.container}>
-      <Text>App to learn kids staff</Text>
-      <Hello name="Aigars" />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {/* <View style={styles.container}>
+        <Text>App to learn kids staff !!</Text>
+        <StatusBar style="auto" />
+      </View> */}
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HelloScreen} />
+        <Stack.Screen name="DifferentScreen" component={DifferentScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
