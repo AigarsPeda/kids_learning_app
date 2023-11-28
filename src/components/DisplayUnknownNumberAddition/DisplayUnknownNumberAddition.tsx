@@ -10,7 +10,9 @@ interface DisplayUnknownNumberAdditionProps {
 const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
   tasks,
 }) => {
-  const inputAccessoryViewID = "uniqueID";
+  const inputAccessoryViewID1 = "uniqueID1";
+  const inputAccessoryViewID2 = "uniqueID2";
+  const inputAccessoryViewID3 = "uniqueID3";
   const [text, setText] = useState("");
 
   return (
@@ -21,21 +23,32 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
             inputString={text}
             text={tasks.data.a}
             setInputString={setText}
-            inputAccessoryViewID={inputAccessoryViewID}
+            inputAccessoryViewID={inputAccessoryViewID1}
           />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.text}>+</Text>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{tasks.data.b || "n/a"}</Text>
+          {/* <Text style={styles.text}>{tasks.data.b || "n/a"}</Text> */}
+          <TextOrInputDisplay
+            inputString={text}
+            text={tasks.data.b}
+            setInputString={setText}
+            inputAccessoryViewID={inputAccessoryViewID2}
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.text}>=</Text>
         </View>
-
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{tasks.data.result || "n/a"}</Text>
+          {/* <Text style={styles.text}>{tasks.data.result || "n/a"}</Text> */}
+          <TextOrInputDisplay
+            inputString={text}
+            text={tasks.data.result}
+            setInputString={setText}
+            inputAccessoryViewID={inputAccessoryViewID3}
+          />
         </View>
       </View>
     </View>
@@ -61,18 +74,18 @@ const styles = StyleSheet.create({
   textContainer: {
     width: 50,
     height: 50,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#221f1f",
+    // borderColor: "#221f1f",
     justifyContent: "center",
   },
   text: {
     fontSize: 20,
     fontWeight: "bold",
-    borderColor: "#221f1f",
+    // borderColor: "#221f1f",
   },
 });
 
