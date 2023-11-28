@@ -1,7 +1,8 @@
-import TextOrInputDisplay from "@components/TextOrInputDisplay/TextOrInputDisplay";
+import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
 import { useState, type FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AdditionType } from "types/addition";
+import useColors from "hooks/useColors";
 
 interface DisplayUnknownNumberAdditionProps {
   tasks: AdditionType;
@@ -10,10 +11,12 @@ interface DisplayUnknownNumberAdditionProps {
 const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
   tasks,
 }) => {
+  const { colors } = useColors();
+  const [text, setText] = useState("");
+
   const inputAccessoryViewID1 = "uniqueID1";
   const inputAccessoryViewID2 = "uniqueID2";
   const inputAccessoryViewID3 = "uniqueID3";
-  const [text, setText] = useState("");
 
   return (
     <View style={styles.container}>
@@ -27,7 +30,14 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>+</Text>
+          <Text
+            style={{
+              ...styles.text,
+              color: colors.text,
+            }}
+          >
+            +
+          </Text>
         </View>
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>{tasks.data.b || "n/a"}</Text> */}
@@ -39,7 +49,14 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>=</Text>
+          <Text
+            style={{
+              ...styles.text,
+              color: colors.text,
+            }}
+          >
+            =
+          </Text>
         </View>
         <View style={styles.textContainer}>
           {/* <Text style={styles.text}>{tasks.data.result || "n/a"}</Text> */}

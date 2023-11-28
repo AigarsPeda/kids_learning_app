@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import useColors from "hooks/useColors";
 
 interface TextOrInputDisplayProps {
   inputString: string;
@@ -14,31 +15,30 @@ const TextOrInputDisplay: FC<TextOrInputDisplayProps> = ({
   inputAccessoryViewID,
   setInputString,
 }) => {
+  const { colors } = useColors();
+
   return (
     <View
       style={{
-        width: 50,
-        height: 50,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
+        ...styles.container,
         borderWidth: text ? 0 : 3,
-        borderColor: "#f97316",
-        borderRadius: 5,
+        borderColor: colors.accent,
       }}
     >
       {text ? (
-        <Text style={styles.text}>{text}</Text>
+        <Text
+          style={{
+            ...styles.text,
+            color: colors.text,
+          }}
+        >
+          {text}
+        </Text>
       ) : (
         <TextInput
           style={{
-            fontSize: 20,
-            display: "flex",
-            fontWeight: "bold",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
+            ...styles.textInput,
+            color: colors.text,
           }}
           value={inputString}
           placeholder={""}
@@ -52,6 +52,23 @@ const TextOrInputDisplay: FC<TextOrInputDisplayProps> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: 50,
+    height: 50,
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textInput: {
+    fontSize: 20,
+    display: "flex",
+    fontWeight: "bold",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   text: {
     fontSize: 20,
     fontWeight: "bold",

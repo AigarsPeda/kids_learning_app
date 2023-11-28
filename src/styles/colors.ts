@@ -2,19 +2,21 @@ import { Appearance } from "react-native";
 
 type Colors = {
   text: string;
-  textAccent: string;
+  accent: string;
   background: string;
 };
 
+// colorTheme === "dark" ? "#c4b5fd" : "#fff",
+
 export const lightModeColors: Colors = {
   text: "#222",
-  textAccent: "#444",
+  accent: "#f97316",
   background: "#fff",
 };
 
 export const darkModeColors: Colors = {
   text: "#fff",
-  textAccent: "#ccc",
+  accent: "#f97316",
   background: "#222",
 };
 
