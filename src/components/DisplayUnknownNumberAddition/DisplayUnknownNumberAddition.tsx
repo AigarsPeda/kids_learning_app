@@ -1,7 +1,7 @@
+import TextOrInputDisplay from "@components/TextOrInputDisplay/TextOrInputDisplay";
 import { useState, type FC } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { AdditionType } from "types/addition";
-import TextOrInputDisplay from "../TextOrInputDisplay/TextOrInputDisplay";
 
 interface DisplayUnknownNumberAdditionProps {
   tasks: AdditionType;

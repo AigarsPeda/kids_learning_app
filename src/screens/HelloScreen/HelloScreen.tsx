@@ -1,13 +1,23 @@
 import DisplayUnknownNumberAddition from "@components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
 import { MATH_TASKS } from "@tasks/math";
 import { useState, type FC } from "react";
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Appearance,
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useColorScheme,
+} from "react-native";
+import { colors } from "../../styles/colors";
 
 interface HelloScreenProps {
   navigation: { navigate: (arg0: string) => void };
 }
 
 const HelloScreen: FC<HelloScreenProps> = ({ navigation }) => {
+  const colorTheme = useColorScheme();
   const [level, setLevel] = useState("easy");
 
   const findTasks = (level: string) => {
@@ -22,7 +32,12 @@ const HelloScreen: FC<HelloScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: colorTheme === "dark" ? "#c4b5fd" : "#fff",
+      }}
+    >
       <Button
         title="Go to Details"
         onPress={() => navigation.navigate("DifferentScreen")}
@@ -41,7 +56,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
     justifyContent: "center",
   },
 });

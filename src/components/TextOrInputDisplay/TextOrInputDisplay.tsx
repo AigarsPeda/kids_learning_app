@@ -24,7 +24,7 @@ const TextOrInputDisplay: FC<TextOrInputDisplayProps> = ({
         alignItems: "center",
         justifyContent: "center",
         borderWidth: text ? 0 : 3,
-        borderColor: "#9333ea",
+        borderColor: "#f97316",
         borderRadius: 5,
       }}
     >
