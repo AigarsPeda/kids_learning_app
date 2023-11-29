@@ -1,8 +1,11 @@
-import { MathObjType, MathTasksType } from "types/addition";
+import {
+  MathObjType,
+  MathTaskExplanationType,
+  MathTasksType,
+} from "types/addition";
 
 const EASY_TASKS: MathTasksType = {
   missingNumber: {
-    description: "Atrodi nezināmo skaitli",
     tasks: [
       {
         id: "1",
@@ -58,4 +61,8 @@ const EASY_TASKS: MathTasksType = {
 
 export const MATH_TASKS: MathObjType = {
   easy: EASY_TASKS,
+};
+
+export const MATH_TASK_EXPLANATION: MathTaskExplanationType = {
+  missingNumber: "Atrodi nezināmo skaitli",
 };

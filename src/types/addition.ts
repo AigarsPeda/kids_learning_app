@@ -1,11 +1,15 @@
 export type MathTasksType = {
   missingNumber: {
-    description: string;
+    // description: string;
     tasks: MissingNumberTaskType[];
   };
 };
 
 export type TaskKindType = keyof MathTasksType;
+
+export type MathTaskExplanationType = {
+  [key in TaskKindType]: string;
+};
 
 export type EquationArgumentType = {
   a: number | undefined;

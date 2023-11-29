@@ -17,7 +17,7 @@ export const lightModeColors: Colors = {
 export const darkModeColors: Colors = {
   text: "#fff",
   accent: "#64748b",
-  background: "#222",
+  background: "#111827",
   correct: "#4caf50",
   incorrect: "#f44336",
 };

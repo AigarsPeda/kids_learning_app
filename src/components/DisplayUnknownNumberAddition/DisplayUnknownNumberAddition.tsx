@@ -1,52 +1,75 @@
 import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
 import useColors from "hooks/useColors";
-import { useEffect, useState, type FC } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState, type FC, useRef, forwardRef } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   type EquationArgumentType,
   type MissingNumberTaskType,
 } from "types/addition";
-import { NonNullable } from "types/utils";
+import { type AnswerType } from "types/common";
 import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
-import { AnswerType } from "../../types/common";
 
-const inputAccessoryViewID1 = "uniqueID1";
-const inputAccessoryViewID2 = "uniqueID2";
-const inputAccessoryViewID3 = "uniqueID3";
+const inputAccessoryViewID1 = "input-ID1";
+const inputAccessoryViewID2 = "input-ID2";
+const inputAccessoryViewID3 = "input-ID3";
 
 interface DisplayUnknownNumberAdditionProps {
+  sequenceNumber: number;
   task: MissingNumberTaskType;
+  // handlePress: () => void;
 }
 
-type NoUndefinedEquationArgumentType = NonNullable<EquationArgumentType>;
+// type NoUndefinedEquationArgumentType = NonNullable<EquationArgumentType>;
 
 const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
   task,
+  sequenceNumber,
 }) => {
   const { colors } = useColors();
-  const [answer, setAnswer] = useState<AnswerType>("unknown"); // [a, b, result
+  const inputRef = useRef<TextInput>(null);
+  const viewRef = useRef<View>(null);
+  const [answer, setAnswer] = useState<AnswerType>("unknown");
   const [text, setText] = useState<EquationArgumentType>({
     a: task.data.a,
     b: task.data.b,
     result: task.data.result,
   });
 
+  const handlePress = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   useEffect(() => {
     setAnswer(isMissingNumberAnswerCorrect(text));
   }, [text]);
 
+  useEffect(() => {
+    if (inputRef.current && sequenceNumber === 0) {
+      console.log("inputRef.current.focus()");
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} ref={viewRef}>
       <View style={styles.taskContainer}>
-        <View style={styles.textContainer}>
-          <TextOrInputDisplay
-            answer={answer}
-            text={task.data.a}
-            inputNumber={text.a}
-            inputAccessoryViewID={inputAccessoryViewID1}
-            setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
-          />
-        </View>
+        <TextOrInputDisplay
+          handlePress={handlePress}
+          ref={inputRef}
+          answer={answer}
+          text={task.data.a}
+          inputNumber={text.a}
+          inputAccessoryViewID={inputAccessoryViewID1}
+          setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
+        />
         <View style={styles.textContainer}>
           <Text
             style={{
@@ -57,16 +80,15 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
             +
           </Text>
         </View>
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>{tasks.data.b || "n/a"}</Text> */}
-          <TextOrInputDisplay
-            answer={answer}
-            text={task.data.b}
-            inputNumber={text.b}
-            inputAccessoryViewID={inputAccessoryViewID2}
-            setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
-          />
-        </View>
+        <TextOrInputDisplay
+          answer={answer}
+          ref={inputRef}
+          text={task.data.b}
+          inputNumber={text.b}
+          handlePress={handlePress}
+          inputAccessoryViewID={inputAccessoryViewID2}
+          setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
+        />
         <View style={styles.textContainer}>
           <Text
             style={{
@@ -77,32 +99,117 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
             =
           </Text>
         </View>
-        <View style={styles.textContainer}>
-          {/* <Text style={styles.text}>{tasks.data.result || "n/a"}</Text> */}
-          <TextOrInputDisplay
-            answer={answer}
-            text={task.data.result}
-            inputNumber={text.result}
-            inputAccessoryViewID={inputAccessoryViewID3}
-            setInputNumber={(str) =>
-              setText((state) => ({ ...state, result: str }))
-            }
-          />
-        </View>
+        <TextOrInputDisplay
+          answer={answer}
+          ref={inputRef}
+          text={task.data.result}
+          inputNumber={text.result}
+          handlePress={handlePress}
+          inputAccessoryViewID={inputAccessoryViewID3}
+          setInputNumber={(str) =>
+            setText((state) => ({ ...state, result: str }))
+          }
+        />
       </View>
     </View>
   );
 };
 
+// type Ref = TextInput;
+
+// const DisplayUnknownNumberAddition = forwardRef<
+//   Ref,
+//   DisplayUnknownNumberAdditionProps
+// >(({ task, sequenceNumber, handlePress }, ref) => {
+//   const { colors } = useColors();
+//   // const inputRef = useRef<TextInput>(null);
+//   const [answer, setAnswer] = useState<AnswerType>("unknown");
+//   const [text, setText] = useState<EquationArgumentType>({
+//     a: task.data.a,
+//     b: task.data.b,
+//     result: task.data.result,
+//   });
+
+//   // const handlePress = () => {
+//   //   if (inputRef.current) {
+//   //     inputRef.current.focus();
+//   //   }
+//   // };
+
+//   useEffect(() => {
+//     setAnswer(isMissingNumberAnswerCorrect(text));
+//   }, [text]);
+
+//   // useEffect(() => {
+//   //   if (inputRef.current && sequenceNumber === 0) {
+//   //     console.log("inputRef.current.focus()");
+//   //     inputRef.current.focus();
+//   //   }
+//   // }, []);
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.taskContainer}>
+//         <TextOrInputDisplay
+//           ref={ref}
+//           answer={answer}
+//           text={task.data.a}
+//           inputNumber={text.a}
+//           handlePress={handlePress}
+//           inputAccessoryViewID={inputAccessoryViewID1}
+//           setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
+//         />
+//         <View style={styles.textContainer}>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               color: colors.text,
+//             }}
+//           >
+//             +
+//           </Text>
+//         </View>
+//         <TextOrInputDisplay
+//           answer={answer}
+//           text={task.data.b}
+//           inputNumber={text.b}
+//           handlePress={handlePress}
+//           inputAccessoryViewID={inputAccessoryViewID2}
+//           setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
+//         />
+//         <View style={styles.textContainer}>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               color: colors.text,
+//             }}
+//           >
+//             =
+//           </Text>
+//         </View>
+//         <TextOrInputDisplay
+//           answer={answer}
+//           text={task.data.result}
+//           inputNumber={text.result}
+//           handlePress={handlePress}
+//           inputAccessoryViewID={inputAccessoryViewID3}
+//           setInputNumber={(str) =>
+//             setText((state) => ({ ...state, result: str }))
+//           }
+//         />
+//       </View>
+//     </View>
+//   );
+// });
+
 const styles = StyleSheet.create({
   container: {
-    // display: "flex",
-    // gap: 10,
-    // alignItems: "center",
-    // flexDirection: "column",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
   },
   taskContainer: {
-    gap: 10,
+    gap: 3,
     margin: 10,
     width: "auto",
     display: "flex",
@@ -111,20 +218,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   textContainer: {
-    width: 50,
-    height: 50,
-    // borderWidth: 1,
+    width: 30,
+    height: 30,
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    // borderColor: "#221f1f",
     justifyContent: "center",
   },
   text: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
-    // borderColor: "#221f1f",
   },
 });
 

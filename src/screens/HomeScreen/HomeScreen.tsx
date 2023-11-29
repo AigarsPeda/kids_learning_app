@@ -1,16 +1,20 @@
 import DisplayTask from "components/DisplayTask/DisplayTask";
 import useColors from "hooks/useColors";
-import { useState, type FC } from "react";
+import { useState, type FC, useRef, useEffect } from "react";
 import {
   Button,
   FlatList,
   SafeAreaView,
   StyleSheet,
   Text,
-  View,
+  TextInput,
 } from "react-native";
-import { MATH_TASKS } from "tasks/math";
-import { MathObjKeysType, TaskKindType } from "types/addition";
+import { MATH_TASKS, MATH_TASK_EXPLANATION } from "tasks/math";
+import {
+  MathObjKeysType,
+  MissingNumberTaskType,
+  TaskKindType,
+} from "types/addition";
 import getRandomTask from "utils/getRandomTask";
 
 interface HomeScreenProps {
@@ -19,6 +23,15 @@ interface HomeScreenProps {
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors } = useColors();
+  const inputRef = useRef<TextInput>(null);
+  // const inputRef = useRef<TextInput>(null);
+  const [tasks, setTasks] = useState<{
+    description: string;
+    tasks: MissingNumberTaskType[];
+  }>({
+    description: "No description",
+    tasks: [],
+  });
   const [level, setLevel] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber"); // "missingNumber" | "addition" | "subtraction" | "multiplication" | "division"
 
@@ -26,7 +39,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
     switch (lev) {
       case "easy":
         return {
-          description: MATH_TASKS[lev][taskK].description,
+          description: MATH_TASK_EXPLANATION[taskK],
           tasks: getRandomTask({
             countOfItems: 3,
             allItems: MATH_TASKS.easy[taskK].tasks,
@@ -46,11 +59,28 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
+  const ref = useRef<SafeAreaView>(null);
+
+  useEffect(() => {
+    setTasks(findTasks(level, taskKind));
+  }, [level, taskKind]);
+
+  useEffect(() => {
+    if (tasks.tasks.length > 0) {
+      console.log("inputRef.current.focus()");
+      inputRef.current?.focus();
+    }
+  }, [tasks]);
+
   return (
     <SafeAreaView
       style={{
         ...styles.container,
         backgroundColor: colors.background,
+      }}
+      ref={ref}
+      onTouchStart={() => {
+        console.log("onTouchStart");
       }}
     >
       <Button
@@ -63,12 +93,16 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
           color: colors.text,
         }}
       >
-        {findTasks(level, taskKind).description}
+        {tasks.description}
       </Text>
       <FlatList
-        data={findTasks(level, taskKind).tasks}
+        data={tasks.tasks}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <DisplayTask task={item} kind={taskKind} />}
+        renderItem={({ item, index }) => {
+          return (
+            <DisplayTask task={item} kind={taskKind} sequenceNumber={index} />
+          );
+        }}
       />
     </SafeAreaView>
   );
