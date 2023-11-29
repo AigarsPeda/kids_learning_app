@@ -1,9 +1,25 @@
-export type AdditionType = {
-  id: number;
-  kind: string;
-  data: {
-    a: number | undefined;
-    b: number | undefined;
-    result: number | undefined;
+export type MathTasksType = {
+  missingNumber: {
+    description: string;
+    tasks: MissingNumberTaskType[];
   };
 };
+
+export type TaskKindType = keyof MathTasksType;
+
+export type EquationArgumentType = {
+  a: number | undefined;
+  b: number | undefined;
+  result: number | undefined;
+};
+
+export type MissingNumberTaskType = {
+  id: string;
+  data: EquationArgumentType;
+};
+
+export type MathObjType = {
+  easy: MathTasksType;
+};
+
+export type MathObjKeysType = keyof MathObjType;

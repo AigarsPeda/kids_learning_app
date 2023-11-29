@@ -1,28 +1,42 @@
 import { FC } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import useColors from "hooks/useColors";
+import { AnswerType } from "types/common";
 
 interface TextOrInputDisplayProps {
-  inputString: string;
+  answer: AnswerType;
+  inputNumber: number | undefined;
   inputAccessoryViewID: string;
   text: string | number | undefined;
-  setInputString: (str: string) => void;
+  setInputNumber: (num: number | undefined) => void;
 }
 
 const TextOrInputDisplay: FC<TextOrInputDisplayProps> = ({
   text,
-  inputString,
+  answer,
+  inputNumber,
   inputAccessoryViewID,
-  setInputString,
+  setInputNumber,
 }) => {
   const { colors } = useColors();
+
+  const getBorderColor = () => {
+    switch (answer) {
+      case "correct":
+        return colors.correct;
+      case "incorrect":
+        return colors.incorrect;
+      case "unknown":
+        return colors.accent;
+    }
+  };
 
   return (
     <View
       style={{
         ...styles.container,
         borderWidth: text ? 0 : 3,
-        borderColor: colors.accent,
+        borderColor: getBorderColor(),
       }}
     >
       {text ? (
@@ -40,11 +54,19 @@ const TextOrInputDisplay: FC<TextOrInputDisplayProps> = ({
             ...styles.textInput,
             color: colors.text,
           }}
-          value={inputString}
-          placeholder={""}
+          placeholder={" "}
           keyboardType="numeric"
-          onChangeText={setInputString}
+          value={inputNumber?.toString() || ""}
           inputAccessoryViewID={inputAccessoryViewID}
+          onChangeText={(text) => {
+            const number = parseInt(text);
+            if (!isNaN(number)) {
+              setInputNumber(number);
+              return;
+            }
+
+            setInputNumber(undefined);
+          }}
         />
       )}
     </View>
