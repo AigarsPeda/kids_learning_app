@@ -1,6 +1,14 @@
 import DisplayTask from "components/DisplayTask/DisplayTask";
+import MyButton from "components/MyButton/MyButton";
 import useColors from "hooks/useColors";
-import { useState, type FC, useRef, useEffect } from "react";
+import React, {
+  RefObject,
+  createRef,
+  useEffect,
+  useRef,
+  useState,
+  type FC,
+} from "react";
 import {
   Button,
   FlatList,
@@ -8,6 +16,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  View,
 } from "react-native";
 import { MATH_TASKS, MATH_TASK_EXPLANATION } from "tasks/math";
 import {
@@ -23,15 +32,16 @@ interface HomeScreenProps {
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors } = useColors();
-  const inputRef = useRef<TextInput>(null);
-  // const inputRef = useRef<TextInput>(null);
   const [tasks, setTasks] = useState<{
     description: string;
     tasks: MissingNumberTaskType[];
   }>({
-    description: "No description",
     tasks: [],
+    description: "No description",
   });
+
+  const taskRefs = useRef<RefObject<TextInput>[]>([]);
+
   const [level, setLevel] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber"); // "missingNumber" | "addition" | "subtraction" | "multiplication" | "division"
 
@@ -59,18 +69,15 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
-  const ref = useRef<SafeAreaView>(null);
-
   useEffect(() => {
-    setTasks(findTasks(level, taskKind));
+    const t = findTasks(level, taskKind);
+    // Create refs for the new tasks
+    taskRefs.current = t.tasks.map(
+      (_, i) => taskRefs.current[i] || createRef<TextInput>()
+    );
+    // Then update the tasks state
+    setTasks(t);
   }, [level, taskKind]);
-
-  useEffect(() => {
-    if (tasks.tasks.length > 0) {
-      console.log("inputRef.current.focus()");
-      inputRef.current?.focus();
-    }
-  }, [tasks]);
 
   return (
     <SafeAreaView
@@ -78,10 +85,12 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         ...styles.container,
         backgroundColor: colors.background,
       }}
-      ref={ref}
-      onTouchStart={() => {
-        console.log("onTouchStart");
-      }}
+      // onTouchStart={() => {
+      //   console.log("onTouchStart");
+
+      //   Keyboard.dismiss();
+      //   taskRefs.current[0]?.current?.focus();
+      // }}
     >
       <Button
         title="Go to Details"
@@ -95,15 +104,38 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
       >
         {tasks.description}
       </Text>
-      <FlatList
-        data={tasks.tasks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => {
-          return (
-            <DisplayTask task={item} kind={taskKind} sequenceNumber={index} />
-          );
+
+      <View
+        style={{
+          height: 290,
+          marginBottom: 30,
         }}
-      />
+      >
+        <FlatList
+          data={tasks.tasks}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item, index }) => {
+            const taskRef = taskRefs.current[index];
+
+            return (
+              <DisplayTask
+                task={item}
+                ref={taskRef}
+                kind={taskKind}
+                sequenceNumber={index}
+              />
+            );
+          }}
+        />
+      </View>
+      <View>
+        <MyButton
+          onPress={() => {
+            setTaskKind("missingNumber");
+          }}
+          title="Nākamais"
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -113,9 +145,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     alignItems: "center",
-    justifyContent: "center",
   },
   headLine: {
+    margin: 16,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  btn: {
     margin: 16,
     fontSize: 20,
     fontWeight: "bold",

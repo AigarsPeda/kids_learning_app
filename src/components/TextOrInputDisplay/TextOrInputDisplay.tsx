@@ -8,7 +8,7 @@ interface TextOrInputDisplayProps {
   inputNumber: number | undefined;
   inputAccessoryViewID: string;
   text: string | number | undefined;
-  handlePress: () => void;
+  // handlePress: () => void;
   setInputNumber: (num: number | undefined) => void;
 }
 
@@ -21,7 +21,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
       answer,
       inputNumber,
       inputAccessoryViewID,
-      handlePress,
+      // handlePress,
       setInputNumber,
     },
     ref
@@ -36,34 +36,16 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
         case "incorrect":
           return colors.incorrect;
         case "unknown":
-          return colors.accent;
+          return colors.gray;
       }
-    };
-
-    // const handlePress = () => {
-    //   if (inputRef.current && !text) {
-    //     inputRef.current.focus();
-    //   }
-    // };
-
-    const getInputNumberLength = () => {
-      if (inputNumber) {
-        return inputNumber.toString().length;
-      }
-
-      return 0;
     };
 
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        // onPress={handlePress}
-        onPressIn={handlePress}
         style={{
           ...styles.container,
           borderWidth: text ? 0 : 3,
-          // 0 === 36, 1 === 36 /2 , 2 === 36 / 3, 3 === 36 / 4, 4 === 36 / 5, 5 === 36 / 6, 6 === 36 / 7, 7 === 36 / 8, 8 === 36 / 9, 9 === 36 / 10
-
           borderColor: getBorderColor(),
         }}
       >
@@ -81,7 +63,6 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             style={{
               ...styles.textInput,
               color: colors.text,
-              // marginLeft: 70 / 2,
             }}
             ref={ref}
             placeholder={" "}
@@ -115,6 +96,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#020617",
+    // overflow: "hidden",
   },
   textInput: {
     fontSize: 32,
@@ -123,8 +106,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    // width: 60,
-    // height: 60,
+    width: 120,
+    height: 75,
+    textAlign: "center",
+    // paddingLeft: 36,
+    // backgroundColor: "#0206",
     // marginLeft: 36,
   },
   text: {

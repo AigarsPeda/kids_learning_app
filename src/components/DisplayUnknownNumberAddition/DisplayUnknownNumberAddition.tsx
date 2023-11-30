@@ -1,13 +1,15 @@
 import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
 import useColors from "hooks/useColors";
-import { useEffect, useState, type FC, useRef, forwardRef } from "react";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  useEffect,
+  useRef,
+  useState,
+  type FC,
+  RefObject,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
 import {
   type EquationArgumentType,
   type MissingNumberTaskType,
@@ -21,19 +23,114 @@ const inputAccessoryViewID3 = "input-ID3";
 
 interface DisplayUnknownNumberAdditionProps {
   sequenceNumber: number;
-  task: MissingNumberTaskType;
   // handlePress: () => void;
+  task: MissingNumberTaskType;
 }
 
 // type NoUndefinedEquationArgumentType = NonNullable<EquationArgumentType>;
 
-const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
-  task,
-  sequenceNumber,
-}) => {
+// const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
+//   task,
+//   sequenceNumber,
+// }) => {
+//   const { colors } = useColors();
+//   const inputRef1 = useRef<TextInput>(null);
+//   const inputRef2 = useRef<TextInput>(null);
+//   const inputRef3 = useRef<TextInput>(null);
+//   const [answer, setAnswer] = useState<AnswerType>("unknown");
+//   const [text, setText] = useState<EquationArgumentType>({
+//     a: task.data.a,
+//     b: task.data.b,
+//     result: task.data.result,
+//   });
+
+//   const handlePress = (ref: RefObject<TextInput>) => {
+//     if (ref.current) {
+//       ref.current.focus();
+
+//       // Keyboard.dismiss();
+//     }
+//   };
+
+//   useEffect(() => {
+//     setAnswer(isMissingNumberAnswerCorrect(text));
+//   }, [text]);
+
+//   useEffect(() => {
+//     if (sequenceNumber === 0) {
+//       console.log("inputRef.current.focus()");
+//       inputRef1.current?.focus();
+//       inputRef2.current?.focus();
+//       inputRef3.current?.focus();
+//     }
+//   }, []);
+
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.taskContainer}>
+//         <TextOrInputDisplay
+//           handlePress={() => handlePress(inputRef1)}
+//           ref={inputRef1}
+//           answer={answer}
+//           text={task.data.a}
+//           inputNumber={text.a}
+//           inputAccessoryViewID={inputAccessoryViewID1}
+//           setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
+//         />
+//         <View style={styles.textContainer}>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               color: colors.text,
+//             }}
+//           >
+//             +
+//           </Text>
+//         </View>
+//         <TextOrInputDisplay
+//           answer={answer}
+//           ref={inputRef2}
+//           text={task.data.b}
+//           inputNumber={text.b}
+//           handlePress={() => handlePress(inputRef2)}
+//           inputAccessoryViewID={inputAccessoryViewID2}
+//           setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
+//         />
+//         <View style={styles.textContainer}>
+//           <Text
+//             style={{
+//               ...styles.text,
+//               color: colors.text,
+//             }}
+//           >
+//             =
+//           </Text>
+//         </View>
+//         <TextOrInputDisplay
+//           answer={answer}
+//           ref={inputRef3}
+//           text={task.data.result}
+//           inputNumber={text.result}
+//           handlePress={() => handlePress(inputRef3)}
+//           inputAccessoryViewID={inputAccessoryViewID3}
+//           setInputNumber={(str) =>
+//             setText((state) => ({ ...state, result: str }))
+//           }
+//         />
+//       </View>
+//     </View>
+//   );
+// };
+
+// type Ref = TextInput | null;
+type Ref = { focus: () => void } | null;
+
+const DisplayUnknownNumberAddition = forwardRef<
+  Ref,
+  DisplayUnknownNumberAdditionProps
+>(({ task, sequenceNumber }, ref) => {
   const { colors } = useColors();
   const inputRef = useRef<TextInput>(null);
-  const viewRef = useRef<View>(null);
   const [answer, setAnswer] = useState<AnswerType>("unknown");
   const [text, setText] = useState<EquationArgumentType>({
     a: task.data.a,
@@ -41,32 +138,30 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
     result: task.data.result,
   });
 
-  const handlePress = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current?.focus();
+    },
+    // ... other methods or properties you want to expose
+  }));
+
+  useEffect(() => {
+    sequenceNumber === 0 && inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     setAnswer(isMissingNumberAnswerCorrect(text));
   }, [text]);
 
-  useEffect(() => {
-    if (inputRef.current && sequenceNumber === 0) {
-      console.log("inputRef.current.focus()");
-      inputRef.current.focus();
-    }
-  }, []);
-
   return (
-    <View style={styles.container} ref={viewRef}>
+    <View style={styles.container}>
       <View style={styles.taskContainer}>
         <TextOrInputDisplay
-          handlePress={handlePress}
           ref={inputRef}
           answer={answer}
           text={task.data.a}
           inputNumber={text.a}
+          // handlePress={handlePress}
           inputAccessoryViewID={inputAccessoryViewID1}
           setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
         />
@@ -81,11 +176,10 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
           </Text>
         </View>
         <TextOrInputDisplay
-          answer={answer}
           ref={inputRef}
+          answer={answer}
           text={task.data.b}
           inputNumber={text.b}
-          handlePress={handlePress}
           inputAccessoryViewID={inputAccessoryViewID2}
           setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
         />
@@ -104,7 +198,6 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
           ref={inputRef}
           text={task.data.result}
           inputNumber={text.result}
-          handlePress={handlePress}
           inputAccessoryViewID={inputAccessoryViewID3}
           setInputNumber={(str) =>
             setText((state) => ({ ...state, result: str }))
@@ -113,94 +206,7 @@ const DisplayUnknownNumberAddition: FC<DisplayUnknownNumberAdditionProps> = ({
       </View>
     </View>
   );
-};
-
-// type Ref = TextInput;
-
-// const DisplayUnknownNumberAddition = forwardRef<
-//   Ref,
-//   DisplayUnknownNumberAdditionProps
-// >(({ task, sequenceNumber, handlePress }, ref) => {
-//   const { colors } = useColors();
-//   // const inputRef = useRef<TextInput>(null);
-//   const [answer, setAnswer] = useState<AnswerType>("unknown");
-//   const [text, setText] = useState<EquationArgumentType>({
-//     a: task.data.a,
-//     b: task.data.b,
-//     result: task.data.result,
-//   });
-
-//   // const handlePress = () => {
-//   //   if (inputRef.current) {
-//   //     inputRef.current.focus();
-//   //   }
-//   // };
-
-//   useEffect(() => {
-//     setAnswer(isMissingNumberAnswerCorrect(text));
-//   }, [text]);
-
-//   // useEffect(() => {
-//   //   if (inputRef.current && sequenceNumber === 0) {
-//   //     console.log("inputRef.current.focus()");
-//   //     inputRef.current.focus();
-//   //   }
-//   // }, []);
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.taskContainer}>
-//         <TextOrInputDisplay
-//           ref={ref}
-//           answer={answer}
-//           text={task.data.a}
-//           inputNumber={text.a}
-//           handlePress={handlePress}
-//           inputAccessoryViewID={inputAccessoryViewID1}
-//           setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
-//         />
-//         <View style={styles.textContainer}>
-//           <Text
-//             style={{
-//               ...styles.text,
-//               color: colors.text,
-//             }}
-//           >
-//             +
-//           </Text>
-//         </View>
-//         <TextOrInputDisplay
-//           answer={answer}
-//           text={task.data.b}
-//           inputNumber={text.b}
-//           handlePress={handlePress}
-//           inputAccessoryViewID={inputAccessoryViewID2}
-//           setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
-//         />
-//         <View style={styles.textContainer}>
-//           <Text
-//             style={{
-//               ...styles.text,
-//               color: colors.text,
-//             }}
-//           >
-//             =
-//           </Text>
-//         </View>
-//         <TextOrInputDisplay
-//           answer={answer}
-//           text={task.data.result}
-//           inputNumber={text.result}
-//           handlePress={handlePress}
-//           inputAccessoryViewID={inputAccessoryViewID3}
-//           setInputNumber={(str) =>
-//             setText((state) => ({ ...state, result: str }))
-//           }
-//         />
-//       </View>
-//     </View>
-//   );
-// });
+});
 
 const styles = StyleSheet.create({
   container: {

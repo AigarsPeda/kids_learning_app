@@ -1,5 +1,6 @@
 type Colors = {
   text: string;
+  gray: string;
   accent: string;
   correct: string;
   incorrect: string;
@@ -8,7 +9,8 @@ type Colors = {
 
 export const lightModeColors: Colors = {
   text: "#222",
-  accent: "#64748b",
+  gray: "#64748b",
+  accent: "#a855f7",
   background: "#fff",
   correct: "#4caf50",
   incorrect: "#f44336",
@@ -16,7 +18,8 @@ export const lightModeColors: Colors = {
 
 export const darkModeColors: Colors = {
   text: "#fff",
-  accent: "#64748b",
+  gray: "#64748b",
+  accent: "#a855f7",
   background: "#111827",
   correct: "#4caf50",
   incorrect: "#f44336",
