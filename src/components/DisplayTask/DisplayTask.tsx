@@ -1,34 +1,45 @@
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
-import { forwardRef } from "react";
-import { Text, TextInput, View } from "react-native";
+import { FC, RefObject, useRef } from "react";
+import { FlatList, Text, TextInput, View } from "react-native";
 import { MissingNumberTaskType, TaskKindType } from "types/addition";
+import createRefsArray from "utils/createRefsArray";
 
 interface DisplayTaskProps {
   kind: TaskKindType;
-  sequenceNumber: number;
-  task: MissingNumberTaskType;
+  tasks: MissingNumberTaskType[];
 }
 
-type Ref = TextInput | null;
+const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
+  const taskRefs = useRef<RefObject<TextInput>[]>([]);
 
-const DisplayTask = forwardRef<Ref, DisplayTaskProps>(
-  ({ kind, sequenceNumber, task }, ref) => {
-    if (kind === "missingNumber") {
-      return (
-        <DisplayUnknownNumberAddition
-          ref={ref}
-          task={task}
-          sequenceNumber={sequenceNumber}
-        />
-      );
-    }
-
+  if (kind === "missingNumber") {
     return (
-      <View>
-        <Text>Unknown task</Text>
-      </View>
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item, index }) => {
+          const taskRef = createRefsArray<TextInput>({
+            length: tasks.length,
+            refs: taskRefs,
+          });
+
+          return (
+            <DisplayUnknownNumberAddition
+              task={item}
+              ref={taskRef[index]}
+              sequenceNumber={index}
+            />
+          );
+        }}
+      />
     );
   }
-);
+
+  return (
+    <View>
+      <Text>Unknown task</Text>
+    </View>
+  );
+};
 
 export default DisplayTask;

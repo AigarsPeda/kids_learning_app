@@ -1,24 +1,15 @@
 import DisplayTask from "components/DisplayTask/DisplayTask";
 import MyButton from "components/MyButton/MyButton";
 import useColors from "hooks/useColors";
-import React, {
-  RefObject,
-  createRef,
-  useEffect,
-  useRef,
-  useState,
-  type FC,
-} from "react";
+import React, { useEffect, useState, type FC } from "react";
 import {
   Button,
-  FlatList,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { MATH_TASKS, MATH_TASK_EXPLANATION } from "tasks/math";
@@ -43,8 +34,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
     tasks: [],
     description: "No description",
   });
-
-  const taskRefs = useRef<RefObject<TextInput>[]>([]);
 
   const [level, setLevel] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber"); // "missingNumber" | "addition" | "subtraction" | "multiplication" | "division"
@@ -74,13 +63,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const t = findTasks(level, taskKind);
-    // Create refs for the new tasks
-    taskRefs.current = t.tasks.map(
-      (_, i) => taskRefs.current[i] || createRef<TextInput>()
-    );
-    // Then update the tasks state
-    setTasks(t);
+    setTasks(findTasks(level, taskKind));
   }, [level, taskKind]);
 
   return (
@@ -103,22 +86,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         {tasks.description}
       </Text>
 
-      <FlatList
-        data={tasks.tasks}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => {
-          const taskRef = taskRefs.current[index];
-
-          return (
-            <DisplayTask
-              task={item}
-              ref={taskRef}
-              kind={taskKind}
-              sequenceNumber={index}
-            />
-          );
-        }}
-      />
+      <DisplayTask tasks={tasks.tasks} kind={taskKind} />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
