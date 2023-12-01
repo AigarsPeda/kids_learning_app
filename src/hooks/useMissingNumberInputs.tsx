@@ -1,29 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
-import { MissingNumberTaskType } from "types/addition";
-import { AnswerType, MissingNumberInputType } from "types/common";
+import { type EquationArgumentType } from "types/addition";
+import { type InputType, type MissingNumberInputType } from "types/common";
 import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
 
 // adding key correct to input object with type AnswerType
-type InputType = MissingNumberInputType & { correct: AnswerType };
 
-type InputObjType = {
+export type InputObjType = {
   [key: string]: InputType;
 };
 
-const useMissingNumberInputs = (tasks: MissingNumberTaskType[]) => {
+const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   const [inputs, setInputs] = useState<InputObjType>({});
 
   const createInputs = useCallback(
-    (tasks: MissingNumberTaskType[]) => {
+    (tasks: EquationArgumentType[]) => {
       const inputs: InputObjType = {};
       for (let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
 
         inputs[i] = {
+          id: task.id,
           correct: "unknown",
-          a: task.data.a || undefined,
-          b: task.data.b || undefined,
-          result: task.data.result || undefined,
+          a: task.a || undefined,
+          b: task.b || undefined,
+          result: task.result || undefined,
         };
       }
       setInputs(inputs);
@@ -31,28 +31,21 @@ const useMissingNumberInputs = (tasks: MissingNumberTaskType[]) => {
     [tasks]
   );
 
-  const checkIfAnswerIsCorrect = ({ index }: { index: number }) => {
-    const input = inputs[index];
-    const isCorrect = isMissingNumberAnswerCorrect(input);
-    setInputs((prev) => ({
-      ...prev,
-      [index]: {
-        ...prev[index],
-        correct: isCorrect,
-      },
-    }));
-  };
-
   const updateInputsValue = ({
-    text,
+    input,
     index,
   }: {
-    text: MissingNumberInputType;
+    input: MissingNumberInputType;
     index: number;
   }) => {
+    const newInput = {
+      ...input,
+      correct: isMissingNumberAnswerCorrect(input),
+    };
+
     setInputs((prev) => ({
       ...prev,
-      [index]: text,
+      [index]: newInput,
     }));
   };
 
@@ -63,7 +56,6 @@ const useMissingNumberInputs = (tasks: MissingNumberTaskType[]) => {
   return {
     inputs,
     updateInputsValue,
-    checkIfAnswerIsCorrect,
   };
 };
 

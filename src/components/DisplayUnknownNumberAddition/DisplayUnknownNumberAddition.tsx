@@ -2,19 +2,18 @@ import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay
 import useColors from "hooks/useColors";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { type MissingNumberTaskType } from "types/addition";
-import { MissingNumberInputType, type AnswerType } from "types/common";
+import { type EquationArgumentType } from "types/addition";
+import { type InputType } from "types/common";
 
 const inputAccessoryViewID1 = "input-ID1";
 const inputAccessoryViewID2 = "input-ID2";
 const inputAccessoryViewID3 = "input-ID3";
 
 interface DisplayUnknownNumberAdditionProps {
-  correct: AnswerType;
+  input: InputType;
   sequenceNumber: number;
-  task: MissingNumberTaskType;
-  input: MissingNumberInputType;
-  updateInputsValue: (value: MissingNumberInputType) => void;
+  task: EquationArgumentType;
+  updateInputsValue: (value: InputType) => void;
 }
 
 type Ref = { focus: () => void } | null;
@@ -22,7 +21,7 @@ type Ref = { focus: () => void } | null;
 const DisplayUnknownNumberAddition = forwardRef<
   Ref,
   DisplayUnknownNumberAdditionProps
->(({ task, input, correct, sequenceNumber, updateInputsValue }, ref) => {
+>(({ task, input, sequenceNumber, updateInputsValue }, ref) => {
   const { colors } = useColors();
   const inputRef = useRef<TextInput>(null);
 
@@ -40,10 +39,10 @@ const DisplayUnknownNumberAddition = forwardRef<
     <>
       <View style={styles.taskContainer}>
         <TextOrInputDisplay
+          text={task.a}
           ref={inputRef}
-          answer={correct}
-          text={task.data.a}
           inputNumber={input?.a}
+          answer={input?.correct || "unknown"}
           inputAccessoryViewID={inputAccessoryViewID1}
           setInputNumber={(str) => {
             updateInputsValue({ ...input, a: str });
@@ -60,10 +59,10 @@ const DisplayUnknownNumberAddition = forwardRef<
           </Text>
         </View>
         <TextOrInputDisplay
+          text={task.b}
           ref={inputRef}
-          answer={correct}
-          text={task.data.b}
           inputNumber={input?.b}
+          answer={input?.correct || "unknown"}
           inputAccessoryViewID={inputAccessoryViewID2}
           setInputNumber={(str) => {
             updateInputsValue({ ...input, b: str });
@@ -80,10 +79,10 @@ const DisplayUnknownNumberAddition = forwardRef<
           </Text>
         </View>
         <TextOrInputDisplay
-          answer={correct}
           ref={inputRef}
-          text={task.data.result}
+          text={task.result}
           inputNumber={input?.result}
+          answer={input?.correct || "unknown"}
           inputAccessoryViewID={inputAccessoryViewID3}
           setInputNumber={(str) => updateInputsValue({ ...input, result: str })}
         />

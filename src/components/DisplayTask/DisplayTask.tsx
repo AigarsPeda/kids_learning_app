@@ -1,6 +1,7 @@
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
 import MyButton from "components/MyButton/MyButton";
-import { FC, RefObject, useEffect, useRef } from "react";
+import useMissingNumberInputs from "hooks/useMissingNumberInputs";
+import { useRef, type FC, type RefObject } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -8,21 +9,18 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { MissingNumberTaskType, TaskKindType } from "types/addition";
+import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import useMissingNumberInputs from "../../hooks/useMissingNumberInputs";
-import isMissingNumberAnswerCorrect from "../../utils/isMissingNumberAnswerCorrect";
 
 interface DisplayTaskProps {
   kind: TaskKindType;
-  tasks: MissingNumberTaskType[];
+  tasks: EquationArgumentType[];
 }
 
 const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
-  const { inputs, updateInputsValue, checkIfAnswerIsCorrect } =
-    useMissingNumberInputs(tasks);
+  const { inputs, updateInputsValue } = useMissingNumberInputs(tasks);
 
   return (
     <>
@@ -36,17 +34,18 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
               length: tasks.length,
             });
 
+            const input = inputs[index];
+
             return (
               <DisplayUnknownNumberAddition
                 task={item}
+                input={input}
                 ref={taskRef[index]}
-                input={inputs[index]}
                 sequenceNumber={index}
-                correct={isMissingNumberAnswerCorrect(inputs[index] || {})}
                 updateInputsValue={(value) => {
                   updateInputsValue({
                     index,
-                    text: value,
+                    input: value,
                   });
                 }}
               />

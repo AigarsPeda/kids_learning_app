@@ -1,7 +1,6 @@
 export type MathTasksType = {
   missingNumber: {
-    // description: string;
-    tasks: MissingNumberTaskType[];
+    tasks: EquationArgumentType[];
   };
 };
 
@@ -12,16 +11,17 @@ export type MathTaskExplanationType = {
 };
 
 export type EquationArgumentType = {
+  id: string;
   kind: TaskKindType;
   a: number | undefined;
   b: number | undefined;
   result: number | undefined;
 };
 
-export type MissingNumberTaskType = {
-  id: string;
-  data: EquationArgumentType;
-};
+// export type MissingNumberTaskType = {
+//   // id: string;
+//   data: EquationArgumentType;
+// };
 
 export type MathObjType = {
   easy: MathTasksType;

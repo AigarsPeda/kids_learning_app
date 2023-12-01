@@ -1,31 +1,37 @@
 import { useEffect, useState } from "react";
 import {
-  MathObjKeysType,
-  MissingNumberTaskType,
-  TaskKindType,
+  type EquationArgumentType,
+  type MathObjKeysType,
+  type TaskKindType,
 } from "types/addition";
 import findTasks from "utils/findTasks";
 
 const useTasks = () => {
-  const [level, setLevel] = useState<MathObjKeysType>("easy");
+  const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber");
   const [tasks, setTasks] = useState<{
     description: string;
-    tasks: MissingNumberTaskType[];
+    tasks: EquationArgumentType[];
   }>({
     tasks: [],
     description: "No description",
   });
 
   useEffect(() => {
-    setTasks(findTasks(level, taskKind));
-  }, [level, taskKind]);
+    setTasks(
+      findTasks({
+        taskKind,
+        countOfItems: 3,
+        difficulty: difficulty,
+      })
+    );
+  }, [difficulty, taskKind]);
 
   return {
     tasks,
     taskKind,
-    setLevel,
     setTaskKind,
+    setDifficulty,
   };
 };
 

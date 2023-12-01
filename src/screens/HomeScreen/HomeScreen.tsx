@@ -16,7 +16,7 @@ interface HomeScreenProps {
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors } = useColors();
-  const { tasks, taskKind, setLevel, setTaskKind } = useTasks();
+  const { tasks, taskKind, setTaskKind } = useTasks();
 
   return (
     <SafeAreaView
