@@ -1,11 +1,10 @@
-import { EquationArgumentType } from "types/addition";
-import { AnswerType } from "types/common";
+import { type AnswerType, type MissingNumberInputType } from "types/common";
 
 const isMissingNumberAnswerCorrect = ({
   a,
   b,
   result,
-}: EquationArgumentType): AnswerType => {
+}: MissingNumberInputType): AnswerType => {
   if (a && b && result) {
     return a + b === result ? "correct" : "incorrect";
   }

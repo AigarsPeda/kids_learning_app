@@ -1,20 +1,18 @@
 import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
 import useColors from "hooks/useColors";
 import {
+  forwardRef,
   useEffect,
+  useImperativeHandle,
   useRef,
   useState,
-  type FC,
-  RefObject,
-  forwardRef,
-  useImperativeHandle,
 } from "react";
-import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import {
   type EquationArgumentType,
   type MissingNumberTaskType,
 } from "types/addition";
-import { type AnswerType } from "types/common";
+import { MissingNumberInputType, type AnswerType } from "types/common";
 import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
 
 const inputAccessoryViewID1 = "input-ID1";
@@ -35,7 +33,7 @@ const DisplayUnknownNumberAddition = forwardRef<
   const { colors } = useColors();
   const inputRef = useRef<TextInput>(null);
   const [answer, setAnswer] = useState<AnswerType>("unknown");
-  const [text, setText] = useState<EquationArgumentType>({
+  const [text, setText] = useState<MissingNumberInputType>({
     a: task.data.a,
     b: task.data.b,
     result: task.data.result,

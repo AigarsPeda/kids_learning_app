@@ -20,6 +20,7 @@ import {
 } from "types/addition";
 import getRandomTask from "utils/getRandomTask";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import useTasks from "../../hooks/useTasks";
 
 interface HomeScreenProps {
   navigation: { navigate: (arg0: string) => void };
@@ -27,44 +28,7 @@ interface HomeScreenProps {
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors } = useColors();
-  const [tasks, setTasks] = useState<{
-    description: string;
-    tasks: MissingNumberTaskType[];
-  }>({
-    tasks: [],
-    description: "No description",
-  });
-
-  const [level, setLevel] = useState<MathObjKeysType>("easy");
-  const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber"); // "missingNumber" | "addition" | "subtraction" | "multiplication" | "division"
-
-  const findTasks = (lev: MathObjKeysType, taskK: TaskKindType) => {
-    switch (lev) {
-      case "easy":
-        return {
-          description: MATH_TASK_EXPLANATION[taskK],
-          tasks: getRandomTask({
-            countOfItems: 3,
-            allItems: MATH_TASKS.easy[taskK].tasks,
-          }),
-        };
-
-      //   // case "medium":
-      //   //   return MATH_TASKS.medium.tasks;
-      default:
-        return {
-          description: "No description",
-          tasks: getRandomTask({
-            countOfItems: 3,
-            allItems: MATH_TASKS.easy[taskK].tasks,
-          }),
-        };
-    }
-  };
-
-  useEffect(() => {
-    setTasks(findTasks(level, taskKind));
-  }, [level, taskKind]);
+  const { tasks, taskKind, setLevel, setTaskKind } = useTasks();
 
   return (
     <SafeAreaView

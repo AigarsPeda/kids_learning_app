@@ -19,8 +19,8 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => {
           const taskRef = createRefsArray<TextInput>({
-            length: tasks.length,
             refs: taskRefs,
+            length: tasks.length,
           });
 
           return (
