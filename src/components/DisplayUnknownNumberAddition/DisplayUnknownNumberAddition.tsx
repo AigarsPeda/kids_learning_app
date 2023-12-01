@@ -34,7 +34,7 @@ const DisplayUnknownNumberAddition = forwardRef<
 
   useEffect(() => {
     sequenceNumber === 0 && inputRef.current?.focus();
-  }, []);
+  }, [sequenceNumber]);
 
   return (
     <>

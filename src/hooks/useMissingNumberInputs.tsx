@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { MissingNumberTaskType } from "types/addition";
 import { AnswerType, MissingNumberInputType } from "types/common";
-import isMissingNumberAnswerCorrect from "../utils/isMissingNumberAnswerCorrect";
+import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
 
 // adding key correct to input object with type AnswerType
 type InputType = MissingNumberInputType & { correct: AnswerType };
