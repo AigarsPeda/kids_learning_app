@@ -12,6 +12,7 @@ export type MathTaskExplanationType = {
 };
 
 export type EquationArgumentType = {
+  kind: TaskKindType;
   a: number | undefined;
   b: number | undefined;
   result: number | undefined;

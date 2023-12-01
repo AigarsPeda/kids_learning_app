@@ -13,6 +13,7 @@ const EASY_TASKS: MathTasksType = {
           a: 1,
           b: undefined,
           result: 3,
+          kind: "missingNumber",
         },
       },
       {
@@ -21,6 +22,7 @@ const EASY_TASKS: MathTasksType = {
           a: undefined,
           b: 2,
           result: 3,
+          kind: "missingNumber",
         },
       },
       {
@@ -29,6 +31,7 @@ const EASY_TASKS: MathTasksType = {
           a: 1,
           b: 2,
           result: undefined,
+          kind: "missingNumber",
         },
       },
       {
@@ -37,6 +40,7 @@ const EASY_TASKS: MathTasksType = {
           a: 4,
           b: 2,
           result: undefined,
+          kind: "missingNumber",
         },
       },
       {
@@ -45,6 +49,7 @@ const EASY_TASKS: MathTasksType = {
           a: undefined,
           b: 4,
           result: 8,
+          kind: "missingNumber",
         },
       },
       {
@@ -53,6 +58,7 @@ const EASY_TASKS: MathTasksType = {
           a: 7,
           b: undefined,
           result: 8,
+          kind: "missingNumber",
         },
       },
     ],

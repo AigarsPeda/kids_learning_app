@@ -89,12 +89,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         ...styles.container,
         backgroundColor: colors.background,
       }}
-      // onTouchStart={() => {
-      //   console.log("onTouchStart");
-
-      //   Keyboard.dismiss();
-      //   taskRefs.current[0]?.current?.focus();
-      // }}
     >
       <Button
         title="Go to Details"
