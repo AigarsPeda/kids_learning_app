@@ -11,6 +11,7 @@ const inputAccessoryViewID3 = "input-ID3";
 
 interface DisplayUnknownNumberAdditionProps {
   input: InputType;
+  isChecked: boolean;
   sequenceNumber: number;
   task: EquationArgumentType;
   updateInputsValue: (value: InputType) => void;
@@ -21,7 +22,7 @@ type Ref = { focus: () => void } | null;
 const DisplayUnknownNumberAddition = forwardRef<
   Ref,
   DisplayUnknownNumberAdditionProps
->(({ task, input, sequenceNumber, updateInputsValue }, ref) => {
+>(({ task, input, isChecked, sequenceNumber, updateInputsValue }, ref) => {
   const { colors } = useColors();
   const inputRef = useRef<TextInput>(null);
 
@@ -36,58 +37,59 @@ const DisplayUnknownNumberAddition = forwardRef<
   }, [sequenceNumber]);
 
   return (
-    <>
-      <View style={styles.taskContainer}>
-        <TextOrInputDisplay
-          text={task.a}
-          ref={inputRef}
-          inputNumber={input?.a}
-          answer={input?.correct || "unknown"}
-          inputAccessoryViewID={inputAccessoryViewID1}
-          setInputNumber={(str) => {
-            updateInputsValue({ ...input, a: str });
+    <View style={styles.taskContainer}>
+      <TextOrInputDisplay
+        text={task.a}
+        ref={inputRef}
+        inputNumber={input?.a}
+        answer={input?.correct || "unknown"}
+        isDisabled={input?.isAnswered || isChecked}
+        inputAccessoryViewID={inputAccessoryViewID1}
+        setInputNumber={(str) => {
+          updateInputsValue({ ...input, a: str });
+        }}
+      />
+      <View style={styles.textContainer}>
+        <Text
+          style={{
+            ...styles.text,
+            color: colors.text,
           }}
-        />
-        <View style={styles.textContainer}>
-          <Text
-            style={{
-              ...styles.text,
-              color: colors.text,
-            }}
-          >
-            +
-          </Text>
-        </View>
-        <TextOrInputDisplay
-          text={task.b}
-          ref={inputRef}
-          inputNumber={input?.b}
-          answer={input?.correct || "unknown"}
-          inputAccessoryViewID={inputAccessoryViewID2}
-          setInputNumber={(str) => {
-            updateInputsValue({ ...input, b: str });
-          }}
-        />
-        <View style={styles.textContainer}>
-          <Text
-            style={{
-              ...styles.text,
-              color: colors.text,
-            }}
-          >
-            =
-          </Text>
-        </View>
-        <TextOrInputDisplay
-          ref={inputRef}
-          text={task.result}
-          inputNumber={input?.result}
-          answer={input?.correct || "unknown"}
-          inputAccessoryViewID={inputAccessoryViewID3}
-          setInputNumber={(str) => updateInputsValue({ ...input, result: str })}
-        />
+        >
+          +
+        </Text>
       </View>
-    </>
+      <TextOrInputDisplay
+        text={task.b}
+        ref={inputRef}
+        inputNumber={input?.b}
+        answer={input?.correct || "unknown"}
+        isDisabled={input?.isAnswered || isChecked}
+        inputAccessoryViewID={inputAccessoryViewID2}
+        setInputNumber={(str) => {
+          updateInputsValue({ ...input, b: str });
+        }}
+      />
+      <View style={styles.textContainer}>
+        <Text
+          style={{
+            ...styles.text,
+            color: colors.text,
+          }}
+        >
+          =
+        </Text>
+      </View>
+      <TextOrInputDisplay
+        ref={inputRef}
+        text={task.result}
+        inputNumber={input?.result}
+        answer={input?.correct || "unknown"}
+        isDisabled={input?.isAnswered || isChecked}
+        inputAccessoryViewID={inputAccessoryViewID3}
+        setInputNumber={(str) => updateInputsValue({ ...input, result: str })}
+      />
+    </View>
   );
 });
 

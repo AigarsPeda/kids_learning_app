@@ -12,11 +12,11 @@ type Colors = {
 export const lightModeColors: Colors = {
   text: "#222",
   gray: "#64748b",
-  accentBackground: "#f3f4f6",
   accent: "#a855f7",
   background: "#fff",
   correct: "#4caf50",
   incorrect: "#f44336",
+  accentBackground: "#f3f4f6",
 };
 
 export const darkModeColors: Colors = {
@@ -24,7 +24,7 @@ export const darkModeColors: Colors = {
   gray: "#64748b",
   accent: "#a855f7",
   background: "#111827",
-  accentBackground: "#020617",
   correct: "#4caf50",
   incorrect: "#f44336",
+  accentBackground: "#020617",
 };

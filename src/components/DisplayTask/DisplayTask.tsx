@@ -16,15 +16,19 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
+  changeTask: (kind: TaskKindType) => void;
 }
 
-const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
+const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
-  const { inputs, updateInputsValue } = useMissingNumberInputs(tasks);
+  const { inputs, isChecked, setIsChecked, checkAnswers, updateInputsValue } =
+    useMissingNumberInputs(tasks);
+
+  const isUnknownNumber = kind === "missingNumber" || kind === "getResult";
 
   return (
     <>
-      {kind === "missingNumber" && (
+      {isUnknownNumber && (
         <FlatList
           data={tasks}
           keyExtractor={(item) => item.id.toString()}
@@ -41,6 +45,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
                 task={item}
                 input={input}
                 ref={taskRef[index]}
+                isChecked={isChecked}
                 sequenceNumber={index}
                 updateInputsValue={(value) => {
                   updateInputsValue({
@@ -53,6 +58,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
           }}
         />
       )}
+
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
@@ -62,10 +68,17 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks }) => {
           }}
         >
           <MyButton
-            title="Nākamais"
+            title={isChecked ? "Nākamais" : "Pārbaudīt"}
             onPress={() => {
-              console.log("next");
-              // setTaskKind("missingNumber");
+              if (!isChecked) {
+                checkAnswers();
+                return;
+              }
+
+              setIsChecked(false);
+              changeTask(
+                kind === "missingNumber" ? "getResult" : "missingNumber"
+              );
             }}
           />
         </View>

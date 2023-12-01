@@ -18,13 +18,13 @@ const useTasks = () => {
   });
 
   useEffect(() => {
-    setTasks(
-      findTasks({
-        taskKind,
-        countOfItems: 3,
-        difficulty: difficulty,
-      })
-    );
+    const t = findTasks({
+      taskKind,
+      countOfItems: 3,
+      difficulty: difficulty,
+    });
+
+    setTasks(t);
   }, [difficulty, taskKind]);
 
   return {

@@ -38,7 +38,11 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         {tasks.description}
       </Text>
 
-      <DisplayTask tasks={tasks.tasks} kind={taskKind} />
+      <DisplayTask
+        kind={taskKind}
+        tasks={tasks.tasks}
+        changeTask={setTaskKind}
+      />
     </SafeAreaView>
   );
 };

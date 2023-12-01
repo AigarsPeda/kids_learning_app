@@ -10,6 +10,7 @@ export type InputObjType = {
 };
 
 const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
+  const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState<InputObjType>({});
 
   const createInputs = useCallback(
@@ -20,6 +21,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
 
         inputs[i] = {
           id: task.id,
+          isAnswered: false,
           correct: "unknown",
           a: task.a || undefined,
           b: task.b || undefined,
@@ -38,9 +40,12 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     input: MissingNumberInputType;
     index: number;
   }) => {
+    const answer = isMissingNumberAnswerCorrect(input);
+
     const newInput = {
       ...input,
-      correct: isMissingNumberAnswerCorrect(input),
+      correct: answer,
+      isAnswered: answer === "correct",
     };
 
     setInputs((prev) => ({
@@ -49,12 +54,35 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     }));
   };
 
+  const checkAnswers = () => {
+    setIsChecked(true);
+
+    setInputs((prev) => {
+      const newInputs = { ...prev };
+      for (const key in newInputs) {
+        const input = newInputs[key];
+        const answer = isMissingNumberAnswerCorrect(input);
+
+        newInputs[key] = {
+          ...input,
+          correct: answer,
+          isAnswered: answer === "correct",
+        };
+      }
+
+      return newInputs;
+    });
+  };
+
   useEffect(() => {
     createInputs(tasks);
   }, [tasks]);
 
   return {
     inputs,
+    isChecked,
+    setIsChecked,
+    checkAnswers,
     updateInputsValue,
   };
 };

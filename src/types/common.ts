@@ -4,4 +4,7 @@ export type AnswerType = "correct" | "incorrect" | "unknown";
 
 export type MissingNumberInputType = Omit<EquationArgumentType, "kind">;
 
-export type InputType = MissingNumberInputType & { correct: AnswerType };
+export type InputType = MissingNumberInputType & {
+  correct: AnswerType;
+  isAnswered: boolean;
+};

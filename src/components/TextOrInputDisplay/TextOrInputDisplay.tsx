@@ -6,6 +6,7 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface TextOrInputDisplayProps {
   answer: AnswerType;
+  isDisabled?: boolean;
   inputAccessoryViewID: string;
   inputNumber: number | undefined;
   text: string | number | undefined;
@@ -16,7 +17,14 @@ type Ref = TextInput | null;
 
 const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
   (
-    { text, answer, inputNumber, inputAccessoryViewID, setInputNumber },
+    {
+      text,
+      answer,
+      isDisabled,
+      inputNumber,
+      inputAccessoryViewID,
+      setInputNumber,
+    },
     ref
   ) => {
     const { colors } = useColors();
@@ -38,8 +46,8 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
         style={{
           ...styles.container,
           borderWidth: text ? 0 : 3,
-          borderColor: getBorderColor(),
           backgroundColor: colors.accentBackground,
+          borderColor: isDisabled ? getBorderColor() : colors.gray,
         }}
       >
         {text ? (
@@ -60,6 +68,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             ref={ref}
             placeholder={" "}
             keyboardType="numeric"
+            editable={!isDisabled}
             value={inputNumber?.toString() || ""}
             inputAccessoryViewID={inputAccessoryViewID}
             onChangeText={(text) => {
