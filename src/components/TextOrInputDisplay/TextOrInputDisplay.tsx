@@ -1,14 +1,14 @@
 import useColors from "hooks/useColors";
-import { useRef, type FC, forwardRef } from "react";
+import { forwardRef } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { AnswerType } from "types/common";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface TextOrInputDisplayProps {
   answer: AnswerType;
-  inputNumber: number | undefined;
   inputAccessoryViewID: string;
+  inputNumber: number | undefined;
   text: string | number | undefined;
-  // handlePress: () => void;
   setInputNumber: (num: number | undefined) => void;
 }
 
@@ -16,18 +16,10 @@ type Ref = TextInput | null;
 
 const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
   (
-    {
-      text,
-      answer,
-      inputNumber,
-      inputAccessoryViewID,
-      // handlePress,
-      setInputNumber,
-    },
+    { text, answer, inputNumber, inputAccessoryViewID, setInputNumber },
     ref
   ) => {
     const { colors } = useColors();
-    // const inputRef = useRef<TextInput>(null);
 
     const getBorderColor = () => {
       switch (answer) {
@@ -47,6 +39,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
           ...styles.container,
           borderWidth: text ? 0 : 3,
           borderColor: getBorderColor(),
+          backgroundColor: colors.accentBackground,
         }}
       >
         {text ? (
@@ -89,33 +82,31 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
 
 const styles = StyleSheet.create({
   container: {
-    width: 75,
-    height: 75,
     borderRadius: 7,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#020617",
-    // overflow: "hidden",
+    width: scalaDownDependingOnDevice(75),
+    height: scalaDownDependingOnDevice(75),
   },
   textInput: {
-    fontSize: 32,
+    fontSize: scalaDownDependingOnDevice(32),
     display: "flex",
     fontWeight: "bold",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: 120,
-    height: 75,
+    width: scalaDownDependingOnDevice(120),
+    height: scalaDownDependingOnDevice(75),
     textAlign: "center",
     // paddingLeft: 36,
     // backgroundColor: "#0206",
     // marginLeft: 36,
   },
   text: {
-    fontSize: 32,
     fontWeight: "bold",
+    fontSize: scalaDownDependingOnDevice(32),
   },
 });
 

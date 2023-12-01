@@ -12,7 +12,10 @@ import React, {
 import {
   Button,
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -25,6 +28,7 @@ import {
   TaskKindType,
 } from "types/addition";
 import getRandomTask from "utils/getRandomTask";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface HomeScreenProps {
   navigation: { navigate: (arg0: string) => void };
@@ -105,37 +109,39 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         {tasks.description}
       </Text>
 
-      <View
-        style={{
-          height: 290,
-          marginBottom: 30,
-        }}
-      >
-        <FlatList
-          data={tasks.tasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item, index }) => {
-            const taskRef = taskRefs.current[index];
+      <FlatList
+        data={tasks.tasks}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item, index }) => {
+          const taskRef = taskRefs.current[index];
 
-            return (
-              <DisplayTask
-                task={item}
-                ref={taskRef}
-                kind={taskKind}
-                sequenceNumber={index}
-              />
-            );
+          return (
+            <DisplayTask
+              task={item}
+              ref={taskRef}
+              kind={taskKind}
+              sequenceNumber={index}
+            />
+          );
+        }}
+      />
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View
+          style={{
+            paddingBottom: scalaDownDependingOnDevice(25),
           }}
-        />
-      </View>
-      <View>
-        <MyButton
-          onPress={() => {
-            setTaskKind("missingNumber");
-          }}
-          title="Nākamais"
-        />
-      </View>
+        >
+          <MyButton
+            title="Nākamais"
+            onPress={() => {
+              setTaskKind("missingNumber");
+            }}
+          />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -143,15 +149,10 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
     alignItems: "center",
+    marginTop: StatusBar.currentHeight || 0,
   },
   headLine: {
-    margin: 16,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  btn: {
     margin: 16,
     fontSize: 20,
     fontWeight: "bold",

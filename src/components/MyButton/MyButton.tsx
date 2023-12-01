@@ -1,6 +1,7 @@
-import { FC } from "react";
-import { Text, StyleSheet, Pressable } from "react-native";
 import useColors from "hooks/useColors";
+import { FC } from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 type MyButton = {
   title?: string;
@@ -20,7 +21,8 @@ const MyButton: FC<MyButton> = ({ onPress, title = "Save" }) => {
       <Text
         style={{
           ...styles.text,
-          color: colors.text,
+          // color: colors.text,
+          color: "#fff",
         }}
       >
         {title}
@@ -31,20 +33,18 @@ const MyButton: FC<MyButton> = ({ onPress, title = "Save" }) => {
 
 const styles = StyleSheet.create({
   button: {
+    elevation: 3,
+    borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "black",
+    paddingVertical: scalaDownDependingOnDevice(12),
+    paddingHorizontal: scalaDownDependingOnDevice(32),
   },
   text: {
-    fontSize: 16,
-    lineHeight: 21,
     fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
+    fontSize: scalaDownDependingOnDevice(16),
+    lineHeight: scalaDownDependingOnDevice(21),
+    letterSpacing: scalaDownDependingOnDevice(0.25),
   },
 });
 
