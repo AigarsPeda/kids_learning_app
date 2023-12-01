@@ -1,27 +1,20 @@
 import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
 import useColors from "hooks/useColors";
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import {
-  type EquationArgumentType,
-  type MissingNumberTaskType,
-} from "types/addition";
+import { type MissingNumberTaskType } from "types/addition";
 import { MissingNumberInputType, type AnswerType } from "types/common";
-import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
 
 const inputAccessoryViewID1 = "input-ID1";
 const inputAccessoryViewID2 = "input-ID2";
 const inputAccessoryViewID3 = "input-ID3";
 
 interface DisplayUnknownNumberAdditionProps {
+  correct: AnswerType;
   sequenceNumber: number;
   task: MissingNumberTaskType;
+  input: MissingNumberInputType;
+  updateInputsValue: (value: MissingNumberInputType) => void;
 }
 
 type Ref = { focus: () => void } | null;
@@ -29,41 +22,32 @@ type Ref = { focus: () => void } | null;
 const DisplayUnknownNumberAddition = forwardRef<
   Ref,
   DisplayUnknownNumberAdditionProps
->(({ task, sequenceNumber }, ref) => {
+>(({ task, input, correct, sequenceNumber, updateInputsValue }, ref) => {
   const { colors } = useColors();
   const inputRef = useRef<TextInput>(null);
-  const [answer, setAnswer] = useState<AnswerType>("unknown");
-  const [text, setText] = useState<MissingNumberInputType>({
-    a: task.data.a,
-    b: task.data.b,
-    result: task.data.result,
-  });
 
   useImperativeHandle(ref, () => ({
     focus: () => {
       inputRef.current?.focus();
     },
-    // ... other methods or properties you want to expose
   }));
 
   useEffect(() => {
     sequenceNumber === 0 && inputRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    setAnswer(isMissingNumberAnswerCorrect(text));
-  }, [text]);
-
   return (
     <>
       <View style={styles.taskContainer}>
         <TextOrInputDisplay
           ref={inputRef}
-          answer={answer}
+          answer={correct}
           text={task.data.a}
-          inputNumber={text.a}
+          inputNumber={input?.a}
           inputAccessoryViewID={inputAccessoryViewID1}
-          setInputNumber={(str) => setText((state) => ({ ...state, a: str }))}
+          setInputNumber={(str) => {
+            updateInputsValue({ ...input, a: str });
+          }}
         />
         <View style={styles.textContainer}>
           <Text
@@ -77,11 +61,13 @@ const DisplayUnknownNumberAddition = forwardRef<
         </View>
         <TextOrInputDisplay
           ref={inputRef}
-          answer={answer}
+          answer={correct}
           text={task.data.b}
-          inputNumber={text.b}
+          inputNumber={input?.b}
           inputAccessoryViewID={inputAccessoryViewID2}
-          setInputNumber={(str) => setText((state) => ({ ...state, b: str }))}
+          setInputNumber={(str) => {
+            updateInputsValue({ ...input, b: str });
+          }}
         />
         <View style={styles.textContainer}>
           <Text
@@ -94,14 +80,12 @@ const DisplayUnknownNumberAddition = forwardRef<
           </Text>
         </View>
         <TextOrInputDisplay
-          answer={answer}
+          answer={correct}
           ref={inputRef}
           text={task.data.result}
-          inputNumber={text.result}
+          inputNumber={input?.result}
           inputAccessoryViewID={inputAccessoryViewID3}
-          setInputNumber={(str) =>
-            setText((state) => ({ ...state, result: str }))
-          }
+          setInputNumber={(str) => updateInputsValue({ ...input, result: str })}
         />
       </View>
     </>
