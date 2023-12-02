@@ -9,6 +9,7 @@ type Colors = {
   accentBackground: string;
 };
 
+// Hey, I'm a comment!
 export const lightModeColors: Colors = {
   text: "#222",
   gray: "#64748b",
