@@ -12,6 +12,7 @@ import {
 import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import usePreviousState from "../../hooks/usePreviousState";
 
 interface DisplayTaskProps {
   kind: TaskKindType;
@@ -30,21 +31,16 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
     checkAnswersById,
   } = useMissingNumberInputs(tasks);
 
-  const prevFocusedId = useRef("");
   const [currentFocusedId, setCurrentFocusedId] = useState("");
+  const prevFocusedId = usePreviousState(currentFocusedId);
 
   const isUnknownNumber = kind === "missingNumber" || kind === "getResult";
 
   useEffect(() => {
-    // On first render prevFocusedId.current is undefined
-    if (!prevFocusedId.current) {
-      prevFocusedId.current = currentFocusedId;
+    if (!prevFocusedId) {
       return;
     }
-
-    // check if previous input is answered correctly
-    checkAnswersById(prevFocusedId.current);
-    prevFocusedId.current = currentFocusedId;
+    checkAnswersById(prevFocusedId);
   }, [currentFocusedId]);
 
   return (
