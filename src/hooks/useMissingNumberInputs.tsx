@@ -33,6 +33,27 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     [tasks]
   );
 
+  const checkAnswersById = (id: string) => {
+    // loop over inputs and find input with key id value === id
+    for (const key in inputs) {
+      if (inputs[key].id === id) {
+        const input = inputs[key];
+        const answer = isMissingNumberAnswerCorrect(input);
+
+        const newInput = {
+          ...input,
+          correct: answer,
+          isAnswered: answer === "correct",
+        };
+
+        setInputs((prev) => ({
+          ...prev,
+          [key]: newInput,
+        }));
+      }
+    }
+  };
+
   const updateInputsValue = ({
     input,
     index,
@@ -40,12 +61,12 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     input: MissingNumberInputType;
     index: number;
   }) => {
-    const answer = isMissingNumberAnswerCorrect(input);
+    // const answer = isMissingNumberAnswerCorrect(input);
 
     const newInput = {
       ...input,
-      correct: answer,
-      isAnswered: answer === "correct",
+      // correct: answer,
+      // isAnswered: answer === "correct",
     };
 
     setInputs((prev) => ({
@@ -83,6 +104,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     isChecked,
     setIsChecked,
     checkAnswers,
+    checkAnswersById,
     updateInputsValue,
   };
 };
