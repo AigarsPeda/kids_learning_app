@@ -8,7 +8,9 @@ import findTasks from "utils/findTasks";
 
 const useTasks = () => {
   const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
-  const [taskKind, setTaskKind] = useState<TaskKindType>("missingNumber");
+  const [taskKind, setTaskKind] = useState<TaskKindType>(
+    "missingNumberAddition"
+  );
   const [tasks, setTasks] = useState<{
     description: string;
     tasks: EquationArgumentType[];

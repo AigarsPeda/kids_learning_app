@@ -1,7 +1,8 @@
+import { selectionAsync } from "expo-haptics";
 import { useCallback, useEffect, useState } from "react";
 import { type EquationArgumentType } from "types/addition";
-import { type InputType, type MissingNumberInputType } from "types/common";
-import isMissingNumberAnswerCorrect from "utils/isMissingNumberAnswerCorrect";
+import { type InputType } from "types/common";
+import isAdditionSubtractionAnswerCorrect from "utils/isAdditionSubtractionAnswerCorrect";
 
 // adding key correct to input object with type AnswerType
 
@@ -26,6 +27,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
           a: task.a || undefined,
           b: task.b || undefined,
           result: task.result || undefined,
+          kind: task.kind,
         };
       }
       setInputs(inputs);
@@ -38,7 +40,13 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     for (const key in inputs) {
       if (inputs[key].id === id) {
         const input = inputs[key];
-        const answer = isMissingNumberAnswerCorrect(input);
+
+        const answer = isAdditionSubtractionAnswerCorrect(input);
+
+        if (answer === "correct") {
+          console.log("correct");
+          selectionAsync();
+        }
 
         const newInput = {
           ...input,
@@ -58,10 +66,10 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     input,
     index,
   }: {
-    input: MissingNumberInputType;
+    input: InputType;
     index: number;
   }) => {
-    // const answer = isMissingNumberAnswerCorrect(input);
+    // const answer = isAdditionSubtractionAnswerCorrect(input);
 
     const newInput = {
       ...input,
@@ -82,7 +90,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
       const newInputs = { ...prev };
       for (const key in newInputs) {
         const input = newInputs[key];
-        const answer = isMissingNumberAnswerCorrect(input);
+        const answer = isAdditionSubtractionAnswerCorrect(input);
 
         newInputs[key] = {
           ...input,

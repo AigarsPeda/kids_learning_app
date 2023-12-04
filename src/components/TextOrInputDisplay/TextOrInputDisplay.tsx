@@ -51,9 +51,6 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
           backgroundColor: colors.accentBackground,
           borderColor: isDisabled ? getBorderColor() : colors.gray,
         }}
-        // onPress={() => {
-        //   console.log("onPress");
-        // }}
       >
         {text ? (
           <Text
@@ -93,8 +90,6 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
   }
 );
 
-// export default TextOrInputDisplay;
-
 const styles = StyleSheet.create({
   container: {
     borderRadius: 7,
@@ -106,15 +101,16 @@ const styles = StyleSheet.create({
     height: scalaDownDependingOnDevice(75),
   },
   textInput: {
-    fontSize: scalaDownDependingOnDevice(32),
     display: "flex",
     fontWeight: "bold",
+    textAlign: "center",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     width: scalaDownDependingOnDevice(120),
     height: scalaDownDependingOnDevice(75),
-    textAlign: "center",
+    fontSize: scalaDownDependingOnDevice(32),
+
     // paddingLeft: 36,
     // backgroundColor: "#0206",
     // marginLeft: 36,

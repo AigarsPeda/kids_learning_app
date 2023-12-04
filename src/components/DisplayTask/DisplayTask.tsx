@@ -1,7 +1,8 @@
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
 import MyButton from "components/MyButton/MyButton";
 import useMissingNumberInputs from "hooks/useMissingNumberInputs";
-import { useRef, type FC, type RefObject, useState, useEffect } from "react";
+import usePreviousState from "hooks/usePreviousState";
+import { useEffect, useRef, useState, type FC, type RefObject } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -12,13 +13,19 @@ import {
 import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import usePreviousState from "../../hooks/usePreviousState";
 
 interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
   changeTask: (kind: TaskKindType) => void;
 }
+
+const steps: TaskKindType[] = [
+  "missingNumberAddition",
+  "getResultOfAddition",
+  "getResultOfSubtraction",
+  "missingNumberSubtraction",
+];
 
 const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
@@ -31,10 +38,15 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
     checkAnswersById,
   } = useMissingNumberInputs(tasks);
 
+  const [currentStep, setCurrentStep] = useState<TaskKindType>(steps[0]);
   const [currentFocusedId, setCurrentFocusedId] = useState("");
   const prevFocusedId = usePreviousState(currentFocusedId);
 
-  const isUnknownNumber = kind === "missingNumber" || kind === "getResult";
+  const isUnknownNumber =
+    kind === "missingNumberAddition" ||
+    kind === "getResultOfAddition" ||
+    kind === "getResultOfSubtraction" ||
+    kind === "missingNumberSubtraction";
 
   useEffect(() => {
     if (!prevFocusedId) {
@@ -96,9 +108,19 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
               }
 
               setIsChecked(false);
-              changeTask(
-                kind === "missingNumber" ? "getResult" : "missingNumber"
-              );
+
+              const currentStepIndex = steps.indexOf(currentStep);
+              const nextStepIndex = currentStepIndex + 1;
+              const nextStep = steps[nextStepIndex];
+
+              if (!nextStep) {
+                changeTask(steps[0]);
+                setCurrentStep(steps[0]);
+                return;
+              }
+
+              changeTask(nextStep);
+              setCurrentStep(nextStep);
             }}
           />
         </View>

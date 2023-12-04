@@ -1,8 +1,14 @@
 export type MathTasksType = {
-  missingNumber: {
+  missingNumberAddition: {
     tasks: EquationArgumentType[];
   };
-  getResult: {
+  missingNumberSubtraction: {
+    tasks: EquationArgumentType[];
+  };
+  getResultOfAddition: {
+    tasks: EquationArgumentType[];
+  };
+  getResultOfSubtraction: {
     tasks: EquationArgumentType[];
   };
 };
