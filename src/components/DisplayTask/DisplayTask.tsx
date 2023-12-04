@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
+import handleNextInputFocus from "utils/handleNextInputFocus";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayTaskProps {
@@ -29,13 +30,15 @@ const steps: TaskKindType[] = [
 
 const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
+
   const {
     inputs,
     isChecked,
-    setIsChecked,
+    isAllAnswered,
     checkAnswers,
-    updateInputsValue,
+    setIsChecked,
     checkAnswersById,
+    updateInputsValue,
   } = useMissingNumberInputs(tasks);
 
   const [currentStep, setCurrentStep] = useState<TaskKindType>(steps[0]);
@@ -47,6 +50,47 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
     kind === "getResultOfAddition" ||
     kind === "getResultOfSubtraction" ||
     kind === "missingNumberSubtraction";
+
+  const handleNextStep = () => {
+    const currentStepIndex = steps.indexOf(currentStep);
+    const nextStepIndex = currentStepIndex + 1;
+    const nextStep = steps[nextStepIndex];
+
+    setIsChecked(false);
+
+    if (!nextStep) {
+      changeTask(steps[0]);
+      setCurrentStep(steps[0]);
+      return;
+    }
+
+    changeTask(nextStep);
+    setCurrentStep(nextStep);
+  };
+
+  const handleButtonState = () => {
+    if (!isAllAnswered && !isChecked) {
+      return {
+        isDisabled: false,
+        title: "Nākamais",
+        function: () => handleNextInputFocus(taskRefs),
+      };
+    }
+
+    if (isAllAnswered && !isChecked) {
+      return {
+        isDisabled: false,
+        title: "Pārbaudīt",
+        function: checkAnswers,
+      };
+    }
+
+    return {
+      isDisabled: false,
+      title: "Nākamais uzdevums",
+      function: handleNextStep,
+    };
+  };
 
   useEffect(() => {
     if (!prevFocusedId) {
@@ -67,17 +111,18 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
               length: tasks.length,
             });
 
+            taskRefs.current = taskRef;
             const input = inputs[index];
 
             return (
               <DisplayUnknownNumberAddition
                 task={item}
                 input={input}
+                isChecked={isChecked}
                 handelOnFocus={(id) => {
                   setCurrentFocusedId(id);
                 }}
                 ref={taskRef[index]}
-                isChecked={isChecked}
                 sequenceNumber={index}
                 updateInputsValue={(value) => {
                   updateInputsValue({
@@ -100,27 +145,10 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
           }}
         >
           <MyButton
-            title={isChecked ? "Nākamais" : "Pārbaudīt"}
+            title={handleButtonState().title}
+            isDisabled={handleButtonState().isDisabled}
             onPress={() => {
-              if (!isChecked) {
-                checkAnswers();
-                return;
-              }
-
-              setIsChecked(false);
-
-              const currentStepIndex = steps.indexOf(currentStep);
-              const nextStepIndex = currentStepIndex + 1;
-              const nextStep = steps[nextStepIndex];
-
-              if (!nextStep) {
-                changeTask(steps[0]);
-                setCurrentStep(steps[0]);
-                return;
-              }
-
-              changeTask(nextStep);
-              setCurrentStep(nextStep);
+              handleButtonState().function();
             }}
           />
         </View>

@@ -5,6 +5,7 @@ import { AnswerType } from "types/common";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface TextOrInputDisplayProps {
+  maxLength?: number;
   answer: AnswerType;
   isDisabled?: boolean;
   handelOnFocus?: () => void;
@@ -21,6 +22,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
     {
       text,
       answer,
+      maxLength,
       isDisabled,
       inputNumber,
       handelOnFocus,
@@ -68,7 +70,9 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
               color: colors.text,
             }}
             ref={ref}
-            placeholder={" "}
+            // placeholder={" "}
+            inputMode="numeric"
+            maxLength={maxLength}
             keyboardType="numeric"
             editable={!isDisabled}
             onFocus={handelOnFocus}
@@ -76,6 +80,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             inputAccessoryViewID={inputAccessoryViewID}
             onChangeText={(text) => {
               const number = parseInt(text);
+
               if (!isNaN(number)) {
                 setInputNumber(number);
                 return;

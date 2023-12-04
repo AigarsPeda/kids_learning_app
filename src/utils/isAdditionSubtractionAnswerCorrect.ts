@@ -1,4 +1,6 @@
-import { InputType, type AnswerType } from "types/common";
+import { type AnswerType, type InputType } from "types/common";
+import checkAddition from "utils/checkAddition";
+import checkSubtraction from "utils/checkSubtraction";
 
 const isAdditionSubtractionAnswerCorrect = ({
   a,
@@ -11,15 +13,14 @@ const isAdditionSubtractionAnswerCorrect = ({
   }
 
   if (kind === "missingNumberAddition" || kind === "getResultOfAddition") {
-    return a + b === result ? "correct" : "incorrect";
+    return checkAddition(a, b, result) ? "correct" : "incorrect";
   }
 
   if (
     kind === "getResultOfSubtraction" ||
     kind === "missingNumberSubtraction"
   ) {
-    console.log(a, b, result);
-    return a - b === result ? "correct" : "incorrect";
+    return checkSubtraction(a, b, result) ? "correct" : "incorrect";
   }
 
   return "unknown";

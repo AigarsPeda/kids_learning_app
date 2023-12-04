@@ -4,8 +4,6 @@ import { type EquationArgumentType } from "types/addition";
 import { type InputType } from "types/common";
 import isAdditionSubtractionAnswerCorrect from "utils/isAdditionSubtractionAnswerCorrect";
 
-// adding key correct to input object with type AnswerType
-
 export type InputObjType = {
   [key: string]: InputType;
 };
@@ -13,6 +11,7 @@ export type InputObjType = {
 const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState<InputObjType>({});
+  const [initialInputs, setInitialInputs] = useState<InputObjType>({});
 
   const createInputs = useCallback(
     (tasks: EquationArgumentType[]) => {
@@ -31,6 +30,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
         };
       }
       setInputs(inputs);
+      setInitialInputs(inputs);
     },
     [tasks]
   );
@@ -44,7 +44,6 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
         const answer = isAdditionSubtractionAnswerCorrect(input);
 
         if (answer === "correct") {
-          console.log("correct");
           selectionAsync();
         }
 
@@ -62,6 +61,17 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     }
   };
 
+  const checkIsAnswered = (inputs: InputObjType) => {
+    for (const key in inputs) {
+      const input = inputs[key];
+      // check if all key values are not undefined
+      if (!input.a || !input.b || !input.result) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const updateInputsValue = ({
     input,
     index,
@@ -77,6 +87,8 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
       // isAnswered: answer === "correct",
     };
 
+    // setIsAllAnswered(checkIsAnswered(inputs));
+
     setInputs((prev) => ({
       ...prev,
       [index]: newInput,
@@ -84,23 +96,39 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   };
 
   const checkAnswers = () => {
+    console.log("checkAnswers");
+
+    const newInputs = { ...inputs };
+
+    for (const key in newInputs) {
+      const input = newInputs[key];
+      const answer = isAdditionSubtractionAnswerCorrect(input);
+
+      newInputs[key] = {
+        ...input,
+        correct: answer,
+        isAnswered: answer === "correct",
+      };
+    }
+
+    setInputs(newInputs);
     setIsChecked(true);
 
-    setInputs((prev) => {
-      const newInputs = { ...prev };
-      for (const key in newInputs) {
-        const input = newInputs[key];
-        const answer = isAdditionSubtractionAnswerCorrect(input);
+    // setInputs((prev) => {
+    //   const newInputs = { ...prev };
+    //   for (const key in newInputs) {
+    //     const input = newInputs[key];
+    //     const answer = isAdditionSubtractionAnswerCorrect(input);
 
-        newInputs[key] = {
-          ...input,
-          correct: answer,
-          isAnswered: answer === "correct",
-        };
-      }
+    //     newInputs[key] = {
+    //       ...input,
+    //       correct: answer,
+    //       isAnswered: answer === "correct",
+    //     };
+    //   }
 
-      return newInputs;
-    });
+    //   return newInputs;
+    // });
   };
 
   useEffect(() => {
@@ -114,6 +142,8 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     checkAnswers,
     checkAnswersById,
     updateInputsValue,
+    isAllAnswered: checkIsAnswered(inputs),
+    isInputChanged: JSON.stringify(initialInputs) !== JSON.stringify(inputs),
   };
 };
 

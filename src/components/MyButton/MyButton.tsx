@@ -7,9 +7,10 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 type MyButton = {
   title?: string;
   onPress: () => void;
+  isDisabled?: boolean;
 };
 
-const MyButton: FC<MyButton> = ({ onPress, title = "Save" }) => {
+const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
   const { colors } = useColors();
   return (
     <Pressable
@@ -17,6 +18,7 @@ const MyButton: FC<MyButton> = ({ onPress, title = "Save" }) => {
         ...styles.button,
         backgroundColor: colors.accent,
       }}
+      disabled={isDisabled}
       onPress={() => {
         impactAsync(ImpactFeedbackStyle.Light);
         onPress();
@@ -26,6 +28,7 @@ const MyButton: FC<MyButton> = ({ onPress, title = "Save" }) => {
         style={{
           ...styles.text,
           color: "#fff",
+          opacity: isDisabled ? 0.5 : 1,
         }}
       >
         {title}

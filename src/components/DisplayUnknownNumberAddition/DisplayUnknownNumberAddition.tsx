@@ -18,7 +18,7 @@ interface DisplayUnknownNumberAdditionProps {
   updateInputsValue: (value: InputType) => void;
 }
 
-type Ref = { focus: () => void } | null;
+type Ref = { focus: () => void; isFocused: () => boolean } | null;
 
 const DisplayUnknownNumberAddition = forwardRef<
   Ref,
@@ -58,6 +58,9 @@ const DisplayUnknownNumberAddition = forwardRef<
       focus: () => {
         inputRef.current?.focus();
       },
+      isFocused: () => {
+        return Boolean(inputRef.current?.isFocused());
+      },
     }));
 
     useEffect(() => {
@@ -68,6 +71,7 @@ const DisplayUnknownNumberAddition = forwardRef<
       <View style={styles.taskContainer}>
         <TextOrInputDisplay
           text={task.a}
+          maxLength={3}
           ref={inputRef}
           inputNumber={input?.a}
           handelOnFocus={() => {
@@ -93,6 +97,7 @@ const DisplayUnknownNumberAddition = forwardRef<
         </View>
         <TextOrInputDisplay
           text={task.b}
+          maxLength={3}
           ref={inputRef}
           inputNumber={input?.b}
           answer={input?.correct || "unknown"}
@@ -116,6 +121,7 @@ const DisplayUnknownNumberAddition = forwardRef<
           </Text>
         </View>
         <TextOrInputDisplay
+          maxLength={3}
           ref={inputRef}
           text={task.result}
           inputNumber={input?.result}
