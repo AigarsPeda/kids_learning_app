@@ -2,6 +2,11 @@ import { Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
+const device = {
+  width,
+  height,
+};
+
 // Define base dimensions for a "larger" reference device (iPhone 15 Pro)
 const BASE_LARGER_WIDTH = 320;
 const BASE_LARGER_HEIGHT = 780;
@@ -19,4 +24,4 @@ const scalaDownDependingOnDevice = (size: number) => {
   return size * scaleFactor;
 };
 
-export { scalaDownDependingOnDevice };
+export { device, scalaDownDependingOnDevice };
