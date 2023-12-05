@@ -1,5 +1,5 @@
 import useColors from "hooks/useColors";
-import { FC, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type FC } from "react";
 import { Animated, Easing, FlatList, Text, View } from "react-native";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
@@ -45,6 +45,54 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
     };
   }, [isChecked, startAnimation]);
 
+  if (isAllAnsweredCorrectly) {
+    return (
+      <Animated.View
+        style={{
+          position: "absolute",
+          transform: [
+            {
+              translateY: translateAnimations.interpolate({
+                inputRange: [0, 1],
+                outputRange: [
+                  device.height,
+                  device.height - scalaDownDependingOnDevice(250),
+                ], // Start and end points
+              }),
+            },
+          ],
+        }}
+      >
+        <View
+          style={{
+            width: device.width,
+            backgroundColor: colors.accentBackground,
+          }}
+        >
+          <View
+            style={{
+              marginVertical: scalaDownDependingOnDevice(20),
+              marginHorizontal: scalaDownDependingOnDevice(40),
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+                fontSize: scalaDownDependingOnDevice(23),
+                color: isAllAnsweredCorrectly
+                  ? colors.correct
+                  : colors.incorrect,
+              }}
+            >
+              Viss pareizi! 🎉
+            </Text>
+          </View>
+        </View>
+      </Animated.View>
+    );
+  }
+
   return (
     <Animated.View
       style={{
@@ -55,7 +103,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
               inputRange: [0, 1],
               outputRange: [
                 device.height,
-                device.height - scalaDownDependingOnDevice(200),
+                device.height - scalaDownDependingOnDevice(270),
               ], // Start and end points
             }),
           },
@@ -64,30 +112,38 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
     >
       <View
         style={{
-          marginHorizontal: scalaDownDependingOnDevice(105),
-          width: device.width - scalaDownDependingOnDevice(77),
+          display: "flex",
+          width: device.width,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: colors.accentBackground,
         }}
       >
-        <Text
+        <View
           style={{
-            textAlign: "left",
-            fontWeight: "bold",
-            fontSize: scalaDownDependingOnDevice(25),
-            paddingBottom: scalaDownDependingOnDevice(4),
-            color: isAllAnsweredCorrectly ? colors.correct : colors.incorrect,
+            margin: "auto",
+            width: device.width / 1.5,
+            marginVertical: scalaDownDependingOnDevice(20),
+            marginHorizontal: scalaDownDependingOnDevice(40),
           }}
         >
-          {isAllAnsweredCorrectly ? "Viss pareizi!" : "Nepareizi!"}
-        </Text>
+          <Text
+            style={{
+              textAlign: "left",
+              fontWeight: "bold",
+              color: colors.incorrect,
+              fontSize: scalaDownDependingOnDevice(25),
+              paddingBottom: scalaDownDependingOnDevice(4),
+            }}
+          >
+            Nepareizi! 😔
+          </Text>
 
-        {!isAllAnsweredCorrectly && (
           <View
             style={{
               width: "100%",
               display: "flex",
               flexDirection: "row",
-              // backgroundColor: colors.accentBackground,
-              // height: !isAllAnsweredCorrectly ? "auto" : 0,
             }}
           >
             <Text
@@ -106,7 +162,6 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
                 width: "100%",
                 display: "flex",
                 flexDirection: "row",
-                // backgroundColor: colors.accentBackground,
               }}
               keyExtractor={(item) => item.toString()}
               renderItem={({ item, index }) => {
@@ -129,7 +184,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
               }}
             />
           </View>
-        )}
+        </View>
       </View>
     </Animated.View>
   );
