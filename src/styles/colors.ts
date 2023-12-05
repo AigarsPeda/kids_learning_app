@@ -16,7 +16,7 @@ export const lightModeColors: Colors = {
   accent: "#a855f7",
   background: "#fff",
   correct: "#4caf50",
-  incorrect: "#e91515",
+  incorrect: "#ff0033",
   accentBackground: "#f3f4f6",
 };
 
@@ -26,6 +26,6 @@ export const darkModeColors: Colors = {
   accent: "#a855f7",
   background: "#111827",
   correct: "#4caf50",
-  incorrect: "#e91515",
+  incorrect: "#ff0033",
   accentBackground: "#020617",
 };

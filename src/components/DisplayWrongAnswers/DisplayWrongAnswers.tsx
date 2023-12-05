@@ -86,8 +86,8 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
               width: "100%",
               display: "flex",
               flexDirection: "row",
-              backgroundColor: colors.accentBackground,
-              height: !isAllAnsweredCorrectly ? "auto" : 0,
+              // backgroundColor: colors.accentBackground,
+              // height: !isAllAnsweredCorrectly ? "auto" : 0,
             }}
           >
             <Text
@@ -106,7 +106,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
                 width: "100%",
                 display: "flex",
                 flexDirection: "row",
-                backgroundColor: colors.accentBackground,
+                // backgroundColor: colors.accentBackground,
               }}
               keyExtractor={(item) => item.toString()}
               renderItem={({ item, index }) => {

@@ -33,7 +33,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
   ) => {
     const { colors } = useColors();
 
-    const getBorderColor = () => {
+    const getColor = () => {
       switch (answer) {
         case "correct":
           return colors.correct;
@@ -51,7 +51,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
           ...styles.container,
           borderWidth: text ? 0 : 3,
           backgroundColor: colors.accentBackground,
-          borderColor: isDisabled ? getBorderColor() : colors.gray,
+          borderColor: isDisabled ? getColor() : colors.gray,
         }}
       >
         {text ? (
@@ -67,10 +67,10 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
           <TextInput
             style={{
               ...styles.textInput,
-              color: colors.text,
+              color: isDisabled ? getColor() : colors.text,
             }}
             ref={ref}
-            // placeholder={" "}
+            placeholder={" "}
             inputMode="numeric"
             maxLength={maxLength}
             keyboardType="numeric"
