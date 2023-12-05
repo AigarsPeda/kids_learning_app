@@ -1,4 +1,5 @@
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
+import DisplayWrongAnswers from "components/DisplayWrongAnswers/DisplayWrongAnswers";
 import MyButton from "components/MyButton/MyButton";
 import useMissingNumberInputs from "hooks/useMissingNumberInputs";
 import usePreviousState from "hooks/usePreviousState";
@@ -7,6 +8,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Text,
   TextInput,
   View,
 } from "react-native";
@@ -34,11 +36,13 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
   const {
     inputs,
     isChecked,
+    wrongAnswers,
     isAllAnswered,
     checkAnswers,
     setIsChecked,
     checkAnswersById,
     updateInputsValue,
+    isAllAnsweredCorrectly,
   } = useMissingNumberInputs(tasks);
 
   const [currentStep, setCurrentStep] = useState<TaskKindType>(steps[0]);
@@ -135,6 +139,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
           }}
         />
       )}
+
+      <DisplayWrongAnswers
+        isChecked={isChecked}
+        wrongAnswers={wrongAnswers}
+        isAllAnsweredCorrectly={isAllAnsweredCorrectly}
+      />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -2,8 +2,9 @@ import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay
 import useColors from "hooks/useColors";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { MathTasksType, type EquationArgumentType } from "types/addition";
+import { type EquationArgumentType } from "types/addition";
 import { type InputType } from "types/common";
+import getTasksSign from "utils/getTasksSign";
 
 const inputAccessoryViewID1 = "input-ID1";
 const inputAccessoryViewID2 = "input-ID2";
@@ -37,22 +38,6 @@ const DisplayUnknownNumberAddition = forwardRef<
   ) => {
     const { colors } = useColors();
     const inputRef = useRef<TextInput>(null);
-
-    const getTasksSign = (kind: keyof MathTasksType) => {
-      switch (kind) {
-        case "getResultOfAddition":
-          return "+";
-
-        case "missingNumberAddition":
-          return "+";
-
-        case "getResultOfSubtraction":
-          return "-";
-
-        case "missingNumberSubtraction":
-          return "-";
-      }
-    };
 
     useImperativeHandle(ref, () => ({
       focus: () => {
