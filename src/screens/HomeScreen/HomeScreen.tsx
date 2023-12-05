@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 
 interface HomeScreenProps {
@@ -16,7 +17,7 @@ interface HomeScreenProps {
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors } = useColors();
-  const { tasks, taskKind, setTaskKind } = useTasks();
+  const { tasks, taskKind, timePassed, resetLevel, setTaskKind } = useTasks();
 
   return (
     <SafeAreaView
@@ -29,20 +30,57 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         title="Go to Details"
         onPress={() => navigation.navigate("DifferentScreen")}
       />
-      <Text
-        style={{
-          ...styles.headLine,
-          color: colors.text,
-        }}
-      >
-        {tasks.description}
-      </Text>
 
-      <DisplayTask
-        kind={taskKind}
-        tasks={tasks.tasks}
-        changeTask={setTaskKind}
-      />
+      {timePassed ? (
+        <View
+          style={{
+            ...styles.headLine,
+            backgroundColor: colors.accentBackground,
+            padding: 16,
+            borderRadius: 8,
+          }}
+        >
+          <Text
+            style={{
+              ...styles.headLine,
+              color: colors.text,
+            }}
+          >
+            Level Completed
+          </Text>
+          <Text
+            style={{
+              ...styles.headLine,
+              color: colors.text,
+            }}
+          >
+            {timePassed}
+          </Text>
+          <Button
+            title="Next Level"
+            onPress={() => {
+              resetLevel();
+            }}
+          />
+        </View>
+      ) : (
+        <>
+          <Text
+            style={{
+              ...styles.headLine,
+              color: colors.text,
+            }}
+          >
+            {tasks.description}
+          </Text>
+
+          <DisplayTask
+            kind={taskKind}
+            tasks={tasks.tasks}
+            changeTask={setTaskKind}
+          />
+        </>
+      )}
     </SafeAreaView>
   );
 };

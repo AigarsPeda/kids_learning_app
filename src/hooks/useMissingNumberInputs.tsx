@@ -159,6 +159,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     setIsChecked,
     checkAnswers,
     wrongAnswers,
+    setWrongAnswers,
     checkAnswersById,
     updateInputsValue,
     isAllAnswered: checkIsAnswered(inputs),
