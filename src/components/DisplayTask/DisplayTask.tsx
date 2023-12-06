@@ -20,6 +20,7 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
+  handleNextLevelStep: () => void;
   changeTask: (kind: TaskKindType) => void;
 }
 
@@ -30,7 +31,12 @@ const steps: TaskKindType[] = [
   "missingNumberSubtraction",
 ];
 
-const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
+const DisplayTask: FC<DisplayTaskProps> = ({
+  kind,
+  tasks,
+  changeTask,
+  handleNextLevelStep,
+}) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
 
   const {
@@ -61,6 +67,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({ kind, tasks, changeTask }) => {
     const nextStep = steps[nextStepIndex];
 
     setIsChecked(false);
+    handleNextLevelStep();
 
     if (!nextStep) {
       changeTask(steps[0]);
