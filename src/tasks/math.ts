@@ -169,7 +169,7 @@ const EASY_TASKS: MathTasksType = {
         id: "10",
         a: undefined,
         b: 8,
-        result: 0,
+        result: 2,
         kind: "missingNumberSubtraction",
       },
       {

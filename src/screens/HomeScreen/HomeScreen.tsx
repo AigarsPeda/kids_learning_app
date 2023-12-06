@@ -14,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { device } from "utils/metrics";
+import Progressbar from "../../components/Progressbar/Progressbar";
 
 interface HomeScreenProps {
   navigation: { navigate: (arg0: string) => void };
@@ -31,10 +32,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const [isFinished, setIsFinished] = useState(false);
   const [currentLevelStep, setCurrentLevelStep] = useState(0);
 
-  const progressBarWidth = useRef(
-    new Animated.Value(initialProgressBarWidth)
-  ).current;
-
   const handleNextLevelStep = () => {
     const nextStep = currentLevelStep + 1;
 
@@ -42,16 +39,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
       setIsFinished(true);
       return;
     }
-
-    // Calculate the new width
-    const newWidth = (WIDTH / TASK_COUNT_PER_LEVEL) * (nextStep + 1);
-
-    // Animate to the new width
-    Animated.timing(progressBarWidth, {
-      toValue: newWidth,
-      duration: 500, // Duration in milliseconds
-      useNativeDriver: false,
-    }).start();
 
     setCurrentLevelStep(nextStep);
   };
@@ -61,13 +48,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
     setCurrentLevelStep(0);
     setTaskKind("missingNumberAddition");
     startTimer.current = new Date();
-
-    // reset the progress bar
-    Animated.timing(progressBarWidth, {
-      toValue: 0,
-      duration: 0,
-      useNativeDriver: false,
-    }).start();
   };
 
   return (
@@ -89,24 +69,8 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         />
       ) : (
         <>
-          <View
-            style={{
-              height: 6,
-              marginTop: 16,
-              borderRadius: 8,
-              width: WIDTH,
-              backgroundColor: colors.accentBackground,
-            }}
-          >
-            <Animated.View
-              style={{
-                height: 6,
-                borderRadius: 8,
-                width: progressBarWidth,
-                backgroundColor: colors.accent,
-              }}
-            />
-          </View>
+          <Progressbar currentLevelStep={currentLevelStep} />
+
           <Text
             style={{
               ...styles.headLine,
