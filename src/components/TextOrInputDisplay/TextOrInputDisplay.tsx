@@ -1,7 +1,7 @@
 import useColors from "hooks/useColors";
 import { forwardRef } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import { AnswerType } from "types/common";
+import { type AnswerType } from "types/common";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface TextOrInputDisplayProps {
@@ -115,10 +115,6 @@ const styles = StyleSheet.create({
     width: scalaDownDependingOnDevice(120),
     height: scalaDownDependingOnDevice(75),
     fontSize: scalaDownDependingOnDevice(32),
-
-    // paddingLeft: 36,
-    // backgroundColor: "#0206",
-    // marginLeft: 36,
   },
   text: {
     fontWeight: "bold",

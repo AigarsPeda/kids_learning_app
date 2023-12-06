@@ -3,10 +3,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DifferentScreen from "@screens/DifferentScreen/DifferentScreen";
 import { type FC } from "react";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
+import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 
 const App: FC = () => {
+  const [fontsLoaded] = useFonts({
+    ABeeZee: require("./assets/fonts/ABeeZee-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       {/* <StatusBar /> */}

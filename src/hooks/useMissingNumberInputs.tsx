@@ -2,9 +2,8 @@ import { selectionAsync } from "expo-haptics";
 import { useCallback, useEffect, useState } from "react";
 import { type EquationArgumentType } from "types/addition";
 import { type InputType } from "types/common";
+import findMissingNumber from "utils/findMissingNumber";
 import isAdditionSubtractionAnswerCorrect from "utils/isAdditionSubtractionAnswerCorrect";
-import getMissingNumberAddition from "../utils/getMissingNumberAddition";
-import findMissingNumber from "../utils/findMissingNumber";
 
 export type InputObjType = {
   [key: string]: InputType;

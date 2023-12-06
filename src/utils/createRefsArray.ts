@@ -1,8 +1,8 @@
-import { RefObject, createRef } from "react";
+import { createRef, type MutableRefObject, type RefObject } from "react";
 
 interface CreateRefsArrayArgs<T> {
   length: number;
-  refs: React.MutableRefObject<RefObject<T>[]>;
+  refs: MutableRefObject<RefObject<T>[]>;
 }
 
 const createRefsArray = <T>({ length, refs }: CreateRefsArrayArgs<T>) => {

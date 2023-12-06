@@ -8,7 +8,6 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
-  Text,
   TextInput,
   View,
 } from "react-native";
@@ -80,14 +79,6 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   };
 
   const handleButtonState = () => {
-    if (!isAllAnswered && !isChecked) {
-      return {
-        isDisabled: false,
-        title: "Nākamais",
-        function: () => handleNextInputFocus(taskRefs),
-      };
-    }
-
     if (isAllAnswered && !isChecked) {
       return {
         isDisabled: false,
@@ -96,10 +87,18 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       };
     }
 
+    if (isAllAnswered && isChecked) {
+      return {
+        isDisabled: false,
+        title: "Nākamais uzdevums",
+        function: handleNextStep,
+      };
+    }
+
     return {
       isDisabled: false,
-      title: "Nākamais uzdevums",
-      function: handleNextStep,
+      title: "Nākamais",
+      function: () => handleNextInputFocus(taskRefs),
     };
   };
 

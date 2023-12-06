@@ -1,4 +1,4 @@
-import { InputType } from "types/common";
+import { type InputType } from "types/common";
 import getMissingNumberAddition from "utils/getMissingNumberAddition";
 import getMissingNumberSubtraction from "utils/getMissingNumberSubtraction";
 
