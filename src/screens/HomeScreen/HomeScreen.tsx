@@ -84,6 +84,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
             kind={taskKind}
             tasks={tasks.tasks}
             changeTask={setTaskKind}
+            decrementLives={decrementLives}
             handleNextLevelStep={handleNextLevelStep}
           />
         </>

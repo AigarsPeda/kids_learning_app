@@ -15,11 +15,11 @@ import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import handleNextInputFocus from "utils/handleNextInputFocus";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import useLives from "../../hooks/useLives";
 
 interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
+  decrementLives: () => void;
   handleNextLevelStep: () => void;
   changeTask: (kind: TaskKindType) => void;
 }
@@ -35,6 +35,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   kind,
   tasks,
   changeTask,
+  decrementLives,
   handleNextLevelStep,
 }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
@@ -92,7 +93,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       return {
         isDisabled: false,
         title: "Nākamais uzdevums",
-        function: handleNextStep,
+        function: () => {
+          handleNextStep();
+          if (!isAllAnsweredCorrectly) {
+            decrementLives();
+          }
+        },
       };
     }
 
