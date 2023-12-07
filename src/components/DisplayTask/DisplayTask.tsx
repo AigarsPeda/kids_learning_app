@@ -15,6 +15,7 @@ import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import handleNextInputFocus from "utils/handleNextInputFocus";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import useLives from "../../hooks/useLives";
 
 interface DisplayTaskProps {
   kind: TaskKindType;

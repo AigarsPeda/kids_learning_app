@@ -14,6 +14,9 @@ import {
   Text,
   View,
 } from "react-native";
+import useLives from "hooks/useLives";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import DisplayHeart from "../../components/DisplayHeart/DisplayHeart";
 
 interface HomeScreenProps {
   navigation: { navigate: (arg0: string) => void };
@@ -22,6 +25,7 @@ interface HomeScreenProps {
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors, typography } = useColors();
   const { tasks, taskKind, setTaskKind } = useTasks();
+  const { lives, decrementLives, incrementLives } = useLives();
 
   const {
     isFinished,
@@ -47,15 +51,22 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         <DisplaySummery startTimer={startTimer} resetLevel={resetLevel} />
       ) : (
         <>
-          <Progressbar currentLevelStep={currentLevelStep} />
-
+          <View
+            style={{
+              gap: 16,
+              flexDirection: "row",
+              alignItems: "center",
+              // backgroundColor: "#fff",
+              justifyContent: "space-between",
+            }}
+          >
+            <Progressbar currentLevelStep={currentLevelStep} />
+            <DisplayHeart health={lives} />
+          </View>
           <View
             style={{
               width: "100%",
-              // ...styles.headLine,
-              // backgroundColor: colors.accentBackground,
               paddingHorizontal: 19,
-              // borderRadius: 8,
             }}
           >
             <Text
