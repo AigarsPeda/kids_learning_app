@@ -68,7 +68,11 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     for (const key in inputs) {
       const input = inputs[key];
       // check if all key values are not undefined
-      if (!input.a || !input.b || !input.result) {
+      if (
+        input.a === undefined ||
+        input.b === undefined ||
+        input.result === undefined
+      ) {
         return false;
       }
     }

@@ -1,8 +1,8 @@
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";
 import Progressbar from "components/Progressbar/Progressbar";
-import useColors from "hooks/useStyles";
 import useLevelStatus from "hooks/useLevelStatus";
+import useColors from "hooks/useStyles";
 import useTasks from "hooks/useTasks";
 import { type FC } from "react";
 
@@ -12,6 +12,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 
 interface HomeScreenProps {
@@ -48,15 +49,25 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         <>
           <Progressbar currentLevelStep={currentLevelStep} />
 
-          <Text
+          <View
             style={{
-              ...styles.headLine,
-              color: colors.text,
-              fontFamily: typography.primaryRegularFamily,
+              width: "100%",
+              // ...styles.headLine,
+              // backgroundColor: colors.accentBackground,
+              paddingHorizontal: 19,
+              // borderRadius: 8,
             }}
           >
-            {tasks.description}
-          </Text>
+            <Text
+              style={{
+                ...styles.headLine,
+                color: colors.text,
+                fontFamily: typography.primaryRegularFamily,
+              }}
+            >
+              {tasks.description}
+            </Text>
+          </View>
 
           <DisplayTask
             kind={taskKind}
@@ -79,7 +90,7 @@ const styles = StyleSheet.create({
   headLine: {
     margin: 16,
     fontSize: 20,
-    paddingVertical: 16,
+    // paddingVertical: 1,
     fontWeight: "bold",
   },
 });

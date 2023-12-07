@@ -2,7 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DifferentScreen from "@screens/DifferentScreen/DifferentScreen";
 import { useFonts } from "expo-font";
-import { type FC } from "react";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
+import { useEffect, type FC } from "react";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
 
 const Stack = createNativeStackNavigator();
@@ -12,6 +13,24 @@ const App: FC = () => {
     RubikBold: require("./assets/fonts/Rubik-Bold.ttf"),
     RubikRegular: require("./assets/fonts/Rubik-Regular.ttf"),
   });
+
+  useEffect(() => {
+    const hideSplashScreen = async () => {
+      await hideAsync();
+    };
+
+    const preventAutoHideSplashScreen = async () => {
+      await preventAutoHideAsync();
+    };
+
+    if (!fontsLoaded) {
+      preventAutoHideSplashScreen();
+    }
+
+    if (fontsLoaded) {
+      hideSplashScreen();
+    }
+  }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;

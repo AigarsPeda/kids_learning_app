@@ -154,10 +154,13 @@ const DisplayTask: FC<DisplayTaskProps> = ({
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{
+          marginBottom: scalaDownDependingOnDevice(20),
+        }}
       >
         <View
           style={{
-            paddingBottom: scalaDownDependingOnDevice(25),
+            paddingBottom: scalaDownDependingOnDevice(19),
           }}
         >
           <MyButton

@@ -44,11 +44,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: scalaDownDependingOnDevice(12),
-    paddingHorizontal: scalaDownDependingOnDevice(32),
+    paddingVertical: scalaDownDependingOnDevice(10),
+    paddingHorizontal: scalaDownDependingOnDevice(40),
   },
   text: {
-    fontWeight: "bold",
     fontSize: scalaDownDependingOnDevice(16),
     lineHeight: scalaDownDependingOnDevice(21),
     letterSpacing: scalaDownDependingOnDevice(0.25),
