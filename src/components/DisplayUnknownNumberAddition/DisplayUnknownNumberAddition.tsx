@@ -1,5 +1,5 @@
 import TextOrInputDisplay from "components/TextOrInputDisplay/TextOrInputDisplay";
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { type EquationArgumentType } from "types/addition";
@@ -36,7 +36,7 @@ const DisplayUnknownNumberAddition = forwardRef<
     },
     ref
   ) => {
-    const { colors } = useColors();
+    const { colors, typography } = useColors();
     const inputRef = useRef<TextInput>(null);
 
     useImperativeHandle(ref, () => ({
@@ -75,6 +75,7 @@ const DisplayUnknownNumberAddition = forwardRef<
             style={{
               ...styles.text,
               color: colors.text,
+              fontFamily: typography.primaryBoldFontFamily,
             }}
           >
             {getTasksSign(task.kind)}
@@ -100,6 +101,7 @@ const DisplayUnknownNumberAddition = forwardRef<
             style={{
               ...styles.text,
               color: colors.text,
+              fontFamily: typography.primaryBoldFontFamily,
             }}
           >
             =
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
 

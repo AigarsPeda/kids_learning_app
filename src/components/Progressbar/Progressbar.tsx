@@ -1,5 +1,5 @@
 import { TASK_COUNT_PER_LEVEL } from "hardcoded";
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { useEffect, useRef, type FC } from "react";
 import { Animated, View } from "react-native";
 import { device } from "utils/metrics";

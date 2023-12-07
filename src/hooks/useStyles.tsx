@@ -1,13 +1,14 @@
 import { useColorScheme } from "react-native";
-import { darkModeColors, lightModeColors } from "styles/colors";
+import { darkModeColors, lightModeColors, typography } from "styles/colors";
 
-const useColors = () => {
+const useStyles = () => {
   const colorTheme = useColorScheme();
 
   return {
+    typography: typography,
     isDark: colorTheme === "dark",
     colors: colorTheme === "dark" ? darkModeColors : lightModeColors,
   };
 };
 
-export default useColors;
+export default useStyles;

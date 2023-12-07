@@ -1,4 +1,4 @@
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
@@ -12,7 +12,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
   startTimer,
   resetLevel,
 }) => {
-  const { colors } = useColors();
+  const { colors, typography } = useColors();
 
   return (
     <View
@@ -35,6 +35,8 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         style={{
           ...styles.headLine,
           color: colors.text,
+          fontFamily: typography.primaryBoldFontFamily,
+          fontWeight: "bold",
         }}
       >
         {getMinHoursPassed(startTimer)}
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   headLine: {
     margin: 16,
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
 

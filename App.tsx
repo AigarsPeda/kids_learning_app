@@ -1,15 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DifferentScreen from "@screens/DifferentScreen/DifferentScreen";
+import { useFonts } from "expo-font";
 import { type FC } from "react";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
-import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 
 const App: FC = () => {
   const [fontsLoaded] = useFonts({
-    ABeeZee: require("./assets/fonts/ABeeZee-Regular.ttf"),
+    RubikBold: require("./assets/fonts/Rubik-Bold.ttf"),
+    Rubik: require("./assets/fonts/Rubik-VariableFont_wght.ttf"),
+    RubikRegular: require("./assets/fonts/Rubik-Regular.ttf"),
+    RubikMedium: require("./assets/fonts/Rubik-Medium.ttf"),
   });
 
   if (!fontsLoaded) {

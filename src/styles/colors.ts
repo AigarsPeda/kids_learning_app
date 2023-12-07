@@ -2,7 +2,6 @@ type Colors = {
   text: string;
   gray: string;
   accent: string;
-
   correct: string;
   incorrect: string;
   background: string;
@@ -28,4 +27,11 @@ export const darkModeColors: Colors = {
   correct: "#4caf50",
   incorrect: "#ff0033",
   accentBackground: "#020617",
+};
+
+export const typography = {
+  primaryFontFamily: "Rubik",
+  primaryBoldFontFamily: "RubikBold",
+  primaryRegularFamily: "RubikRegular",
+  primaryMediumFamily: "RubikMedium",
 };

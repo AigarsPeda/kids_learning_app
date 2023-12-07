@@ -1,5 +1,5 @@
 import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
@@ -11,7 +11,7 @@ type MyButton = {
 };
 
 const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
-  const { colors } = useColors();
+  const { colors, typography } = useColors();
   return (
     <Pressable
       style={{
@@ -29,6 +29,7 @@ const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
           ...styles.text,
           color: "#fff",
           opacity: isDisabled ? 0.5 : 1,
+          fontFamily: typography.primaryMediumFamily,
         }}
       >
         {title}

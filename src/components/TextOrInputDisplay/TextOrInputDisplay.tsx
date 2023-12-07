@@ -1,4 +1,4 @@
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { forwardRef } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { type AnswerType } from "types/common";
@@ -31,7 +31,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
     },
     ref
   ) => {
-    const { colors } = useColors();
+    const { colors, typography } = useColors();
 
     const getColor = () => {
       switch (answer) {
@@ -59,6 +59,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             style={{
               ...styles.text,
               color: colors.text,
+              fontFamily: typography.primaryBoldFontFamily,
             }}
           >
             {text}
@@ -68,6 +69,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             style={{
               ...styles.textInput,
               color: isDisabled ? getColor() : colors.text,
+              fontFamily: typography.primaryBoldFontFamily,
             }}
             ref={ref}
             placeholder={" "}

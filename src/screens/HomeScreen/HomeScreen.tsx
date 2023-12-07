@@ -1,7 +1,7 @@
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";
 import Progressbar from "components/Progressbar/Progressbar";
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import useLevelStatus from "hooks/useLevelStatus";
 import useTasks from "hooks/useTasks";
 import { type FC } from "react";
@@ -19,7 +19,7 @@ interface HomeScreenProps {
 }
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
-  const { colors } = useColors();
+  const { colors, typography } = useColors();
   const { tasks, taskKind, setTaskKind } = useTasks();
 
   const {
@@ -52,7 +52,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
             style={{
               ...styles.headLine,
               color: colors.text,
-              fontFamily: "ABeeZee",
+              fontFamily: typography.primaryMediumFamily,
             }}
           >
             {tasks.description}

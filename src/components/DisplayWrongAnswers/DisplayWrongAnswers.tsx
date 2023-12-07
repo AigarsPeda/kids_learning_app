@@ -1,4 +1,4 @@
-import useColors from "hooks/useColors";
+import useColors from "hooks/useStyles";
 import { useCallback, useEffect, useRef, type FC } from "react";
 import { Animated, Easing, FlatList, Text, View } from "react-native";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
