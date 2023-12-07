@@ -4,7 +4,7 @@ import { useEffect, useRef, type FC } from "react";
 import { Animated, View } from "react-native";
 import { device } from "utils/metrics";
 
-const WIDTH = device.width - 50;
+const WIDTH = device.width - 75;
 const INITIAL_PROGRESSBAR_WIDTH = WIDTH * 0.05; // 5% of total width
 
 interface ProgressbarProps {

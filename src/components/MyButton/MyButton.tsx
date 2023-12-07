@@ -29,7 +29,7 @@ const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
           ...styles.text,
           color: "#fff",
           opacity: isDisabled ? 0.5 : 1,
-          fontFamily: typography.primaryMediumFamily,
+          fontFamily: typography.primaryBoldFontFamily,
         }}
       >
         {title}

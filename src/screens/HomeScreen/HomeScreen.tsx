@@ -52,7 +52,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
             style={{
               ...styles.headLine,
               color: colors.text,
-              fontFamily: typography.primaryMediumFamily,
+              fontFamily: typography.primaryRegularFamily,
             }}
           >
             {tasks.description}
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   headLine: {
     margin: 16,
     fontSize: 20,
+    paddingVertical: 16,
     fontWeight: "bold",
   },
 });

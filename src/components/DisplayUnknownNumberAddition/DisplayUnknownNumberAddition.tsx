@@ -135,8 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   textContainer: {
-    width: 30,
-    height: 30,
+    width: 35,
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",

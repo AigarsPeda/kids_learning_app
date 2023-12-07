@@ -10,9 +10,7 @@ const Stack = createNativeStackNavigator();
 const App: FC = () => {
   const [fontsLoaded] = useFonts({
     RubikBold: require("./assets/fonts/Rubik-Bold.ttf"),
-    Rubik: require("./assets/fonts/Rubik-VariableFont_wght.ttf"),
     RubikRegular: require("./assets/fonts/Rubik-Regular.ttf"),
-    RubikMedium: require("./assets/fonts/Rubik-Medium.ttf"),
   });
 
   if (!fontsLoaded) {

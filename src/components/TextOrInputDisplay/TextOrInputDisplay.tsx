@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     display: "flex",
-    fontWeight: "bold",
     textAlign: "center",
     flexDirection: "row",
     alignItems: "center",
@@ -119,7 +118,6 @@ const styles = StyleSheet.create({
     fontSize: scalaDownDependingOnDevice(32),
   },
   text: {
-    fontWeight: "bold",
     fontSize: scalaDownDependingOnDevice(32),
   },
 });

@@ -30,8 +30,6 @@ export const darkModeColors: Colors = {
 };
 
 export const typography = {
-  primaryFontFamily: "Rubik",
   primaryBoldFontFamily: "RubikBold",
   primaryRegularFamily: "RubikRegular",
-  primaryMediumFamily: "RubikMedium",
 };
