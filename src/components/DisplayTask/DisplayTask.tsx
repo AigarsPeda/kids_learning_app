@@ -85,7 +85,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       return {
         isDisabled: false,
         title: "Pārbaudīt",
-        function: checkAnswers,
+        function: () => {
+          checkAnswers();
+          if (!isAllAnsweredCorrectly) {
+            decrementLives();
+          }
+        },
       };
     }
 
@@ -95,9 +100,6 @@ const DisplayTask: FC<DisplayTaskProps> = ({
         title: "Nākamais uzdevums",
         function: () => {
           handleNextStep();
-          if (!isAllAnsweredCorrectly) {
-            decrementLives();
-          }
         },
       };
     }
