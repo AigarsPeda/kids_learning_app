@@ -25,7 +25,7 @@ interface HomeScreenProps {
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const { colors, typography } = useColors();
   const { tasks, taskKind, setTaskKind } = useTasks();
-  const { lives, decrementLives, incrementLives } = useLives();
+  const { lives, isLivesFinished, resetLives, decrementLives } = useLives();
 
   const {
     isFinished,
@@ -47,8 +47,14 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         onPress={() => navigation.navigate("DifferentScreen")}
       />
 
-      {isFinished ? (
-        <DisplaySummery startTimer={startTimer} resetLevel={resetLevel} />
+      {isLivesFinished || isFinished ? (
+        <DisplaySummery
+          startTimer={startTimer}
+          resetLevel={() => {
+            resetLevel();
+            resetLives();
+          }}
+        />
       ) : (
         <>
           <View

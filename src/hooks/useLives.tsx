@@ -11,10 +11,16 @@ const useLives = () => {
     setLives((prev) => prev + 1);
   };
 
+  const resetLives = () => {
+    setLives(3);
+  };
+
   return {
     lives,
+    resetLives,
     decrementLives,
     incrementLives,
+    isLivesFinished: lives <= 0,
   };
 };
 
