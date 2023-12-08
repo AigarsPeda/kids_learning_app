@@ -1,5 +1,8 @@
-const leftOrRightMargin = (index: number): "left" | "right" => {
-  const direction = index % 10 < 5 ? "left" : "right";
+const leftOrRightMargin = (
+  index: number,
+  brakePoint: number
+): "left" | "right" => {
+  const direction = index % 10 < brakePoint ? "left" : "right";
   return direction;
 };
 

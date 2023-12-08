@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
-import leftOrRightMargin from "utils/leftOrRightMargin";
+import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LevelScreenProps {
@@ -23,8 +23,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
 
   const createArray = (length: number) => [...Array(length)];
-
-  let currentLeftMargin = 0;
 
   return (
     <SafeAreaView
@@ -41,23 +39,11 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
         renderItem={({ item, index }) => {
           const isFirst = index === 0;
 
-          // let leftMargin = scalaDownDependingOnDevice(40 * index);
-          currentLeftMargin =
-            leftOrRightMargin(index) === "left"
-              ? currentLeftMargin + 30
-              : currentLeftMargin - 30;
-
-          const startLeftMargin = scalaDownDependingOnDevice(currentLeftMargin);
-
-          let obj = {
-            marginLeft: startLeftMargin,
-          };
-
           return (
             <View
               style={{
-                marginTop: isFirst ? 0 : scalaDownDependingOnDevice(70),
-                ...obj,
+                marginLeft: handleLeftMargin(index, 32, 5),
+                marginTop: isFirst ? 0 : scalaDownDependingOnDevice(105),
               }}
             >
               <RoundButton
