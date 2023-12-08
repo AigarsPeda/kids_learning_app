@@ -49,7 +49,12 @@ const DisplayUnknownNumberAddition = forwardRef<
     }));
 
     useEffect(() => {
-      sequenceNumber === 0 && inputRef.current?.focus();
+      // set the focus with delay
+      if (sequenceNumber === 0) {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 530);
+      }
     }, [sequenceNumber]);
 
     return (

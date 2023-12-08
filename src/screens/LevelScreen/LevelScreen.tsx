@@ -39,9 +39,6 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         backgroundColor: colors.background,
       }}
     >
-      {/* {console.log("otherParam", otherParam)} */}
-      {/* <Button title="Back to home" onPress={() => navigation.goBack()} /> */}
-
       {isLivesFinished || isFinished ? (
         <DisplaySummery
           startTimer={startTimer}
