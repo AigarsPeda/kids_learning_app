@@ -30,6 +30,7 @@ export const darkModeColors: Colors = {
 };
 
 export const typography = {
-  primaryBoldFontFamily: "RubikBold",
-  primaryRegularFamily: "RubikRegular",
+  primaryRegularFont: "BloggerSans",
+  primaryBoldFont: "BloggerSansBold",
+  primaryMediumFont: "BloggerSansMedium",
 };

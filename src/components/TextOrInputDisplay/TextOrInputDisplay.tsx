@@ -59,7 +59,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             style={{
               ...styles.text,
               color: colors.text,
-              fontFamily: typography.primaryBoldFontFamily,
+              fontFamily: typography.primaryBoldFont,
             }}
           >
             {text}
@@ -69,7 +69,7 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
             style={{
               ...styles.textInput,
               color: isDisabled ? getColor() : colors.text,
-              fontFamily: typography.primaryBoldFontFamily,
+              fontFamily: typography.primaryBoldFont,
             }}
             ref={ref}
             placeholder={" "}

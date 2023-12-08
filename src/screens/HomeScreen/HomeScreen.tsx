@@ -1,39 +1,18 @@
-import DisplaySummery from "components/DisplaySummery/DisplaySummery";
-import DisplayTask from "components/DisplayTask/DisplayTask";
-import Progressbar from "components/Progressbar/Progressbar";
-import useLevelStatus from "hooks/useLevelStatus";
-import useColors from "hooks/useStyles";
-import useTasks from "hooks/useTasks";
-import { type FC } from "react";
+import MyButton from "components/MyButton/MyButton";
+import useStyles from "hooks/useStyles";
+import { FC } from "react";
+import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import { type LevelScreenPropsType } from "types/screen";
 
-import {
-  Button,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import useLives from "hooks/useLives";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import DisplayHeart from "../../components/DisplayHeart/DisplayHeart";
-
-interface HomeScreenProps {
-  navigation: { navigate: (arg0: string) => void };
+interface LevelScreenProps {
+  navigation: {
+    // navigate: (arg0: string, arg1: { otherParam: string }) => void;
+    navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
+  };
 }
-
-const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
-  const { colors, typography } = useColors();
-  const { tasks, taskKind, setTaskKind } = useTasks();
-  const { lives, isLivesFinished, resetLives, decrementLives } = useLives();
-
-  const {
-    isFinished,
-    startTimer,
-    currentLevelStep,
-    resetLevel,
-    handleNextLevelStep,
-  } = useLevelStatus();
+//LevelScreenPropsType
+const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
+  const { colors, typography } = useStyles();
 
   return (
     <SafeAreaView
@@ -42,59 +21,17 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
         backgroundColor: colors.background,
       }}
     >
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate("DifferentScreen")}
-      />
-
-      {isLivesFinished || isFinished ? (
-        <DisplaySummery
-          startTimer={startTimer}
-          resetLevel={() => {
-            resetLevel();
-            resetLives();
-          }}
+      <View style={styles.container}>
+        {/* <Text>HomeScreen</Text> */}
+        <MyButton
+          title="Go to level 1"
+          onPress={() =>
+            navigation.navigate("LevelScreen", {
+              level: "anything you want here",
+            })
+          }
         />
-      ) : (
-        <>
-          <View
-            style={{
-              gap: 16,
-              flexDirection: "row",
-              alignItems: "center",
-              // backgroundColor: "#fff",
-              justifyContent: "space-between",
-            }}
-          >
-            <Progressbar currentLevelStep={currentLevelStep} />
-            <DisplayHeart health={lives} />
-          </View>
-          <View
-            style={{
-              width: "100%",
-              paddingHorizontal: 19,
-            }}
-          >
-            <Text
-              style={{
-                ...styles.headLine,
-                color: colors.text,
-                fontFamily: typography.primaryRegularFamily,
-              }}
-            >
-              {tasks.description}
-            </Text>
-          </View>
-
-          <DisplayTask
-            kind={taskKind}
-            tasks={tasks.tasks}
-            changeTask={setTaskKind}
-            decrementLives={decrementLives}
-            handleNextLevelStep={handleNextLevelStep}
-          />
-        </>
-      )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -108,7 +45,6 @@ const styles = StyleSheet.create({
   headLine: {
     margin: 16,
     fontSize: 20,
-    // paddingVertical: 1,
     fontWeight: "bold",
   },
 });

@@ -4,11 +4,13 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
 
 interface DisplaySummeryProps {
+  goHome: () => void;
   startTimer: Date | null;
   resetLevel: () => void;
 }
 
 const DisplaySummery: FC<DisplaySummeryProps> = ({
+  goHome,
   startTimer,
   resetLevel,
 }) => {
@@ -18,9 +20,9 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
     <View
       style={{
         ...styles.headLine,
-        backgroundColor: colors.accentBackground,
         padding: 16,
         borderRadius: 8,
+        backgroundColor: colors.accentBackground,
       }}
     >
       <Text
@@ -35,8 +37,8 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         style={{
           ...styles.headLine,
           color: colors.text,
-          fontFamily: typography.primaryBoldFontFamily,
           fontWeight: "bold",
+          fontFamily: typography.primaryBoldFont,
         }}
       >
         {getMinHoursPassed(startTimer)}
@@ -47,6 +49,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           resetLevel();
         }}
       />
+      <Button title="Home" onPress={goHome} />
     </View>
   );
 };
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
   headLine: {
     margin: 16,
     fontSize: 20,
-    // fontWeight: "bold",
   },
 });
 

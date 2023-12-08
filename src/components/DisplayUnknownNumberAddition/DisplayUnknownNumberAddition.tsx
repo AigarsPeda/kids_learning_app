@@ -75,7 +75,7 @@ const DisplayUnknownNumberAddition = forwardRef<
             style={{
               ...styles.text,
               color: colors.text,
-              fontFamily: typography.primaryBoldFontFamily,
+              fontFamily: typography.primaryBoldFont,
             }}
           >
             {getTasksSign(task.kind)}
@@ -101,7 +101,7 @@ const DisplayUnknownNumberAddition = forwardRef<
             style={{
               ...styles.text,
               color: colors.text,
-              fontFamily: typography.primaryBoldFontFamily,
+              fontFamily: typography.primaryBoldFont,
             }}
           >
             =

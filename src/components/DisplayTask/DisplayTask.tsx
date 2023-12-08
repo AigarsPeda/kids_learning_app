@@ -87,9 +87,6 @@ const DisplayTask: FC<DisplayTaskProps> = ({
         title: "Pārbaudīt",
         function: () => {
           checkAnswers();
-          if (!isAllAnsweredCorrectly) {
-            decrementLives();
-          }
         },
       };
     }
@@ -100,6 +97,9 @@ const DisplayTask: FC<DisplayTaskProps> = ({
         title: "Nākamais uzdevums",
         function: () => {
           handleNextStep();
+          if (!isAllAnsweredCorrectly) {
+            decrementLives();
+          }
         },
       };
     }

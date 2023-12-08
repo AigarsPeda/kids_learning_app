@@ -4,7 +4,7 @@ import { useEffect, useRef, type FC } from "react";
 import { Animated, View } from "react-native";
 import { device } from "utils/metrics";
 
-const WIDTH = device.width - 120;
+const WIDTH = device.width - 140;
 const INITIAL_PROGRESSBAR_WIDTH = WIDTH * 0.05; // 5% of total width
 
 interface ProgressbarProps {
@@ -47,8 +47,7 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
   return (
     <View
       style={{
-        height: 6,
-
+        height: 8,
         borderRadius: 8,
         width: WIDTH,
         backgroundColor: colors.accentBackground,
@@ -56,7 +55,7 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
     >
       <Animated.View
         style={{
-          height: 6,
+          height: 8,
           borderRadius: 8,
           width: progressBarWidth,
           backgroundColor: colors.accent,
