@@ -53,7 +53,7 @@ const DisplayUnknownNumberAddition = forwardRef<
       if (sequenceNumber === 0) {
         setTimeout(() => {
           inputRef.current?.focus();
-        }, 530);
+        }, 560);
       }
     }, [sequenceNumber]);
 

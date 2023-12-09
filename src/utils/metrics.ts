@@ -9,7 +9,7 @@ const device = {
 
 // Define base dimensions for a "larger" reference device (iPhone 15 Pro)
 const BASE_LARGER_WIDTH = 320;
-const BASE_LARGER_HEIGHT = 780;
+const BASE_LARGER_HEIGHT = 710;
 
 const scalaDownDependingOnDevice = (size: number) => {
   // Calculate scale factors
