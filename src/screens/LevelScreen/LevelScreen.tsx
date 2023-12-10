@@ -11,6 +11,7 @@ import useTasks from "hooks/useTasks";
 import { type FC } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
+import { scalaDownDependingOnDevice } from "../../utils/metrics";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
@@ -42,8 +43,9 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
       {isLivesFinished || isFinished ? (
         <DisplaySummery
           startTimer={startTimer}
+          isLivesFinished={isLivesFinished}
           goHome={() => navigation.goBack()}
-          resetLevel={() => {
+          handleNextLevel={() => {
             resetLevel();
             resetLives();
           }}
@@ -56,15 +58,15 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              paddingHorizontal: 15,
               justifyContent: "space-between",
+              paddingHorizontal: scalaDownDependingOnDevice(19),
             }}
           >
             <Ionicons
               name="close"
-              size={44}
               color={colors.gray}
               onPress={() => navigation.goBack()}
+              size={scalaDownDependingOnDevice(40)}
             />
             <Progressbar currentLevelStep={currentLevelStep} />
             <DisplayHeart health={lives} />
@@ -72,7 +74,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           <View
             style={{
               width: "100%",
-              paddingHorizontal: 8,
+              paddingHorizontal: scalaDownDependingOnDevice(12),
             }}
           >
             <Text

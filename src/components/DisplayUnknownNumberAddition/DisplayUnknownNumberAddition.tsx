@@ -5,6 +5,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { type EquationArgumentType } from "types/addition";
 import { type InputType } from "types/common";
 import getTasksSign from "utils/getTasksSign";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 const inputAccessoryViewID1 = "input-ID1";
 const inputAccessoryViewID2 = "input-ID2";
@@ -140,16 +141,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   textContainer: {
-    width: 35,
     borderRadius: 5,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: scalaDownDependingOnDevice(28),
   },
   text: {
-    fontSize: 25,
-    // fontWeight: "bold",
+    fontSize: scalaDownDependingOnDevice(25),
   },
 });
 

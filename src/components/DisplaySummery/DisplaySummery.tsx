@@ -6,13 +6,15 @@ import getMinHoursPassed from "utils/getMinHoursPassed";
 interface DisplaySummeryProps {
   goHome: () => void;
   startTimer: Date | null;
-  resetLevel: () => void;
+  isLivesFinished: boolean;
+  handleNextLevel: () => void;
 }
 
 const DisplaySummery: FC<DisplaySummeryProps> = ({
   goHome,
   startTimer,
-  resetLevel,
+  isLivesFinished,
+  handleNextLevel,
 }) => {
   const { colors, typography } = useColors();
 
@@ -43,12 +45,18 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         {getMinHoursPassed(startTimer)}
       </Text>
-      <Button
-        title="Next Level"
-        onPress={() => {
-          resetLevel();
-        }}
-      />
+      {!isLivesFinished && (
+        <Button
+          title="Next Level"
+          onPress={() => {
+            // TODO: save to async storage
+            // add 1 to level
+            // set key v1: {level: 1, lives: 3, tasks: []}
+
+            handleNextLevel();
+          }}
+        />
+      )}
       <Button title="Home" onPress={goHome} />
     </View>
   );

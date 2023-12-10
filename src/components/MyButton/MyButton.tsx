@@ -28,7 +28,7 @@ const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
         style={{
           ...styles.text,
           color: "#fff",
-          letterSpacing: 0.3,
+          letterSpacing: 0.5,
           opacity: isDisabled ? 0.5 : 1,
           fontFamily: typography.primaryMediumFont,
         }}
@@ -41,7 +41,7 @@ const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
 
 const styles = StyleSheet.create({
   button: {
-    elevation: 3,
+    elevation: 5,
     borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scalaDownDependingOnDevice(40),
   },
   text: {
-    fontSize: scalaDownDependingOnDevice(16),
+    fontSize: scalaDownDependingOnDevice(20),
     lineHeight: scalaDownDependingOnDevice(21),
     letterSpacing: scalaDownDependingOnDevice(0.25),
   },

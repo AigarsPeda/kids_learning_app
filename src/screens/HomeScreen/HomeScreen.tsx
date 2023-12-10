@@ -1,4 +1,5 @@
 import RoundButton from "components/RoundButton/RoundButton";
+import { LEVEL_SETTINGS } from "hardcoded";
 import useStyles from "hooks/useStyles";
 import { useState, type FC } from "react";
 import { FlatList, SafeAreaView, StatusBar, Text, View } from "react-native";
@@ -8,19 +9,57 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LevelScreenProps {
   navigation: {
-    // navigate: (arg0: string, arg1: { otherParam: string }) => void;
     navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
   };
 }
 
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const [level, setLevel] = useState("1");
+  const [completedLevelParts, setCompletedLevelParts] = useState(1);
   const { colors, typography } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const createArray = (length: number) => [...Array(length)];
 
   const array = createArray(20);
+
+  const getPercentages = (levelPart: number) => {
+    const percentage = (levelPart / LEVEL_SETTINGS.levelParts) * 100;
+
+    // display 12% when levelPart is 0 to avoid not showing the RoundButton background
+    if (percentage === 0) {
+      return 12;
+    }
+
+    return percentage;
+  };
+
+  // TODO: get level from async storage
+  // useEffect(() => {
+  //   // const storeData = async (value: string) => {
+  //   //   try {
+  //   //     await AsyncStorage.setItem("@level", value);
+  //   //   } catch (e) {
+  //   //     // saving error
+  //   //   }
+  //   // };
+
+  //   // storeData(level);
+
+  //   // const getData = async () => {
+  //   //   try {
+  //   //     const value = await AsyncStorage.getItem("@level");
+  //   //     if (value !== null) {
+  //   //       console.log("--->", value);
+  //   //       // setLevel(value);
+  //   //     }
+  //   //   } catch (e) {
+  //   //     // error reading value
+  //   //   }
+  //   // };
+
+  //   // getData();
+  // }, []);
 
   return (
     <SafeAreaView
@@ -84,14 +123,15 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
                   marginLeft: handleLeftMargin(index, 32, 5),
                   marginTop: isFirst
                     ? scalaDownDependingOnDevice(25)
-                    : scalaDownDependingOnDevice(105),
+                    : scalaDownDependingOnDevice(60),
                   marginBottom: isLast ? scalaDownDependingOnDevice(170) : 0,
                 }}
               >
                 <RoundButton
+                  rotateAngle={rotateAngle}
+                  levelProgress={getPercentages(completedLevelParts)}
                   isSelected={level === (index + 1).toString()}
                   isDisabled={level !== (index + 1).toString()}
-                  rotateAngle={rotateAngle}
                   title={(index + 1).toString()}
                   onPress={() =>
                     navigation.navigate("LevelScreen", {

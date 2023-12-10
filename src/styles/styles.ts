@@ -12,7 +12,7 @@ type Colors = {
 // Hey, I'm a comment!
 export const lightModeColors: Colors = {
   text: "#222",
-  gray: "#64748b",
+  gray: "#d1d5db",
   accent: "#a855f7",
   background: "#fff",
   correct: "#4caf50",

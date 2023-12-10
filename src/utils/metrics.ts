@@ -1,27 +1,29 @@
 import { Dimensions } from "react-native";
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("screen");
 
 const device = {
   width,
   height,
 };
 
-// Define base dimensions for a "larger" reference device (iPhone 15 Pro)
+// Define base dimensions for a "larger" reference device (iPhone 12 Pro)
 const BASE_LARGER_WIDTH = 320;
-const BASE_LARGER_HEIGHT = 710;
+const BASE_LARGER_HEIGHT = 626;
 
-const scalaDownDependingOnDevice = (size: number) => {
-  // Calculate scale factors
-  const widthScaleFactor = width / BASE_LARGER_WIDTH;
-  const heightScaleFactor = height / BASE_LARGER_HEIGHT;
+const scalaDownDependingOnDevice = (size: number): number => {
+  const screenAspectRatio = width / height;
 
-  // Use the smaller of the two scale factors to ensure the content fits on the screen
-  const scaleFactor =
-    Math.ceil(Math.min(widthScaleFactor, heightScaleFactor) * 100) / 100;
+  // Calculate the aspect ratio of the base size
+  const baseAspectRatio = BASE_LARGER_WIDTH / BASE_LARGER_HEIGHT;
 
-  // Scale down the size; scaleFactor will be less than 1 for smaller devices
-  return size * scaleFactor;
+  // Determine the adjustment factor based on the aspect ratios
+  const adjustmentFactor = baseAspectRatio / screenAspectRatio;
+
+  // Adjust the size based on the screen size
+  const adjustedSize = size * adjustmentFactor;
+
+  return adjustedSize;
 };
 
 export { device, scalaDownDependingOnDevice };

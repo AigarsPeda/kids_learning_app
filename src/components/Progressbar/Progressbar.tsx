@@ -2,9 +2,9 @@ import { TASK_COUNT_PER_LEVEL } from "hardcoded";
 import useColors from "hooks/useStyles";
 import { useEffect, useRef, type FC } from "react";
 import { Animated, View } from "react-native";
-import { device } from "utils/metrics";
+import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
-const WIDTH = device.width - 140;
+const WIDTH = device.width - 150;
 const INITIAL_PROGRESSBAR_WIDTH = WIDTH * 0.05; // 5% of total width
 
 interface ProgressbarProps {
@@ -47,18 +47,18 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
   return (
     <View
       style={{
-        height: 8,
-        borderRadius: 8,
         width: WIDTH,
         backgroundColor: colors.accentBackground,
+        height: scalaDownDependingOnDevice(8),
+        borderRadius: scalaDownDependingOnDevice(8),
       }}
     >
       <Animated.View
         style={{
-          height: 8,
-          borderRadius: 8,
           width: progressBarWidth,
           backgroundColor: colors.accent,
+          height: scalaDownDependingOnDevice(8),
+          borderRadius: scalaDownDependingOnDevice(8),
         }}
       />
     </View>

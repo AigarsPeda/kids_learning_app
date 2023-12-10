@@ -103,7 +103,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
               inputRange: [0, 1],
               outputRange: [
                 device.height,
-                device.height - scalaDownDependingOnDevice(270),
+                device.height - scalaDownDependingOnDevice(250),
               ], // Start and end points
             }),
           },

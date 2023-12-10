@@ -68,8 +68,8 @@ const TextOrInputDisplay = forwardRef<Ref, TextOrInputDisplayProps>(
           <TextInput
             style={{
               ...styles.textInput,
-              color: isDisabled ? getColor() : colors.text,
               fontFamily: typography.primaryBoldFont,
+              color: isDisabled ? getColor() : colors.text,
             }}
             ref={ref}
             placeholder={" "}
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: scalaDownDependingOnDevice(75),
-    height: scalaDownDependingOnDevice(75),
+    width: scalaDownDependingOnDevice(80),
+    height: scalaDownDependingOnDevice(80),
   },
   textInput: {
     display: "flex",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: scalaDownDependingOnDevice(120),
     height: scalaDownDependingOnDevice(75),
-    fontSize: scalaDownDependingOnDevice(32),
+    fontSize: scalaDownDependingOnDevice(33),
   },
   text: {
     fontSize: scalaDownDependingOnDevice(32),
