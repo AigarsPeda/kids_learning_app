@@ -1,13 +1,12 @@
 import RoundButton from "components/RoundButton/RoundButton";
-import useAsyncStorage from "hooks/useAsyncStorage";
+import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
+import useUserSettings from "hooks/useUserSettings";
 import { useEffect, useState, type FC } from "react";
 import { FlatList, SafeAreaView, StatusBar, Text, View } from "react-native";
-import { GameLevelType, UserSettingsType } from "types/game";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import useUserSettings from "../../hooks/useUserSettings";
 
 interface LevelScreenProps {
   navigation: {
@@ -21,11 +20,8 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors, typography } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { data, getData } = useAsyncStorage<GameLevelType>({
-    key: "v1",
-  });
-
   const { userData } = useUserSettings();
+  const { gameData, getGameData } = useGameData();
 
   const createArray = (length: number) => [...Array(length)];
 
@@ -34,20 +30,20 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   useEffect(() => {
     // removeData();
     navigation.addListener("focus", () => {
-      getData();
+      getGameData();
     });
 
     return () => {
       navigation.removeListener("focus", () => {
-        getData();
+        getGameData();
       });
     };
   }, []);
 
   useEffect(() => {
     console.log("HomeScreen useEffect userData", userData);
-    console.log("HomeScreen useEffect", data);
-  }, [data, userData]);
+    console.log("HomeScreen useEffect", gameData);
+  }, [gameData, userData]);
 
   return (
     <SafeAreaView
@@ -105,7 +101,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
             const rotateAngle = index % 2 === 0 ? 10 : -10;
             const isLast = array.length - 1 === index;
             const i = (index + 1).toString();
-            const level = data && data[i];
+            const level = gameData && gameData[i];
 
             const isSelectable = Boolean(level) || index === 0;
 
