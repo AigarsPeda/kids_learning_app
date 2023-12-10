@@ -7,6 +7,7 @@ import { GameLevelType, UserSettingsType } from "types/game";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import useUserSettings from "../../hooks/useUserSettings";
 
 interface LevelScreenProps {
   navigation: {
@@ -24,9 +25,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     key: "v1",
   });
 
-  const { data: userData } = useAsyncStorage<UserSettingsType>({
-    key: "v1_user",
-  });
+  const { userData } = useUserSettings();
 
   const createArray = (length: number) => [...Array(length)];
 
