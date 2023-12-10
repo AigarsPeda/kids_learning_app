@@ -4,14 +4,17 @@ import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";
 import Progressbar from "components/Progressbar/Progressbar";
+import { TASK_COUNT_PER_LEVEL } from "hardcoded";
+import useAsyncStorage from "hooks/useAsyncStorage";
 import useLevelStatus from "hooks/useLevelStatus";
 import useLives from "hooks/useLives";
 import useStyles from "hooks/useStyles";
 import useTasks from "hooks/useTasks";
 import { type FC } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { GameLevelType } from "types/game";
 import { type LevelScreenPropsType } from "types/screen";
-import { scalaDownDependingOnDevice } from "../../utils/metrics";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
@@ -23,15 +26,17 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { level } = route.params;
   const { colors, typography } = useStyles();
   const { tasks, taskKind, setTaskKind } = useTasks();
-  const { lives, isLivesFinished, resetLives, decrementLives } = useLives();
 
   const {
+    lives,
     isFinished,
     startTimer,
+    isLivesFinished,
     currentLevelStep,
     resetLevel,
+    decrementLives,
     handleNextLevelStep,
-  } = useLevelStatus();
+  } = useLevelStatus(parseInt(level));
 
   return (
     <SafeAreaView
@@ -46,8 +51,8 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           isLivesFinished={isLivesFinished}
           goHome={() => navigation.goBack()}
           handleNextLevel={() => {
+            // handleNextLevel();
             resetLevel();
-            resetLives();
           }}
         />
       ) : (

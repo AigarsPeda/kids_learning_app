@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const useLives = () => {
+const useLives = (storedLives: number) => {
   const [lives, setLives] = useState(3);
 
   const decrementLives = () => {
@@ -11,13 +11,18 @@ const useLives = () => {
     setLives((prev) => prev + 1);
   };
 
-  const resetLives = () => {
-    setLives(3);
-  };
+  useEffect(() => {
+    setLives(storedLives);
+  }, [storedLives]);
+
+  // const resetLives = (num: number) => {
+  //   setLives(num);
+  // };
 
   return {
     lives,
-    resetLives,
+    // resetLives,
+    // resetLives,
     decrementLives,
     incrementLives,
     isLivesFinished: lives <= 0,

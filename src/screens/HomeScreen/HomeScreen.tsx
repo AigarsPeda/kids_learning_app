@@ -1,8 +1,9 @@
 import RoundButton from "components/RoundButton/RoundButton";
-import { LEVEL_SETTINGS } from "hardcoded";
+import useAsyncStorage from "hooks/useAsyncStorage";
 import useStyles from "hooks/useStyles";
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { FlatList, SafeAreaView, StatusBar, Text, View } from "react-native";
+import { GameLevelType, UserSettingsType } from "types/game";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
@@ -10,56 +11,44 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface LevelScreenProps {
   navigation: {
     navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
+    addListener: (arg0: string, arg1: () => void) => void;
+    removeListener: (arg0: string, arg1: () => void) => void;
   };
 }
 
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
-  const [level, setLevel] = useState("1");
-  const [completedLevelParts, setCompletedLevelParts] = useState(1);
   const { colors, typography } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const { data, getData } = useAsyncStorage<GameLevelType>({
+    key: "v1",
+  });
+
+  const { data: userData } = useAsyncStorage<UserSettingsType>({
+    key: "v1_user",
+  });
 
   const createArray = (length: number) => [...Array(length)];
 
   const array = createArray(20);
 
-  const getPercentages = (levelPart: number) => {
-    const percentage = (levelPart / LEVEL_SETTINGS.levelParts) * 100;
+  useEffect(() => {
+    // removeData();
+    navigation.addListener("focus", () => {
+      getData();
+    });
 
-    // display 12% when levelPart is 0 to avoid not showing the RoundButton background
-    if (percentage === 0) {
-      return 12;
-    }
+    return () => {
+      navigation.removeListener("focus", () => {
+        getData();
+      });
+    };
+  }, []);
 
-    return percentage;
-  };
-
-  // TODO: get level from async storage
-  // useEffect(() => {
-  //   // const storeData = async (value: string) => {
-  //   //   try {
-  //   //     await AsyncStorage.setItem("@level", value);
-  //   //   } catch (e) {
-  //   //     // saving error
-  //   //   }
-  //   // };
-
-  //   // storeData(level);
-
-  //   // const getData = async () => {
-  //   //   try {
-  //   //     const value = await AsyncStorage.getItem("@level");
-  //   //     if (value !== null) {
-  //   //       console.log("--->", value);
-  //   //       // setLevel(value);
-  //   //     }
-  //   //   } catch (e) {
-  //   //     // error reading value
-  //   //   }
-  //   // };
-
-  //   // getData();
-  // }, []);
+  useEffect(() => {
+    console.log("HomeScreen useEffect userData", userData);
+    console.log("HomeScreen useEffect", data);
+  }, [data, userData]);
 
   return (
     <SafeAreaView
@@ -116,6 +105,10 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
             const isFirst = index === 0;
             const rotateAngle = index % 2 === 0 ? 10 : -10;
             const isLast = array.length - 1 === index;
+            const i = (index + 1).toString();
+            const level = data && data[i];
+
+            const isSelectable = Boolean(level) || index === 0;
 
             return (
               <View
@@ -129,13 +122,14 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
               >
                 <RoundButton
                   rotateAngle={rotateAngle}
-                  levelProgress={getPercentages(completedLevelParts)}
-                  isSelected={level === (index + 1).toString()}
-                  isDisabled={level !== (index + 1).toString()}
+                  levelProgress={level?.levelProgress || 0}
+                  isSelected={isSelectable}
+                  isDisabled={!isSelectable}
                   title={(index + 1).toString()}
                   onPress={() =>
                     navigation.navigate("LevelScreen", {
                       level: (index + 1).toString(),
+                      // storedLives: userData?.user?.lives || 3,
                     })
                   }
                 />

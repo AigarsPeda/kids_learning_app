@@ -3,6 +3,7 @@ import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import { LEVEL_SETTINGS } from "../../hardcoded";
 
 type RoundButtonProps = {
   title?: string;
@@ -11,7 +12,7 @@ type RoundButtonProps = {
   shadowWidth?: number;
   isSelected?: boolean;
   rotateAngle?: number;
-  levelProgress?: number;
+  levelProgress: number;
 };
 
 const RoundButton: FC<RoundButtonProps> = ({
@@ -21,7 +22,7 @@ const RoundButton: FC<RoundButtonProps> = ({
   isSelected,
   rotateAngle,
   levelProgress,
-  shadowWidth = 5,
+  // shadowWidth = 5,
 }) => {
   const { colors, typography } = useColors();
 
@@ -30,9 +31,10 @@ const RoundButton: FC<RoundButtonProps> = ({
   };
 
   const calculateHeight = () => {
-    if (!levelProgress) return 0;
-    // using scalaDownDependingOnDevice(120) and levelProgress
-    return scalaDownDependingOnDevice(120) * (levelProgress / 100);
+    return (
+      (scalaDownDependingOnDevice(150) / LEVEL_SETTINGS.levelParts) *
+      levelProgress
+    );
   };
 
   const rotateInOppositeDirection = () => {
@@ -111,7 +113,7 @@ const RoundButton: FC<RoundButtonProps> = ({
                 backgroundColor: colors.accent,
                 width: scalaDownDependingOnDevice(160),
                 opacity: levelProgress ? levelProgress : 0,
-                borderRadius: scalaDownDependingOnDevice(20),
+                // borderRadius: scalaDownDependingOnDevice(20),
                 transform: [{ rotate: `${rotateInOppositeDirection()}deg` }],
               }}
             />
