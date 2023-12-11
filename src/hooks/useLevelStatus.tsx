@@ -1,90 +1,105 @@
-import { TASK_COUNT_PER_LEVEL } from "hardcoded";
-import useAsyncStorage from "hooks/useAsyncStorage";
+import { LEVEL_SETTINGS, TASK_COUNT_PER_LEVEL } from "hardcoded";
+import useGameData from "hooks/useGameData";
 import useUserSettings from "hooks/useUserSettings";
 import { useEffect, useRef, useState } from "react";
-import { GameLevelType } from "types/game";
-import useGameData from "./useGameData";
 
 const useLevelStatus = (storedLevel: number) => {
   const [lives, setLives] = useState(3);
   const [level, setLevel] = useState(1);
   const startTimer = useRef<Date>(new Date());
-  const [isFinished, setIsFinished] = useState(false);
-  const [currentLevelStep, setCurrentLevelStep] = useState(0);
-  const { userData, updateUserData } = useUserSettings();
   const { gameData, updateGameData } = useGameData();
+  const [isFinished, setIsFinished] = useState(false);
+  const { userData, updateUserData } = useUserSettings();
+  const [currentLevelStep, setCurrentLevelStep] = useState(0);
 
   const decrementLives = () => {
-    setLives((prev) => prev - 1);
-
     const newUserData = { ...userData };
 
     if (!newUserData.user) {
       newUserData.user = {
         lives: 3,
+        lastUpdate: new Date(),
       };
     }
 
     newUserData.user.lives = newUserData.user.lives - 1;
 
+    setLives((prev) => prev - 1);
     updateUserData(newUserData);
   };
 
-  const handleNextLevel = async () => {
+  const handleSavingCurrentLevelStep = (step: number) => {
     const newData = { ...gameData };
     const thisLevel = newData[level];
-    const levelProgress = thisLevel?.levelProgress || 0;
+    const nextLevel = thisLevel?.levelProgress || 0;
+    const s = step === TASK_COUNT_PER_LEVEL ? 0 : step;
 
     newData[level] = {
-      level: 1,
-      levelProgress: levelProgress + 1,
+      // step in witch user is
+      levelStep: s,
+      // how many times user has completed all steps
+      levelProgress:
+        step >= LEVEL_SETTINGS.levelParts ? nextLevel + 1 : nextLevel,
     };
 
-    if ((newData[level].levelProgress || 0) >= TASK_COUNT_PER_LEVEL) {
-      const nextLevel = level + 1;
+    setCurrentLevelStep(s);
 
-      if (!thisLevel) {
-        newData[nextLevel.toString()] = {
-          level: 1,
-          levelProgress: 1,
-        };
-      }
+    updateGameData(newData);
 
-      setLevel(nextLevel);
+    if (step === TASK_COUNT_PER_LEVEL) {
+      setIsFinished(true);
     }
-
-    await updateGameData(newData);
   };
 
-  const handleNextLevelStep = () => {
+  const handleCurrentLevelStep = () => {
     const nextStep = currentLevelStep + 1;
+    handleSavingCurrentLevelStep(nextStep);
+  };
 
-    if (nextStep >= TASK_COUNT_PER_LEVEL) {
-      handleNextLevel();
-      setIsFinished(true);
+  const handleNextLevel = () => {
+    const nextLevel = level + 1;
+    const newGameData = { ...gameData };
+    const nextLevelData = newGameData[nextLevel];
+
+    if (!newGameData) {
       return;
     }
 
-    setCurrentLevelStep(nextStep);
-  };
+    if (!nextLevelData) {
+      // create new level data if it does not exist
+      newGameData[nextLevel.toString()] = {
+        levelStep: 0,
+        levelProgress: 1,
+      };
+    }
 
-  const resetLevel = () => {
+    setLevel(nextLevel);
     setIsFinished(false);
     setCurrentLevelStep(0);
+    updateGameData(newGameData);
     startTimer.current = new Date();
   };
 
   useEffect(() => {
-    setLives(userData?.user?.lives || 3);
+    const thisLevel = gameData?.[level];
+
+    if (!thisLevel) {
+      return;
+    }
+
+    setCurrentLevelStep(thisLevel.levelStep);
+  }, [gameData, level]);
+
+  useEffect(() => {
+    if (!userData?.user?.lives) {
+      return;
+    }
+    setLives(userData.user.lives);
   }, [userData?.user?.lives]);
 
   useEffect(() => {
     setLevel(storedLevel);
   }, [storedLevel]);
-
-  useEffect(() => {
-    console.log("useLevelStatus useEffect userData", userData);
-  }, [userData]);
 
   return {
     lives,
@@ -92,9 +107,9 @@ const useLevelStatus = (storedLevel: number) => {
     currentLevelStep,
     isLivesFinished: lives <= 0,
     startTimer: startTimer.current,
-    resetLevel,
     decrementLives,
-    handleNextLevelStep,
+    handleNextLevel,
+    handleCurrentLevelStep,
   };
 };
 

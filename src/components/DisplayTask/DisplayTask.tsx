@@ -15,7 +15,6 @@ import { type EquationArgumentType, type TaskKindType } from "types/addition";
 import createRefsArray from "utils/createRefsArray";
 import handleNextInputFocus from "utils/handleNextInputFocus";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import { DeviceEventEmitter } from "react-native";
 
 interface DisplayTaskProps {
   kind: TaskKindType;

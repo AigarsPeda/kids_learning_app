@@ -7,8 +7,6 @@ import {
 import findTasks from "utils/findTasks";
 
 const useTasks = () => {
-  // const startTimer = useRef<Date | null>(null);
-  // const [currentLevel, setCurrentLevel] = useState(0);
   const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>(
     "missingNumberAddition"
@@ -21,19 +19,6 @@ const useTasks = () => {
     description: "No description",
   });
 
-  // const resetLevel = () => {
-  //   setCurrentLevel(0);
-  //   startTimer.current = new Date();
-  // };
-
-  // useEffect(() => {
-  //   startTimer.current = new Date();
-
-  //   return () => {
-  //     startTimer.current = null;
-  //   };
-  // }, []);
-
   useEffect(() => {
     setTasks(
       findTasks({
@@ -44,20 +29,11 @@ const useTasks = () => {
     );
   }, [difficulty, taskKind]);
 
-  // useEffect(() => {
-  //   console.log("currentLevel ", currentLevel);
-  // }, [currentLevel]);
-
   return {
     tasks,
     taskKind,
-    // resetLevel,
     setTaskKind,
     setDifficulty,
-    // timePassed:
-    //   currentLevel >= TASK_COUNT_PER_LEVEL &&
-    //   getMinHoursPassed(startTimer.current),
-    // isLevelCompleted: currentLevel === TASK_COUNT_PER_LEVEL,
   };
 };
 

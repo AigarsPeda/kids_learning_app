@@ -10,9 +10,9 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LevelScreenProps {
   navigation: {
-    navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
     addListener: (arg0: string, arg1: () => void) => void;
     removeListener: (arg0: string, arg1: () => void) => void;
+    navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
   };
 }
 
@@ -20,30 +20,33 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors, typography } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { userData } = useUserSettings();
-  const { gameData, getGameData } = useGameData();
+  const { userData, getUserData, removeAllUserData } = useUserSettings();
+  const { gameData, getGameData, removeAllGameData } = useGameData();
 
   const createArray = (length: number) => [...Array(length)];
 
   const array = createArray(20);
 
   useEffect(() => {
-    // removeData();
+    // removeAllUserData();
+    // removeAllGameData();
     navigation.addListener("focus", () => {
       getGameData();
+      getUserData();
     });
 
     return () => {
       navigation.removeListener("focus", () => {
         getGameData();
+        getUserData();
       });
     };
   }, []);
 
-  useEffect(() => {
-    console.log("HomeScreen useEffect userData", userData);
-    console.log("HomeScreen useEffect", gameData);
-  }, [gameData, userData]);
+  // useEffect(() => {
+  //   console.log("HomeScreen useEffect userData", userData);
+  //   console.log("HomeScreen useEffect", gameData);
+  // }, [gameData, userData]);
 
   return (
     <SafeAreaView
@@ -117,10 +120,9 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
               >
                 <RoundButton
                   rotateAngle={rotateAngle}
-                  levelProgress={level?.levelProgress || 0}
                   isSelected={isSelectable}
-                  isDisabled={!isSelectable}
                   title={(index + 1).toString()}
+                  levelProgress={level?.levelProgress || 0.7}
                   onPress={() =>
                     navigation.navigate("LevelScreen", {
                       level: (index + 1).toString(),

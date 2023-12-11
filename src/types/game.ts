@@ -1,17 +1,15 @@
 export type GameLevelType = {
   [key: string]: {
-    level?: number;
-    // lives?: number;
-    levelProgress?: number;
-    // levelScore?: number;
+    // step in witch user is
+    levelStep: number;
+    // how many times user has completed all steps
+    levelProgress: number;
   };
 };
 
 export type UserSettingsType = {
   [key: string]: {
     lives: number;
-    // level?: number;
-    // levelScore?: number;
-    // levelProgress?: number;
+    lastUpdate: Date;
   };
 };

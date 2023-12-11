@@ -1,14 +1,13 @@
 import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
+import { LEVEL_SETTINGS } from "hardcoded";
 import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import { LEVEL_SETTINGS } from "../../hardcoded";
 
 type RoundButtonProps = {
   title?: string;
   onPress: () => void;
-  isDisabled?: boolean;
   shadowWidth?: number;
   isSelected?: boolean;
   rotateAngle?: number;
@@ -18,11 +17,9 @@ type RoundButtonProps = {
 const RoundButton: FC<RoundButtonProps> = ({
   title,
   onPress,
-  isDisabled,
   isSelected,
   rotateAngle,
   levelProgress,
-  // shadowWidth = 5,
 }) => {
   const { colors, typography } = useColors();
 
@@ -31,15 +28,15 @@ const RoundButton: FC<RoundButtonProps> = ({
   };
 
   const calculateHeight = () => {
-    return (
-      (scalaDownDependingOnDevice(150) / LEVEL_SETTINGS.levelParts) *
-      levelProgress
-    );
+    const height =
+      (scalaDownDependingOnDevice(120) / LEVEL_SETTINGS.levelParts) *
+      levelProgress;
+
+    return height;
   };
 
   const rotateInOppositeDirection = () => {
     if (!rotateAngle) return 0;
-    // if (rotateAngle === 0) return 0;
     return rotateAngle * -1;
   };
 
@@ -65,7 +62,7 @@ const RoundButton: FC<RoundButtonProps> = ({
               height: scalaDownDependingOnDevice(115),
               opacity: levelProgress ? levelProgress : 0,
               borderRadius: scalaDownDependingOnDevice(25),
-              backgroundColor: isDisabled ? colors.lightGray : colors.gray,
+              backgroundColor: !isSelected ? colors.lightGray : colors.gray,
             }}
           />
         )}
@@ -82,9 +79,9 @@ const RoundButton: FC<RoundButtonProps> = ({
           borderRadius: scalaDownDependingOnDevice(20),
           // shadowOffset: { width: shadowWidth, height: 5 },
           // shadowColor: isDisabled ? colors.gray : colors.accent,
-          backgroundColor: isDisabled ? colors.gray : "transparent",
+          backgroundColor: !isSelected ? colors.gray : "transparent",
         }}
-        disabled={isDisabled}
+        disabled={!isSelected}
         onPress={() => {
           impactAsync(ImpactFeedbackStyle.Light);
           onPress();
@@ -97,13 +94,13 @@ const RoundButton: FC<RoundButtonProps> = ({
             color: colors.text,
             letterSpacing: 0.3,
             position: "absolute",
-            opacity: isDisabled ? 0.8 : 1,
+            opacity: !isSelected ? 0.8 : 1,
             fontFamily: typography.primaryBoldFont,
           }}
         >
           {title}
         </Text>
-        {!isDisabled && (
+        {isSelected && (
           <View
             style={{ position: "absolute", bottom: -10, left: -10, right: 0 }}
           >
