@@ -21,7 +21,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "LevelScreen">;
 const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { level } = route.params;
   const { colors, typography } = useStyles();
-  const { tasks, taskKind, setTaskKind } = useTasks();
+  const { tasks, taskKind, setTaskKind } = useTasks(parseInt(level));
 
   const {
     lives,
@@ -46,7 +46,10 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           startTimer={startTimer}
           isLivesFinished={isLivesFinished}
           handleNextLevel={handleNextLevel}
-          goHome={() => navigation.goBack()}
+          goHome={() => {
+            handleNextLevel();
+            navigation.goBack();
+          }}
         />
       ) : (
         <>

@@ -7,6 +7,7 @@ type Colors = {
   lightGray: string;
   background: string;
   accentBackground: string;
+  completed: string;
 };
 
 // Hey, I'm a comment!
@@ -18,6 +19,7 @@ export const lightModeColors: Colors = {
   correct: "#4caf50",
   incorrect: "#ff0033",
   lightGray: "#e5e7eb",
+  completed: "#9ca3af",
   accentBackground: "#f3f4f6",
 };
 
@@ -29,6 +31,7 @@ export const darkModeColors: Colors = {
   correct: "#4caf50",
   incorrect: "#ff0033",
   lightGray: "#1f2937",
+  completed: "#9ca3af",
   accentBackground: "#020617",
 };
 

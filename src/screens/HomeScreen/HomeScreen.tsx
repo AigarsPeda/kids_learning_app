@@ -2,11 +2,12 @@ import RoundButton from "components/RoundButton/RoundButton";
 import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
 import useUserSettings from "hooks/useUserSettings";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useState, type FC, useCallback } from "react";
 import { FlatList, SafeAreaView, StatusBar, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface LevelScreenProps {
   navigation: {
@@ -27,26 +28,33 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
 
   const array = createArray(20);
 
-  useEffect(() => {
-    // removeAllUserData();
-    // removeAllGameData();
-    navigation.addListener("focus", () => {
+  useFocusEffect(
+    useCallback(() => {
       getGameData();
       getUserData();
-    });
-
-    return () => {
-      navigation.removeListener("focus", () => {
-        getGameData();
-        getUserData();
-      });
-    };
-  }, []);
+    }, [])
+  );
 
   // useEffect(() => {
-  //   console.log("HomeScreen useEffect userData", userData);
-  //   console.log("HomeScreen useEffect", gameData);
-  // }, [gameData, userData]);
+  //   // removeAllUserData();
+  //   // removeAllGameData();
+  //   navigation.addListener("focus", () => {
+  //     getGameData();
+  //     getUserData();
+  //   });
+
+  //   return () => {
+  //     navigation.removeListener("focus", () => {
+  //       getGameData();
+  //       getUserData();
+  //     });
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    console.log("userData", userData);
+    console.log("gameData", gameData);
+  }, [gameData, userData]);
 
   return (
     <SafeAreaView
@@ -105,7 +113,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
             const isLast = array.length - 1 === index;
             const i = (index + 1).toString();
             const level = gameData && gameData[i];
-
             const isSelectable = Boolean(level) || index === 0;
 
             return (
@@ -120,13 +127,12 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
               >
                 <RoundButton
                   rotateAngle={rotateAngle}
-                  isSelected={isSelectable}
+                  isSelectable={isSelectable}
                   title={(index + 1).toString()}
-                  levelProgress={level?.levelProgress || 0.7}
+                  levelProgress={level?.levelProgress || 0.6}
                   onPress={() =>
                     navigation.navigate("LevelScreen", {
                       level: (index + 1).toString(),
-                      // storedLives: userData?.user?.lives || 3,
                     })
                   }
                 />

@@ -6,8 +6,8 @@ import {
 } from "types/addition";
 import findTasks from "utils/findTasks";
 
-const useTasks = () => {
-  const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
+const useTasks = (level: number) => {
+  // const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>(
     "missingNumberAddition"
   );
@@ -19,21 +19,32 @@ const useTasks = () => {
     description: "No description",
   });
 
+  const getDifficulty = (level: number): MathObjKeysType => {
+    if (level <= 10) {
+      return "1";
+    }
+
+    if (level > 10 && level <= 20) {
+      return "2";
+    }
+
+    return "1";
+  };
+
   useEffect(() => {
     setTasks(
       findTasks({
         taskKind,
         countOfItems: 3,
-        difficulty: difficulty,
+        difficulty: getDifficulty(level),
       })
     );
-  }, [difficulty, taskKind]);
+  }, [level, taskKind]);
 
   return {
     tasks,
     taskKind,
     setTaskKind,
-    setDifficulty,
   };
 };
 

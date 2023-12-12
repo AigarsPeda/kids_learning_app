@@ -1,4 +1,4 @@
-import { TASK_COUNT_PER_LEVEL } from "hardcoded";
+import { LEVEL_SETTINGS } from "hardcoded";
 import useColors from "hooks/useStyles";
 import { useEffect, useRef, type FC } from "react";
 import { Animated, View } from "react-native";
@@ -25,9 +25,9 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
     }
 
     const nextStep = currentLevelStep + 1;
-    const newWidth = (WIDTH / TASK_COUNT_PER_LEVEL) * nextStep;
+    const newWidth = (WIDTH / LEVEL_SETTINGS.levelParts) * nextStep;
 
-    if (currentLevelStep === TASK_COUNT_PER_LEVEL) {
+    if (currentLevelStep === LEVEL_SETTINGS.levelParts) {
       Animated.timing(progressBarWidth, {
         toValue: 0,
         duration: 0,

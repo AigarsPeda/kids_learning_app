@@ -9,7 +9,7 @@ type RoundButtonProps = {
   title?: string;
   onPress: () => void;
   shadowWidth?: number;
-  isSelected?: boolean;
+  isSelectable: boolean;
   rotateAngle?: number;
   levelProgress: number;
 };
@@ -17,7 +17,7 @@ type RoundButtonProps = {
 const RoundButton: FC<RoundButtonProps> = ({
   title,
   onPress,
-  isSelected,
+  isSelectable,
   rotateAngle,
   levelProgress,
 }) => {
@@ -29,7 +29,7 @@ const RoundButton: FC<RoundButtonProps> = ({
 
   const calculateHeight = () => {
     const height =
-      (scalaDownDependingOnDevice(120) / LEVEL_SETTINGS.levelParts) *
+      (scalaDownDependingOnDevice(130) / LEVEL_SETTINGS.levelProgress) *
       levelProgress;
 
     return height;
@@ -44,28 +44,22 @@ const RoundButton: FC<RoundButtonProps> = ({
     <View
       style={{
         padding: 5,
-        position: "relative",
         borderRadius: calculateOuterRadius(),
         width: scalaDownDependingOnDevice(120),
         height: scalaDownDependingOnDevice(120),
         transform: [{ rotate: `${rotateAngle}deg` }],
-        borderColor: isSelected ? colors.lightGray : "transparent",
-        borderWidth: isSelected ? scalaDownDependingOnDevice(6) : 0,
       }}
     >
       <View style={{ position: "absolute", bottom: -2, left: -1, right: 0 }}>
-        {/* Shadow */}
-        {!isSelected && (
-          <View
-            style={{
-              width: scalaDownDependingOnDevice(115),
-              height: scalaDownDependingOnDevice(115),
-              opacity: levelProgress ? levelProgress : 0,
-              borderRadius: scalaDownDependingOnDevice(25),
-              backgroundColor: !isSelected ? colors.lightGray : colors.gray,
-            }}
-          />
-        )}
+        <View
+          style={{
+            width: scalaDownDependingOnDevice(115),
+            height: scalaDownDependingOnDevice(115),
+            opacity: levelProgress ? levelProgress : 0,
+            borderRadius: scalaDownDependingOnDevice(25),
+            backgroundColor: colors.lightGray,
+          }}
+        />
       </View>
       <Pressable
         style={{
@@ -75,13 +69,11 @@ const RoundButton: FC<RoundButtonProps> = ({
           height: "100%",
           shadowRadius: 2.9,
           overflow: "hidden",
-          shadowOpacity: isSelected ? 0 : 0.4,
+          shadowOpacity: isSelectable ? 0 : 0.4,
           borderRadius: scalaDownDependingOnDevice(20),
-          // shadowOffset: { width: shadowWidth, height: 5 },
-          // shadowColor: isDisabled ? colors.gray : colors.accent,
-          backgroundColor: !isSelected ? colors.gray : "transparent",
+          backgroundColor: !isSelectable ? colors.gray : "transparent",
         }}
-        disabled={!isSelected}
+        disabled={!isSelectable}
         onPress={() => {
           impactAsync(ImpactFeedbackStyle.Light);
           onPress();
@@ -91,16 +83,16 @@ const RoundButton: FC<RoundButtonProps> = ({
           style={{
             ...styles.text,
             zIndex: 1,
-            color: colors.text,
+            color: "white",
             letterSpacing: 0.3,
             position: "absolute",
-            opacity: !isSelected ? 0.8 : 1,
+            opacity: !isSelectable ? 0.8 : 1,
             fontFamily: typography.primaryBoldFont,
           }}
         >
           {title}
         </Text>
-        {isSelected && (
+        {isSelectable && (
           <View
             style={{ position: "absolute", bottom: -10, left: -10, right: 0 }}
           >
@@ -110,7 +102,6 @@ const RoundButton: FC<RoundButtonProps> = ({
                 backgroundColor: colors.accent,
                 width: scalaDownDependingOnDevice(160),
                 opacity: levelProgress ? levelProgress : 0,
-                // borderRadius: scalaDownDependingOnDevice(20),
                 transform: [{ rotate: `${rotateInOppositeDirection()}deg` }],
               }}
             />
