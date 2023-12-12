@@ -5,11 +5,18 @@ import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
 import useUserSettings from "hooks/useUserSettings";
 import { useCallback, useEffect, useState, type FC } from "react";
-import { FlatList, SafeAreaView, StatusBar, Text, View } from "react-native";
+import {
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  View,
+} from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import HomeHeader from "../../components/HomeHeader/HomeHeader";
+import HomeHeader from "components/HomeHeader/HomeHeader";
 
 interface LevelScreenProps {
   navigation: {
@@ -22,9 +29,17 @@ interface LevelScreenProps {
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const { userData, getUserData, removeAllUserData } = useUserSettings();
   const { gameData, getGameData, removeAllGameData } = useGameData();
+  const { userData, getUserData, removeAllUserData } = useUserSettings();
+
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1000);
+  }, []);
 
   const createArray = (length: number) => [...Array(length)];
 
@@ -34,7 +49,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     useCallback(() => {
       getGameData();
       getUserData();
-    }, [])
+    }, [isRefreshing])
   );
 
   // useEffect(() => {
@@ -127,6 +142,9 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
       >
         <FlatList
           data={array}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
           onScroll={(event) => {
             const offsetY = event.nativeEvent.contentOffset.y;
             // Check the value of offsetY to determine if the FlatList is scrolled

@@ -1,5 +1,4 @@
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
-import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
 import useUserSettings from "hooks/useUserSettings";
 import { Text, View } from "react-native";
