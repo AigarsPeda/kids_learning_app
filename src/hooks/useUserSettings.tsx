@@ -2,6 +2,7 @@ import useAsyncStorage from "hooks/useAsyncStorage";
 import { useEffect } from "react";
 import { UserSettingsType } from "types/game";
 import isHoursPassed from "utils/isHoursPassed";
+import isMinutesPassed from "utils/isMinutesPassed";
 
 const useUserSettings = () => {
   const { data, setNewData, clearData, getData } =
@@ -18,8 +19,12 @@ const useUserSettings = () => {
   useEffect(() => {
     if (data && data.user.lives < 3) {
       if (
-        isHoursPassed({
-          hours: 2,
+        // isHoursPassed({
+        //   hours: 2,
+        //   startDate: data.user.lastUpdate,
+        // })
+        isMinutesPassed({
+          minutes: 5,
           startDate: data.user.lastUpdate,
         })
       ) {

@@ -1,22 +1,19 @@
 import { useFocusEffect } from "@react-navigation/native";
-import DisplayHeart from "components/DisplayHeart/DisplayHeart";
+import HomeHeader from "components/HomeHeader/HomeHeader";
 import RoundButton from "components/RoundButton/RoundButton";
 import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
-import useUserSettings from "hooks/useUserSettings";
 import { useCallback, useEffect, useState, type FC } from "react";
 import {
   FlatList,
   RefreshControl,
   SafeAreaView,
   StatusBar,
-  Text,
   View,
 } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import HomeHeader from "components/HomeHeader/HomeHeader";
 
 interface LevelScreenProps {
   navigation: {
@@ -32,7 +29,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { gameData, getGameData, removeAllGameData } = useGameData();
-  const { userData, getUserData, removeAllUserData } = useUserSettings();
+  // const { userData, getUserData, removeAllUserData } = useUserSettings();
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -48,30 +45,31 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       getGameData();
-      getUserData();
-    }, [isRefreshing])
+      // getUserData();
+    }, [])
   );
 
   // useEffect(() => {
   //   // removeAllUserData();
   //   // removeAllGameData();
+
   //   navigation.addListener("focus", () => {
   //     getGameData();
-  //     getUserData();
+  //     // getUserData();
   //   });
 
   //   return () => {
   //     navigation.removeListener("focus", () => {
   //       getGameData();
-  //       getUserData();
+  //       // getUserData();
   //     });
   //   };
-  // }, []);
+  // }, [isRefreshing]);
 
   useEffect(() => {
-    console.log("userData", userData);
+    // console.log("userData", userData);
     console.log("gameData", gameData);
-  }, [gameData, userData]);
+  }, [gameData]);
 
   return (
     <SafeAreaView
@@ -92,7 +90,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader />
+        <HomeHeader isRefreshing={isRefreshing} />
         {/* <View
           style={{
             display: "flex",

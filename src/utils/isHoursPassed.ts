@@ -9,8 +9,6 @@ const isHoursPassed = ({ startDate, hours }: IsHoursPassesArgs) => {
 
   const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
 
-  console.log("diffHours", diffHours);
-
   return diffHours >= hours;
 };
 
