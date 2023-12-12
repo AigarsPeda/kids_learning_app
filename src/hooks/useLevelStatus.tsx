@@ -4,7 +4,7 @@ import useUserSettings from "hooks/useUserSettings";
 import { useEffect, useRef, useState } from "react";
 
 const useLevelStatus = (storedLevel: number) => {
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(0);
   const [level, setLevel] = useState(1);
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
@@ -114,10 +114,8 @@ const useLevelStatus = (storedLevel: number) => {
     currentLevelStep,
     isLivesFinished: lives <= 0,
     startTimer: startTimer.current,
-
     decrementLives,
     handleNextLevel,
-
     handleCurrentLevelStep,
   };
 };

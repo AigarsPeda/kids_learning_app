@@ -1,26 +1,24 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useState, type FC } from "react";
+import { LEVEL_SETTINGS } from "hardcoded";
+import useStyles from "hooks/useStyles";
+import { type FC } from "react";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface HomeScreenProps {
-  health: number;
+  health?: number;
 }
 
-const DisplayHeart: FC<HomeScreenProps> = ({ health }) => {
-  const [initialHealth, setInitialHealth] = useState(0);
+const DisplayHeart: FC<HomeScreenProps> = ({ health = 0 }) => {
+  const { colors } = useStyles();
 
-  useEffect(() => {
-    setInitialHealth(health);
-  }, []);
-
-  const healthRatio = health / initialHealth;
+  const healthRatio = health / LEVEL_SETTINGS.defaultLives;
 
   if (healthRatio >= 0.5 && healthRatio < 1) {
     return (
       <Ionicons
         name="heart-half"
-        size={scalaDownDependingOnDevice(31)}
-        color="#eab308"
+        color={colors.incorrect}
+        size={scalaDownDependingOnDevice(30)}
       />
     );
   }
@@ -29,8 +27,8 @@ const DisplayHeart: FC<HomeScreenProps> = ({ health }) => {
     return (
       <Ionicons
         name="heart-outline"
-        size={scalaDownDependingOnDevice(31)}
-        color="#eab308"
+        color={colors.incorrect}
+        size={scalaDownDependingOnDevice(30)}
       />
     );
   }
@@ -39,8 +37,8 @@ const DisplayHeart: FC<HomeScreenProps> = ({ health }) => {
     return (
       <Ionicons
         name="heart-dislike-outline"
-        size={scalaDownDependingOnDevice(31)}
-        color="#ff0033"
+        color={colors.incorrect}
+        size={scalaDownDependingOnDevice(30)}
       />
     );
   }
@@ -48,8 +46,8 @@ const DisplayHeart: FC<HomeScreenProps> = ({ health }) => {
   return (
     <Ionicons
       name="heart"
-      size={scalaDownDependingOnDevice(31)}
-      color="#4caf50"
+      color={colors.incorrect}
+      size={scalaDownDependingOnDevice(30)}
     />
   );
 };
