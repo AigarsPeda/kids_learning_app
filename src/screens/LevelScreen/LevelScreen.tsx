@@ -110,8 +110,6 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         decrementLives={decrementLives}
         handleNextLevelStep={handleCurrentLevelStep}
       />
-      {/* </>
-      )} */}
     </SafeAreaView>
   );
 };

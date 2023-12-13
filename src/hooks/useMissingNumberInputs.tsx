@@ -12,7 +12,6 @@ export type InputObjType = {
 const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState<InputObjType>({});
-  // const [wrongAnswers, setWrongAnswers] = useState<InputType[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<number[]>([]);
   const [initialInputs, setInitialInputs] = useState<InputObjType>({});
 
@@ -114,17 +113,18 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
         isAnswered: answer === "correct",
       };
 
-      // if (answer !== "correct") {
-      const wrongAnswer = initialInputs[key];
+      if (answer !== "correct") {
+        const wrongAnswer = initialInputs[key];
 
-      for (const ky in wrongAnswer) {
-        const k = ky as keyof InputType;
+        for (const ky in wrongAnswer) {
+          const k = ky as keyof InputType;
 
-        if (wrongAnswer[k] === undefined) {
-          const missingNumber = findMissingNumber(wrongAnswer);
+          if (wrongAnswer[k] === undefined) {
+            const missingNumber = findMissingNumber(wrongAnswer);
 
-          if (missingNumber) {
-            newWrongAnswers.push(missingNumber);
+            if (missingNumber) {
+              newWrongAnswers.push(missingNumber);
+            }
           }
         }
       }

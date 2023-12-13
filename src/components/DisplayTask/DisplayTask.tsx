@@ -49,7 +49,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     setIsChecked,
     checkAnswersById,
     updateInputsValue,
-    isAllAnsweredCorrectly,
+    // isAllAnsweredCorrectly,
   } = useMissingNumberInputs(tasks);
 
   const [currentStep, setCurrentStep] = useState<TaskKindType>(steps[0]);
@@ -80,6 +80,13 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     setCurrentStep(nextStep);
   };
 
+  const handleNextTask = () => {
+    handleNextStep();
+    if (wrongAnswers.length !== 0) {
+      decrementLives();
+    }
+  };
+
   const handleButtonState = () => {
     if (isAllAnswered && !isChecked) {
       return {
@@ -96,10 +103,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
         isDisabled: false,
         title: "Nākamais uzdevums",
         function: () => {
-          handleNextStep();
-          if (!isAllAnsweredCorrectly) {
-            decrementLives();
-          }
+          handleNextTask();
         },
       };
     }
@@ -158,7 +162,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       <DisplayWrongAnswers
         isChecked={isChecked}
         wrongAnswers={wrongAnswers}
-        isAllAnsweredCorrectly={isAllAnsweredCorrectly}
+        handleNextTask={handleNextTask}
       />
 
       <KeyboardAvoidingView
