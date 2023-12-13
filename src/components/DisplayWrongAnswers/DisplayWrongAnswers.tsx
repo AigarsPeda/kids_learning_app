@@ -64,9 +64,9 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
         // transparent={true}
         // animationType="slide"
         isVisible={Boolean(wrongAnswers.length !== 0)}
-        onDismiss={() => {
-          handleNextTask();
-        }}
+        // onDismiss={() => {
+        //   handleNextTask();
+        // }}
         animationIn="slideInUp"
         animationOut="slideOutDown"
         animationInTiming={500}
