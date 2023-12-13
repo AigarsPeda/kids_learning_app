@@ -5,9 +5,9 @@ import getMinHoursPassed from "utils/getMinHoursPassed";
 
 interface DisplaySummeryProps {
   goHome: () => void;
-  startTimer: Date | null;
   isLivesFinished: boolean;
   handleNextLevel: () => void;
+  startTimer: Date | null | undefined;
 }
 
 const DisplaySummery: FC<DisplaySummeryProps> = ({

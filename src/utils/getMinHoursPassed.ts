@@ -1,4 +1,4 @@
-const getMinHoursPassed = (startTimer: Date | null) => {
+const getMinHoursPassed = (startTimer: Date | null | undefined) => {
   if (!startTimer) {
     return;
   }

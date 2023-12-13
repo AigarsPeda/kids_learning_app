@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";
+import NoLives from "components/NoLives/NoLives";
 import Progressbar from "components/Progressbar/Progressbar";
 import useLevelStatus from "hooks/useLevelStatus";
 import useStyles from "hooks/useStyles";
@@ -11,7 +12,6 @@ import { type FC } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import NoLives from "../../components/NoLives/NoLives";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
