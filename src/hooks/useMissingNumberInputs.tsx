@@ -121,9 +121,6 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
         const k = ky as keyof InputType;
 
         if (wrongAnswer[k] === undefined) {
-          // @ts-ignore
-          // wrongAnswer[k] = findMissingNumber(wrongAnswer);
-
           const missingNumber = findMissingNumber(wrongAnswer);
 
           if (missingNumber) {
@@ -131,9 +128,6 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
           }
         }
       }
-
-      // newWrongAnswers.push(wrongAnswer);
-      // }
     }
 
     setWrongAnswers(newWrongAnswers);

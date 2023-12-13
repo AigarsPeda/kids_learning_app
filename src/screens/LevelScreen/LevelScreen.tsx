@@ -11,6 +11,7 @@ import { type FC } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import NoLives from "../../components/NoLives/NoLives";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
@@ -34,6 +35,30 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     handleCurrentLevelStep,
   } = useLevelStatus(parseInt(level));
 
+  if (isLivesFinished) {
+    return (
+      <NoLives
+        goHome={() => {
+          navigation.goBack();
+        }}
+      />
+    );
+  }
+
+  if (isFinished) {
+    return (
+      <DisplaySummery
+        startTimer={startTimer}
+        isLivesFinished={isLivesFinished}
+        handleNextLevel={handleNextLevel}
+        goHome={() => {
+          handleNextLevel();
+          navigation.goBack();
+        }}
+      />
+    );
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -41,64 +66,52 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         backgroundColor: colors.background,
       }}
     >
-      {isLivesFinished || isFinished ? (
-        <DisplaySummery
-          startTimer={startTimer}
-          isLivesFinished={isLivesFinished}
-          handleNextLevel={handleNextLevel}
-          goHome={() => {
-            handleNextLevel();
-            navigation.goBack();
-          }}
+      <SafeAreaView
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingHorizontal: scalaDownDependingOnDevice(19),
+        }}
+      >
+        <Ionicons
+          name="close"
+          color={colors.gray}
+          onPress={() => navigation.goBack()}
+          size={scalaDownDependingOnDevice(40)}
         />
-      ) : (
-        <>
-          <SafeAreaView
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingHorizontal: scalaDownDependingOnDevice(19),
-            }}
-          >
-            <Ionicons
-              name="close"
-              color={colors.gray}
-              onPress={() => navigation.goBack()}
-              size={scalaDownDependingOnDevice(40)}
-            />
-            <Progressbar currentLevelStep={currentLevelStep} />
-            <DisplayHeart health={lives} />
-          </SafeAreaView>
-          <View
-            style={{
-              width: "100%",
-              paddingHorizontal: scalaDownDependingOnDevice(12),
-            }}
-          >
-            <Text
-              style={{
-                ...styles.headLine,
-                color: colors.text,
-                letterSpacing: 0.5,
-                fontFamily: typography.primaryMediumFont,
-              }}
-            >
-              {tasks.description}
-            </Text>
-          </View>
+        <Progressbar currentLevelStep={currentLevelStep} />
+        <DisplayHeart health={lives} />
+      </SafeAreaView>
+      <View
+        style={{
+          width: "100%",
+          paddingHorizontal: scalaDownDependingOnDevice(12),
+        }}
+      >
+        <Text
+          style={{
+            ...styles.headLine,
+            color: colors.text,
+            letterSpacing: 0.5,
+            fontFamily: typography.primaryMediumFont,
+          }}
+        >
+          {tasks.description}
+        </Text>
+      </View>
 
-          <DisplayTask
-            kind={taskKind}
-            tasks={tasks.tasks}
-            changeTask={setTaskKind}
-            decrementLives={decrementLives}
-            handleNextLevelStep={handleCurrentLevelStep}
-          />
-        </>
-      )}
+      <DisplayTask
+        kind={taskKind}
+        tasks={tasks.tasks}
+        changeTask={setTaskKind}
+        decrementLives={decrementLives}
+        handleNextLevelStep={handleCurrentLevelStep}
+      />
+      {/* </>
+      )} */}
     </SafeAreaView>
   );
 };

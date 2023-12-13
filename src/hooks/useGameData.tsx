@@ -8,7 +8,8 @@ const useGameData = () => {
       initialValue: {
         "1": {
           levelStep: 0,
-          levelProgress: 0,
+          // levelProgress: 0,
+          isLevelCompleted: false,
         },
       },
     });

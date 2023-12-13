@@ -1,12 +1,6 @@
-// export const TASK_COUNT_PER_LEVEL = 10;
-// export const TASK_COUNT_PER_LEVEL = 5;
-
 export const LEVEL_SETTINGS = {
-  levelParts: 5, // how many times user has completed all steps progress
-  levelProgress: 5,
+  levelParts: 10, // user has to complete 5 tasks to complete level
+  // levelProgress: 5, // user has to complete 5 levels to complete game
   defaultLives: 3,
-  // pointsPerPart: 10,
-  // pointsPerSecond: 1,
-  // pointsPerLevel: 100,
-  // taskCountInLevel: TASK_COUNT_PER_LEVEL,
+  livesRecoveryTimeInMinutes: 5,
 };

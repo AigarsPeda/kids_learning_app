@@ -13,28 +13,28 @@ interface ProgressbarProps {
 
 const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
   const { colors } = useColors();
-  const isFirstRender = useRef(true);
   const progressBarWidth = useRef(
     new Animated.Value(INITIAL_PROGRESSBAR_WIDTH)
   ).current;
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    if (currentLevelStep === 0) {
       return;
     }
+
+    console.log(">>>>>>", currentLevelStep);
 
     const nextStep = currentLevelStep + 1;
     const newWidth = (WIDTH / LEVEL_SETTINGS.levelParts) * nextStep;
 
-    if (currentLevelStep === LEVEL_SETTINGS.levelParts) {
-      Animated.timing(progressBarWidth, {
-        toValue: 0,
-        duration: 0,
-        useNativeDriver: false,
-      }).start();
-      return;
-    }
+    // if (currentLevelStep === LEVEL_SETTINGS.levelParts) {
+    //   Animated.timing(progressBarWidth, {
+    //     toValue: 0,
+    //     duration: 0,
+    //     useNativeDriver: false,
+    //   }).start();
+    //   return;
+    // }
 
     // Animate to the new width
     Animated.timing(progressBarWidth, {
@@ -51,6 +51,7 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
         backgroundColor: colors.accentBackground,
         height: scalaDownDependingOnDevice(8),
         borderRadius: scalaDownDependingOnDevice(8),
+        overflow: "hidden",
       }}
     >
       <Animated.View

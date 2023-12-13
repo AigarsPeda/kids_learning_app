@@ -23,8 +23,8 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       style={{
         ...styles.headLine,
         padding: 16,
-        borderRadius: 8,
-        backgroundColor: colors.accentBackground,
+        // borderRadius: 8,
+        // backgroundColor: colors.accentBackground,
       }}
     >
       <Text

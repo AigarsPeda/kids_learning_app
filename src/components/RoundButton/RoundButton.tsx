@@ -9,16 +9,18 @@ type RoundButtonProps = {
   title?: string;
   onPress: () => void;
   shadowWidth?: number;
-  isSelectable: boolean;
   rotateAngle?: number;
+  isCompleted?: boolean;
   levelProgress: number;
+  isSelectable: boolean;
 };
 
 const RoundButton: FC<RoundButtonProps> = ({
   title,
   onPress,
-  isSelectable,
   rotateAngle,
+  isCompleted,
+  isSelectable,
   levelProgress,
 }) => {
   const { colors, typography } = useColors();
@@ -28,8 +30,10 @@ const RoundButton: FC<RoundButtonProps> = ({
   };
 
   const calculateHeight = () => {
+    if (isCompleted) return scalaDownDependingOnDevice(130);
+
     const height =
-      (scalaDownDependingOnDevice(130) / LEVEL_SETTINGS.levelProgress) *
+      (scalaDownDependingOnDevice(130) / LEVEL_SETTINGS.levelParts) *
       levelProgress;
 
     return height;
@@ -48,6 +52,9 @@ const RoundButton: FC<RoundButtonProps> = ({
         width: scalaDownDependingOnDevice(120),
         height: scalaDownDependingOnDevice(120),
         transform: [{ rotate: `${rotateAngle}deg` }],
+        // add border
+        // borderWidth: 2,
+        // borderColor: colors.accent,
       }}
     >
       <View style={{ position: "absolute", bottom: -2, left: -1, right: 0 }}>

@@ -29,7 +29,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { gameData, getGameData, removeAllGameData } = useGameData();
-  // const { userData, getUserData, removeAllUserData } = useUserSettings();
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -44,6 +43,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
+      // removeAllGameData();
       getGameData();
       // getUserData();
     }, [])
@@ -91,44 +91,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
         }}
       >
         <HomeHeader isRefreshing={isRefreshing} />
-        {/* <View
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexDirection: "row",
-          }}
-        >
-          <Text
-            style={{
-              color: colors.text,
-              fontFamily: typography.primaryMediumFont,
-              fontSize: scalaDownDependingOnDevice(40),
-            }}
-          >
-            Choose Level
-          </Text>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <DisplayHeart health={userData?.user.lives || 3} />
-            <Text
-              style={{
-                color: colors.incorrect,
-                fontFamily: typography.primaryMediumFont,
-                fontSize: scalaDownDependingOnDevice(29),
-                marginLeft: scalaDownDependingOnDevice(5),
-                marginTop: scalaDownDependingOnDevice(4),
-              }}
-            >
-              {userData?.user.lives || 3}
-            </Text>
-          </View>
-        </View> */}
       </View>
 
       <View
@@ -177,7 +139,8 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
                   rotateAngle={rotateAngle}
                   isSelectable={isSelectable}
                   title={(index + 1).toString()}
-                  levelProgress={level?.levelProgress || 0.6}
+                  isCompleted={level?.isLevelCompleted}
+                  levelProgress={level?.levelStep || 0.86}
                   onPress={() =>
                     navigation.navigate("LevelScreen", {
                       level: (index + 1).toString(),

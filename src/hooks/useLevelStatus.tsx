@@ -30,20 +30,20 @@ const useLevelStatus = (storedLevel: number) => {
 
   const handleSavingCurrentLevelStep = (step: number) => {
     const newData = { ...gameData };
-    const thisLevel = newData[level];
-    const nextLevel = thisLevel?.levelProgress || 0;
     const s = step === LEVEL_SETTINGS.levelParts ? 0 : step;
 
-    newData[level] = {
-      // step in witch user is
-      levelStep: s,
-      // how many times user has completed all steps
-      levelProgress:
-        step >= LEVEL_SETTINGS.levelProgress ? nextLevel + 1 : nextLevel,
-    };
+    // Save the current level only if it is not completed yet
+    if (!newData[level].isLevelCompleted) {
+      newData[level] = {
+        // step in witch user is
+        levelStep: s,
+        isLevelCompleted: step === LEVEL_SETTINGS.levelParts,
+      };
+
+      updateGameData(newData);
+    }
 
     setCurrentLevelStep(step);
-    updateGameData(newData);
 
     if (step === LEVEL_SETTINGS.levelParts) {
       setIsFinished(true);
@@ -61,10 +61,9 @@ const useLevelStatus = (storedLevel: number) => {
     const currenLevel = newGameData[level];
     const nextLevelData = newGameData[nextLevel];
 
-    const isLevelFinished =
-      currenLevel.levelProgress >= LEVEL_SETTINGS.levelParts;
+    // const isLevelFinished = currenLevel.levelStep >= LEVEL_SETTINGS.levelParts;
 
-    if (!isLevelFinished) {
+    if (!currenLevel.isLevelCompleted) {
       setIsFinished(false);
       setCurrentLevelStep(0);
       updateGameData(newGameData);
@@ -76,7 +75,7 @@ const useLevelStatus = (storedLevel: number) => {
       // create new level data if it does not exist
       newGameData[nextLevel.toString()] = {
         levelStep: 0,
-        levelProgress: 0,
+        isLevelCompleted: false,
       };
     }
 
@@ -93,6 +92,8 @@ const useLevelStatus = (storedLevel: number) => {
     if (!thisLevel) {
       return;
     }
+
+    console.log("thisLevel", thisLevel);
 
     setCurrentLevelStep(thisLevel.levelStep);
   }, [gameData, level]);
