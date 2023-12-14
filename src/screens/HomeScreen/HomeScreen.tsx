@@ -4,7 +4,14 @@ import RoundButton from "components/RoundButton/RoundButton";
 import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
 import useUserSettings from "hooks/useUserSettings";
-import { useCallback, useEffect, useState, type FC } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type FC,
+  useMemo,
+  useRef,
+} from "react";
 import {
   FlatList,
   RefreshControl,
@@ -26,9 +33,9 @@ interface LevelScreenProps {
 
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
+  const flatListRef = useRef<FlatList>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
   const { gameData, getGameData, removeAllGameData } = useGameData();
   const { userData, getUserData, removeAllUserData } = useUserSettings();
 
@@ -52,6 +59,26 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
       getGameData();
     }, [])
   );
+
+  const lastCompletedLevelIndex = useMemo(() => {
+    for (let i = array.length - 1; i >= 0; i--) {
+      const level = gameData && gameData[(i + 1).toString()];
+      if (level && level.isLevelCompleted) {
+        return i;
+      }
+    }
+    return -1; // No completed levels found
+  }, [gameData]);
+
+  useEffect(() => {
+    if (lastCompletedLevelIndex !== -1) {
+      // Calculate the index of the next element
+      const nextIndex = Math.min(lastCompletedLevelIndex + 1, array.length - 1);
+
+      // Scroll to the next element after the last completed level
+      flatListRef.current?.scrollToIndex({ animated: true, index: nextIndex });
+    }
+  }, [lastCompletedLevelIndex]);
 
   useEffect(() => {
     console.log("userData", userData);
@@ -89,6 +116,12 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
       >
         <FlatList
           data={array}
+          ref={flatListRef}
+          getItemLayout={(_data, index) => ({
+            length: 100, // Specify the height of your item
+            offset: 100 * index,
+            index,
+          })}
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }
