@@ -9,5 +9,6 @@ export type UserSettingsType = {
   [key: string]: {
     lives: number;
     lastUpdate: Date;
+    experience: number;
   };
 };

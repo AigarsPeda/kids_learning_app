@@ -15,12 +15,13 @@ const useLevelStatus = (storedLevel: number) => {
   const decrementLives = () => {
     const newUserData = { ...userData };
 
-    if (!newUserData.user) {
-      newUserData.user = {
-        lives: 3,
-        lastUpdate: new Date(),
-      };
-    }
+    // if (!newUserData.user) {
+    //   newUserData.user = {
+    //     lives: 3,
+    //     lastUpdate: new Date(),
+    //     experience: newUserData.user.experience,
+    //   };
+    // }
 
     newUserData.user.lives = newUserData.user.lives - 1;
 
@@ -46,6 +47,13 @@ const useLevelStatus = (storedLevel: number) => {
     setCurrentLevelStep(step);
 
     if (step === LEVEL_SETTINGS.levelParts) {
+      // add experience if level is completed to the user
+      const newUserData = { ...userData };
+
+      newUserData.user.experience =
+        newUserData.user.experience + LEVEL_SETTINGS.experiencePerLevel;
+
+      updateUserData(newUserData);
       setIsFinished(true);
     }
   };
@@ -70,6 +78,9 @@ const useLevelStatus = (storedLevel: number) => {
       startTimer.current = new Date();
       return;
     }
+
+    // add experience if level is completed to the user
+    const newUserData = { ...userData };
 
     if (!nextLevelData) {
       // create new level data if it does not exist

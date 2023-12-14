@@ -12,6 +12,7 @@ const useUserSettings = () => {
         user: {
           lives: 3,
           lastUpdate: new Date(),
+          experience: 0,
         },
       },
     });
