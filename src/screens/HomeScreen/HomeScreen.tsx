@@ -3,6 +3,7 @@ import HomeHeader from "components/HomeHeader/HomeHeader";
 import RoundButton from "components/RoundButton/RoundButton";
 import useGameData from "hooks/useGameData";
 import useStyles from "hooks/useStyles";
+import useUserSettings from "hooks/useUserSettings";
 import { useCallback, useEffect, useState, type FC } from "react";
 import {
   FlatList,
@@ -29,10 +30,13 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { gameData, getGameData, removeAllGameData } = useGameData();
+  const { userData, getUserData, removeAllUserData } = useUserSettings();
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
     setTimeout(() => {
+      getGameData();
+      getUserData();
       setIsRefreshing(false);
     }, 1000);
   }, []);
@@ -44,32 +48,15 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       // removeAllGameData();
+      getUserData();
       getGameData();
-      // getUserData();
     }, [])
   );
 
-  // useEffect(() => {
-  //   // removeAllUserData();
-  //   // removeAllGameData();
-
-  //   navigation.addListener("focus", () => {
-  //     getGameData();
-  //     // getUserData();
-  //   });
-
-  //   return () => {
-  //     navigation.removeListener("focus", () => {
-  //       getGameData();
-  //       // getUserData();
-  //     });
-  //   };
-  // }, [isRefreshing]);
-
   useEffect(() => {
-    // console.log("userData", userData);
+    console.log("userData", userData);
     console.log("gameData", gameData);
-  }, [gameData]);
+  }, [gameData, userData]);
 
   return (
     <SafeAreaView
@@ -90,7 +77,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader isRefreshing={isRefreshing} />
+        <HomeHeader userData={userData} />
       </View>
 
       <View

@@ -1,32 +1,24 @@
-import { useFocusEffect } from "@react-navigation/native";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import useStyles from "hooks/useStyles";
-import useUserSettings from "hooks/useUserSettings";
-import { useCallback, type FC } from "react";
+import { type FC } from "react";
 import { Text, View } from "react-native";
+import { UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface HomeScreenProps {
-  isRefreshing: boolean;
+  userData: UserSettingsType | undefined;
 }
 
-const HomeHeader: FC<HomeScreenProps> = ({ isRefreshing }) => {
-  const { userData, getUserData } = useUserSettings();
+const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
   const { colors, typography } = useStyles();
-
-  useFocusEffect(
-    useCallback(() => {
-      getUserData();
-    }, [isRefreshing])
-  );
 
   return (
     <View
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         flexDirection: "row",
+        justifyContent: "space-between",
       }}
     >
       <Text

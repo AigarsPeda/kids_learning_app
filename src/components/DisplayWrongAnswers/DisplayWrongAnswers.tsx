@@ -1,80 +1,48 @@
+import MyButton from "components/MyButton/MyButton";
 import useColors from "hooks/useStyles";
-import { useCallback, useEffect, useRef, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import {
-  Animated,
-  Easing,
   FlatList,
-  Text,
-  View,
-  // Modal,
   StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { device, scalaDownDependingOnDevice } from "utils/metrics";
 import Modal from "react-native-modal";
-import MyButton from "../MyButton/MyButton";
+import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayWrongAnswersProps {
-  isChecked: boolean;
   wrongAnswers: number[];
   handleNextTask: () => void;
-  // isAllAnsweredCorrectly: boolean;
 }
 
 const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
-  isChecked,
   wrongAnswers,
   handleNextTask,
-  // isAllAnsweredCorrectly,
 }) => {
   const { colors } = useColors();
-  const translateAnimations = useRef(new Animated.Value(0)).current;
-
-  const startAnimation = useCallback(() => {
-    Animated.timing(translateAnimations, {
-      toValue: 1,
-      delay: 320,
-      duration: 600,
-      useNativeDriver: true,
-      easing: Easing.in(Easing.elastic(1)),
-    }).start();
-  }, [translateAnimations]);
-
-  const resetAnimation = useCallback(() => {
-    Animated.timing(translateAnimations, {
-      toValue: 0,
-      duration: 0,
-      useNativeDriver: true,
-    }).start();
-  }, [translateAnimations]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    if (isChecked) {
-      startAnimation();
+    if (Boolean(wrongAnswers.length !== 0)) {
+      setIsModalVisible(true);
     }
-
-    return () => {
-      resetAnimation();
-    };
-  }, [isChecked, startAnimation]);
+  }, [wrongAnswers]);
 
   return (
     <View style={styles.centeredView}>
       <Modal
-        // transparent={true}
-        // animationType="slide"
-        isVisible={Boolean(wrongAnswers.length !== 0)}
-        // onDismiss={() => {
-        //   handleNextTask();
-        // }}
         animationIn="slideInUp"
         animationOut="slideOutDown"
         animationInTiming={500}
-        animationOutTiming={750}
+        animationOutTiming={500}
         backdropColor="rgba(16, 24, 39, 0.300)"
+        isVisible={isModalVisible}
+        onModalHide={() => {
+          handleNextTask();
+        }}
         style={{
           margin: 0,
-          // backgroundColor: "rgba(16, 24, 39, 0.000)",
         }}
       >
         <TouchableOpacity
@@ -150,7 +118,15 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
                   paddingTop: scalaDownDependingOnDevice(20),
                 }}
               >
-                <MyButton title="Sapratu" onPress={handleNextTask} />
+                <MyButton
+                  title="Sapratu"
+                  onPress={() => {
+                    setIsModalVisible(false);
+                    // setTimeout(() => {
+                    //   handleNextTask();
+                    // }, 300);
+                  }}
+                />
               </View>
             </View>
           </View>
@@ -162,7 +138,6 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
 
 const styles = StyleSheet.create({
   centeredView: {
-    // backgroundColor: "rgba(16, 24, 39, 0.200)",
     flex: 1,
     justifyContent: "flex-end",
   },
@@ -178,9 +153,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     elevation: 5,
+    shadowRadius: 4,
+    shadowOpacity: 0.25,
   },
 });
 

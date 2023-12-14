@@ -160,7 +160,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       )}
 
       <DisplayWrongAnswers
-        isChecked={isChecked}
+        // isChecked={isChecked}
         wrongAnswers={wrongAnswers}
         handleNextTask={handleNextTask}
       />
