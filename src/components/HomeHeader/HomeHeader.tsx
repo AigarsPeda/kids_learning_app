@@ -1,10 +1,10 @@
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
+import ZigIcon from "components/icons/Zig/Zig";
 import useStyles from "hooks/useStyles";
 import { type FC } from "react";
 import { Text, View } from "react-native";
 import { UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface HomeScreenProps {
   userData: UserSettingsType | undefined;
@@ -38,10 +38,10 @@ const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
           alignItems: "center",
         }}
       >
-        <Ionicons
-          name="gift"
-          color={colors.accent}
-          size={scalaDownDependingOnDevice(30)}
+        <ZigIcon
+          fill={colors.accent}
+          width={scalaDownDependingOnDevice(30)}
+          height={scalaDownDependingOnDevice(30)}
         />
         <Text
           style={{
