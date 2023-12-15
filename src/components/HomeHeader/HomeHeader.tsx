@@ -7,10 +7,11 @@ import { type UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface HomeScreenProps {
+  getGameData: () => Promise<void>;
   userData: UserSettingsType | undefined;
 }
 
-const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
+const HomeHeader: FC<HomeScreenProps> = ({ userData, getGameData }) => {
   const { colors, typography } = useStyles();
 
   return (
@@ -39,7 +40,7 @@ const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
         }}
       >
         <ExperienceModal userData={userData} />
-        <LivesModal userData={userData} />
+        <LivesModal userData={userData} getGameData={getGameData} />
       </View>
     </View>
   );

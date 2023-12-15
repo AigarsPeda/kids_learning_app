@@ -8,13 +8,16 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import { type UserSettingsType } from "types/game";
 import createArray from "utils/createArray";
+import formatTimeToString from "utils/formatTimeToString";
+import getTimePassedSince from "utils/getTimePassedSince";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LivesModalProps {
+  getGameData: () => Promise<void>;
   userData: UserSettingsType | undefined;
 }
 
-const LivesModal: FC<LivesModalProps> = ({ userData }) => {
+const LivesModal: FC<LivesModalProps> = ({ userData, getGameData }) => {
   const { colors, typography } = useStyles();
   const [timeTillNextLife, setTimeTillNextLife] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -25,48 +28,19 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
     setIsModalVisible((state) => !state);
   };
 
-  const displayTimeTillNextLife = () => {
-    if (!userData?.user.lastUpdate) {
-      return "00:00";
-    }
-
-    const lastUpdate = new Date(userData?.user.lastUpdate);
-    const now = new Date();
-    const timeTillNextLife =
-      LEVEL_SETTINGS.livesRecoveryTimeInMinutes * 60 -
-      Math.floor((now.getTime() - lastUpdate.getTime()) / 1000);
-
-    console.log("timeTillNextLife", timeTillNextLife);
-
-    if (timeTillNextLife <= 0) {
-      // const newUserData = { ...userData };
-      // newUserData.user.lives = 3;
-      // newUserData.user.lastUpdate = new Date();
-      return "00:00:00";
-    }
-
-    const hours = Math.floor(timeTillNextLife / 3600);
-    const minutes = Math.floor(timeTillNextLife / 60);
-    const seconds = timeTillNextLife - minutes * 60;
-
-    // // add 0 in front of number if it is less than 10
-    const hoursString = hours < 10 ? `0${hours}` : `${hours}`;
-    const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const secondsString = seconds < 10 ? `0${seconds}` : `${seconds}`;
-
-    return `${hoursString}:${minutesString}:${secondsString}`;
-  };
-
   // if modal is open run this function every second and update the time
   useEffect(() => {
     if (isModalVisible && userData && userData?.user.lives < 3) {
       const interval = setInterval(() => {
-        setTimeTillNextLife(displayTimeTillNextLife());
+        const { hours, minutes, seconds } = getTimePassedSince(
+          userData?.user.lastUpdate
+        );
+        setTimeTillNextLife(formatTimeToString({ hours, minutes, seconds }));
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [isModalVisible]);
+  }, [isModalVisible, userData]);
 
   return (
     <>

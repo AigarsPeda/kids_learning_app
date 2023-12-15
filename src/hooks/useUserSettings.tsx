@@ -1,8 +1,7 @@
-import { LEVEL_SETTINGS } from "hardcoded";
 import useAsyncStorage from "hooks/useAsyncStorage";
 import { useEffect } from "react";
 import { type UserSettingsType } from "types/game";
-import isMinutesPassed from "utils/isMinutesPassed";
+import getTimePassedSince from "utils/getTimePassedSince";
 
 const useUserSettings = () => {
   const { data, setNewData, clearData, getData } =
@@ -11,25 +10,28 @@ const useUserSettings = () => {
       initialValue: {
         user: {
           lives: 3,
-          lastUpdate: new Date(),
           experience: 0,
+          lastUpdate: new Date(),
         },
       },
     });
 
   useEffect(() => {
     if (data && data.user.lives < 3) {
-      if (
-        isMinutesPassed({
-          startDate: data.user.lastUpdate,
-          minutes: LEVEL_SETTINGS.livesRecoveryTimeInMinutes,
-        })
-      ) {
-        const newUserData = { ...data };
-        newUserData.user.lives = 3;
-        newUserData.user.lastUpdate = new Date();
-        setNewData(newUserData);
-      }
+      const interval = setInterval(() => {
+        const { timeTillNextLife } = getTimePassedSince(data.user.lastUpdate);
+
+        console.log("timeTillNextLife", timeTillNextLife);
+
+        if (timeTillNextLife <= 0) {
+          const newUserData = { ...data };
+          newUserData.user.lives = newUserData.user.lives + 1;
+          newUserData.user.lastUpdate = new Date();
+          setNewData(newUserData);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
     }
   }, [data]);
 
