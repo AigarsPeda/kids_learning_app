@@ -1,6 +1,5 @@
-import DisplayHeart from "components/DisplayHeart/DisplayHeart";
-import OpacityButton from "components/OpacityButton/OpacityButton";
-import ZigIcon from "components/icons/Zig/Zig";
+import ExperienceModal from "components/ExperienceModal/ExperienceModal";
+import LivesModal from "components/LivesModal/LivesModal";
 import useStyles from "hooks/useStyles";
 import { type FC } from "react";
 import { Text, View } from "react-native";
@@ -39,65 +38,8 @@ const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
           alignItems: "center",
         }}
       >
-        <OpacityButton
-          onPress={() => {
-            console.log("pressed");
-          }}
-          icon={
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <ZigIcon
-                fill={colors.accent}
-                width={scalaDownDependingOnDevice(30)}
-                height={scalaDownDependingOnDevice(30)}
-              />
-              <Text
-                style={{
-                  color: colors.accent,
-                  fontFamily: typography.primaryMediumFont,
-                  fontSize: scalaDownDependingOnDevice(22),
-                  marginLeft: scalaDownDependingOnDevice(5),
-                  marginTop: scalaDownDependingOnDevice(4),
-                  marginRight: scalaDownDependingOnDevice(10),
-                }}
-              >
-                {userData?.user.experience}
-              </Text>
-            </View>
-          }
-        />
-        <OpacityButton
-          onPress={() => {
-            console.log("pressed");
-          }}
-          icon={
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <DisplayHeart health={userData?.user.lives} />
-              <Text
-                style={{
-                  color: colors.incorrect,
-                  fontFamily: typography.primaryMediumFont,
-                  fontSize: scalaDownDependingOnDevice(22),
-                  marginLeft: scalaDownDependingOnDevice(5),
-                  marginTop: scalaDownDependingOnDevice(4),
-                }}
-              >
-                {userData?.user.lives}
-              </Text>
-            </View>
-          }
-        />
+        <ExperienceModal userData={userData} />
+        <LivesModal userData={userData} />
       </View>
     </View>
   );
