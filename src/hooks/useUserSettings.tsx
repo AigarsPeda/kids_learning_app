@@ -22,7 +22,10 @@ const useUserSettings = () => {
       const { lives, lastUpdate } = data.user;
 
       const interval = setInterval(() => {
-        const { timeTillNextLife } = getTimePassedSince(lastUpdate);
+        const { timeTillNextLife } = getTimePassedSince(
+          lastUpdate,
+          LEVEL_SETTINGS.livesRecoveryTimeInMinutes
+        );
 
         console.log("timeTillNextLife", timeTillNextLife);
 

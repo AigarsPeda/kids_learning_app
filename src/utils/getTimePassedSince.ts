@@ -1,11 +1,9 @@
-import { LEVEL_SETTINGS } from "hardcoded";
-
-const getTimePassedSince = (startDate: Date) => {
+const getTimePassedSince = (startDate: Date, endTimeInMinutes: number) => {
   const now = new Date();
   const lastUpdate = new Date(startDate);
 
   const timeTillNextLife =
-    LEVEL_SETTINGS.livesRecoveryTimeInMinutes * 60 -
+    endTimeInMinutes * 60 -
     Math.floor((now.getTime() - lastUpdate.getTime()) / 1000);
 
   if (timeTillNextLife <= 0) {

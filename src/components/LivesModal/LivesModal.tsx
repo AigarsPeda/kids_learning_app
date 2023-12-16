@@ -30,7 +30,8 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
     if (isModalVisible && userData && userData?.user.lives < 3) {
       const updateInterval = () => {
         const { hours, minutes, seconds } = getTimePassedSince(
-          userData?.user.lastUpdate
+          userData?.user.lastUpdate,
+          LEVEL_SETTINGS.livesRecoveryTimeInMinutes
         );
         setTimeTillNextLife(formatTimeToString({ hours, minutes, seconds }));
       };
