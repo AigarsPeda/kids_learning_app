@@ -132,13 +132,13 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
 
 const styles = StyleSheet.create({
   modalView: {
-    position: "absolute",
     top: 0,
     padding: 35,
     elevation: 5,
     shadowRadius: 4,
     shadowOpacity: 0.25,
     width: device.width,
+    position: "absolute",
     alignItems: "center",
     backgroundColor: "white",
     borderBottomLeftRadius: 20,
