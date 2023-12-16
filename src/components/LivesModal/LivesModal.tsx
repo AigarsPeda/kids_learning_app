@@ -13,31 +13,35 @@ import getTimePassedSince from "utils/getTimePassedSince";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LivesModalProps {
-  getGameData: () => Promise<void>;
   userData: UserSettingsType | undefined;
 }
 
-const LivesModal: FC<LivesModalProps> = ({ userData, getGameData }) => {
+const LivesModal: FC<LivesModalProps> = ({ userData }) => {
   const { colors, typography } = useStyles();
-  const [timeTillNextLife, setTimeTillNextLife] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
   const array = createArray(LEVEL_SETTINGS.defaultLives);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [timeTillNextLife, setTimeTillNextLife] = useState("");
 
   const openCloseModal = () => {
     setIsModalVisible((state) => !state);
   };
 
-  // if modal is open run this function every second and update the time
   useEffect(() => {
     if (isModalVisible && userData && userData?.user.lives < 3) {
-      const interval = setInterval(() => {
+      const updateInterval = () => {
         const { hours, minutes, seconds } = getTimePassedSince(
           userData?.user.lastUpdate
         );
         setTimeTillNextLife(formatTimeToString({ hours, minutes, seconds }));
-      }, 1000);
+      };
 
+      // Run the function immediately
+      updateInterval();
+
+      // Set up the interval to run the function every second
+      const interval = setInterval(updateInterval, 1000);
+
+      // Clean up the interval on component unmount or when dependencies change
       return () => clearInterval(interval);
     }
   }, [isModalVisible, userData]);

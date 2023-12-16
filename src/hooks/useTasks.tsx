@@ -7,7 +7,6 @@ import {
 import findTasks from "utils/findTasks";
 
 const useTasks = (level: number) => {
-  // const [difficulty, setDifficulty] = useState<MathObjKeysType>("easy");
   const [taskKind, setTaskKind] = useState<TaskKindType>(
     "missingNumberAddition"
   );

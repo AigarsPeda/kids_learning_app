@@ -49,7 +49,6 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     setIsChecked,
     checkAnswersById,
     updateInputsValue,
-    // isAllAnsweredCorrectly,
   } = useMissingNumberInputs(tasks);
 
   const [currentStep, setCurrentStep] = useState<TaskKindType>(steps[0]);
@@ -81,10 +80,10 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   };
 
   const handleNextTask = () => {
-    handleNextStep();
     if (wrongAnswers.length !== 0) {
       decrementLives();
     }
+    handleNextStep();
   };
 
   const handleButtonState = () => {

@@ -15,15 +15,8 @@ const useLevelStatus = (storedLevel: number) => {
   const decrementLives = () => {
     const newUserData = { ...userData };
 
-    // if (!newUserData.user) {
-    //   newUserData.user = {
-    //     lives: 3,
-    //     lastUpdate: new Date(),
-    //     experience: newUserData.user.experience,
-    //   };
-    // }
-
     newUserData.user.lives = newUserData.user.lives - 1;
+    newUserData.user.lastUpdate = new Date();
 
     setLives((prev) => prev - 1);
     updateUserData(newUserData);
@@ -80,7 +73,7 @@ const useLevelStatus = (storedLevel: number) => {
     }
 
     // add experience if level is completed to the user
-    const newUserData = { ...userData };
+    // const newUserData = { ...userData };
 
     if (!nextLevelData) {
       // create new level data if it does not exist
@@ -103,8 +96,6 @@ const useLevelStatus = (storedLevel: number) => {
     if (!thisLevel) {
       return;
     }
-
-    console.log("thisLevel", thisLevel);
 
     setCurrentLevelStep(thisLevel.levelStep);
   }, [gameData, level]);
