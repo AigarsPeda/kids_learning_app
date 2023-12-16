@@ -76,30 +76,22 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
       />
 
       <Modal
+        hasBackdrop={true}
         animationInTiming={500}
-        animationOutTiming={750}
+        animationOutTiming={500}
         animationIn="slideInDown"
         animationOut="slideOutUp"
         deviceWidth={device.width}
         isVisible={isModalVisible}
-        hasBackdrop={true}
         onBackdropPress={openCloseModal}
-        backdropColor="rgba(16, 24, 39, 0.100)"
+        backdropTransitionInTiming={400}
+        backdropTransitionOutTiming={200}
+        backdropColor="rgba(16, 24, 39, 0.200)"
         style={{
           margin: 0,
           position: "relative",
         }}
       >
-        {/* <View
-        // style={{
-        //   flex: 1,
-        // }}
-        // style={{
-        //   position: "relative",
-        //   // ...styles.modalView,
-        //   // height: scalaDownDependingOnDevice(50),
-        // }}
-        > */}
         <View
           style={{
             ...styles.modalView,
@@ -133,17 +125,12 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             {timeTillNextLife}
           </Text>
         </View>
-        {/* </View> */}
       </Modal>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  // centeredView: {
-  //   // top: 0,
-  //   // position: "absolute",
-  // },
   modalView: {
     position: "absolute",
     top: 0,
