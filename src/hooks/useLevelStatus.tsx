@@ -9,37 +9,29 @@ const useLevelStatus = (storedLevel: number) => {
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
   const [isFinished, setIsFinished] = useState(false);
-  const { userData, updateUserData } = useUserSettings();
+  const { userData, updateUserData, decrementLives } = useUserSettings();
   const [currentLevelStep, setCurrentLevelStep] = useState(0);
 
-  const decrementLives = () => {
-    const newUserData = { ...userData };
+  const handleSavingCurrentLevelProgress = () => {
+    const nextStep = currentLevelStep + 1;
 
-    newUserData.user.lives = newUserData.user.lives - 1;
-    newUserData.user.lastUpdate = new Date();
-
-    setLives((prev) => prev - 1);
-    updateUserData(newUserData);
-  };
-
-  const handleSavingCurrentLevelStep = (step: number) => {
     const newData = { ...gameData };
-    const s = step === LEVEL_SETTINGS.levelParts ? 0 : step;
+    const s = nextStep === LEVEL_SETTINGS.levelParts ? 0 : nextStep;
 
     // Save the current level only if it is not completed yet
     if (!newData[level].isLevelCompleted) {
       newData[level] = {
         // step in witch user is
         levelStep: s,
-        isLevelCompleted: step === LEVEL_SETTINGS.levelParts,
+        isLevelCompleted: nextStep === LEVEL_SETTINGS.levelParts,
       };
 
       updateGameData(newData);
     }
 
-    setCurrentLevelStep(step);
+    setCurrentLevelStep(nextStep);
 
-    if (step === LEVEL_SETTINGS.levelParts) {
+    if (nextStep === LEVEL_SETTINGS.levelParts) {
       // add experience if level is completed to the user
       const newUserData = { ...userData };
 
@@ -49,11 +41,6 @@ const useLevelStatus = (storedLevel: number) => {
       updateUserData(newUserData);
       setIsFinished(true);
     }
-  };
-
-  const handleCurrentLevelStep = () => {
-    const nextStep = currentLevelStep + 1;
-    handleSavingCurrentLevelStep(nextStep);
   };
 
   const handleNextLevel = () => {
@@ -119,7 +106,7 @@ const useLevelStatus = (storedLevel: number) => {
     startTimer: startTimer.current,
     decrementLives,
     handleNextLevel,
-    handleCurrentLevelStep,
+    handleSavingCurrentLevelProgress,
   };
 };
 

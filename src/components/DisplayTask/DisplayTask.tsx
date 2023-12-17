@@ -20,8 +20,8 @@ interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
   decrementLives: () => void;
-  handleNextLevelStep: () => void;
   changeTask: (kind: TaskKindType) => void;
+  handleSavingCurrentLevelProgress: () => void;
 }
 
 const steps: TaskKindType[] = [
@@ -36,7 +36,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   tasks,
   changeTask,
   decrementLives,
-  handleNextLevelStep,
+  handleSavingCurrentLevelProgress,
 }) => {
   const taskRefs = useRef<RefObject<TextInput>[]>([]);
 
@@ -64,26 +64,20 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   const handleNextStep = () => {
     const currentStepIndex = steps.indexOf(currentStep);
     const nextStepIndex = currentStepIndex + 1;
-    const nextStep = steps[nextStepIndex];
+    const nextStep = steps[nextStepIndex] || steps[0];
 
-    setIsChecked(false);
-    handleNextLevelStep();
-
-    if (!nextStep) {
-      changeTask(steps[0]);
-      setCurrentStep(steps[0]);
-      return;
-    }
-
-    changeTask(nextStep);
-    setCurrentStep(nextStep);
-  };
-
-  const handleNextTask = () => {
     if (wrongAnswers.length !== 0) {
       decrementLives();
     }
-    handleNextStep();
+
+    // save if no wrong answers
+    if (wrongAnswers.length === 0) {
+      handleSavingCurrentLevelProgress();
+    }
+
+    setIsChecked(false);
+    changeTask(nextStep);
+    setCurrentStep(nextStep);
   };
 
   const handleButtonState = () => {
@@ -101,9 +95,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       return {
         isDisabled: false,
         title: "Nākamais uzdevums",
-        function: () => {
-          handleNextTask();
-        },
+        function: handleNextStep,
       };
     }
 
@@ -161,7 +153,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       <DisplayWrongAnswers
         // isChecked={isChecked}
         wrongAnswers={wrongAnswers}
-        handleNextTask={handleNextTask}
+        handleNextTask={handleNextStep}
       />
 
       <KeyboardAvoidingView

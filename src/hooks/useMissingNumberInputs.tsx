@@ -4,7 +4,6 @@ import { type EquationArgumentType } from "types/addition";
 import { type InputType } from "types/common";
 import findMissingNumber from "utils/findMissingNumber";
 import isAdditionSubtractionAnswerCorrect from "utils/isAdditionSubtractionAnswerCorrect";
-import useUserSettings from "hooks/useUserSettings";
 
 export type InputObjType = {
   [key: string]: InputType;

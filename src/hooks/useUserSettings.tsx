@@ -1,8 +1,8 @@
+import { LEVEL_SETTINGS } from "hardcoded";
 import useAsyncStorage from "hooks/useAsyncStorage";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { type UserSettingsType } from "types/game";
 import getTimePassedSince from "utils/getTimePassedSince";
-import { LEVEL_SETTINGS } from "../hardcoded";
 
 const useUserSettings = () => {
   const { data, setNewData, clearData, getData } =
@@ -10,16 +10,34 @@ const useUserSettings = () => {
       key: "v1_user",
       initialValue: {
         user: {
+          experience: 0,
           lastUpdate: new Date(),
           lives: LEVEL_SETTINGS.defaultLives,
-          experience: 0,
         },
       },
     });
 
+  const decrementLives = () => {
+    const newUserData = { ...data };
+
+    newUserData.user.lives = newUserData.user.lives - 1;
+    newUserData.user.lastUpdate = new Date();
+
+    setNewData(newUserData);
+  };
+
+  const incrementLives = useCallback(() => {
+    const newUserData = { ...data };
+
+    newUserData.user.lives = newUserData.user.lives + 1;
+    newUserData.user.lastUpdate = new Date();
+
+    setNewData(newUserData);
+  }, [data]);
+
   useEffect(() => {
     if (data && data.user.lives < 3) {
-      const { lives, lastUpdate } = data.user;
+      const { lastUpdate } = data.user;
 
       const interval = setInterval(() => {
         const { timeTillNextLife } = getTimePassedSince(
@@ -30,25 +48,17 @@ const useUserSettings = () => {
         console.log("timeTillNextLife", timeTillNextLife);
 
         if (timeTillNextLife <= 0) {
-          const newUserData = { ...data };
-
-          newUserData.user.lives = newUserData.user.lives + 1;
-          newUserData.user.lastUpdate = new Date();
-
-          // newUserData.user.lives = {
-          //   current: current + 1,
-          //   lastUpdate: new Date(),
-          // };
-          setNewData(newUserData);
+          incrementLives();
         }
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [data]);
+  }, [data, incrementLives]);
 
   return {
     userData: data,
+    decrementLives,
     getUserData: getData,
     updateUserData: setNewData,
     removeAllUserData: clearData,
