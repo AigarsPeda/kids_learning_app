@@ -11,8 +11,10 @@ const useUserSettings = () => {
       initialValue: {
         user: {
           experience: 0,
-          lastUpdate: new Date(),
-          lives: LEVEL_SETTINGS.defaultLives,
+          lives: {
+            lastUpdate: new Date(),
+            lives: LEVEL_SETTINGS.defaultLives,
+          },
         },
       },
     });
@@ -20,8 +22,13 @@ const useUserSettings = () => {
   const decrementLives = () => {
     const newUserData = { ...data };
 
-    newUserData.user.lives = newUserData.user.lives - 1;
-    newUserData.user.lastUpdate = new Date();
+    // newUserData.user.lives = newUserData.user.lives - 1;
+    // newUserData.user.lastUpdate = new Date();
+
+    newUserData.user.lives = {
+      lives: newUserData.user.lives.lives - 1,
+      lastUpdate: new Date(),
+    };
 
     setNewData(newUserData);
   };
@@ -29,15 +36,20 @@ const useUserSettings = () => {
   const incrementLives = useCallback(() => {
     const newUserData = { ...data };
 
-    newUserData.user.lives = newUserData.user.lives + 1;
-    newUserData.user.lastUpdate = new Date();
+    // newUserData.user.lives = newUserData.user.lives + 1;
+    // newUserData.user.lastUpdate = new Date();
+
+    newUserData.user.lives = {
+      lives: newUserData.user.lives.lives + 1,
+      lastUpdate: new Date(),
+    };
 
     setNewData(newUserData);
   }, [data]);
 
   useEffect(() => {
-    if (data && data.user.lives < 3) {
-      const { lastUpdate } = data.user;
+    if (data && data.user.lives.lives < 3) {
+      const { lastUpdate } = data.user.lives;
 
       const interval = setInterval(() => {
         const { timeTillNextLife } = getTimePassedSince(

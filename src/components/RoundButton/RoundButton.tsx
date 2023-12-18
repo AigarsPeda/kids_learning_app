@@ -2,7 +2,7 @@ import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
 import { LEVEL_SETTINGS } from "hardcoded";
 import useColors from "hooks/useStyles";
 import { type FC } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 type RoundButtonProps = {
@@ -45,32 +45,43 @@ const RoundButton: FC<RoundButtonProps> = ({
   };
 
   return (
-    <View
-      style={{
-        padding: 5,
-        borderRadius: calculateOuterRadius(),
-        width: scalaDownDependingOnDevice(120),
-        height: scalaDownDependingOnDevice(120),
-        transform: [{ rotate: `${rotateAngle}deg` }],
-        // add border
-        // borderWidth: 2,
-        // borderColor: colors.accent,
+    <Pressable
+      style={({ pressed }) => [
+        {
+          padding: 5,
+          borderRadius: calculateOuterRadius(),
+          width: scalaDownDependingOnDevice(120),
+          height: scalaDownDependingOnDevice(120),
+        },
+        {
+          transform: [
+            { scale: pressed ? 0.9 : 1 },
+            { rotate: `${rotateAngle}deg` },
+          ],
+        },
+      ]}
+      disabled={!isSelectable}
+      onPress={() => {
+        impactAsync(ImpactFeedbackStyle.Light);
+        onPress();
       }}
     >
       <View style={{ position: "absolute", bottom: -2, left: -1, right: 0 }}>
         <View
           style={{
+            backgroundColor: colors.lightGray,
             width: scalaDownDependingOnDevice(115),
             height: scalaDownDependingOnDevice(115),
             opacity: levelProgress ? levelProgress : 0,
             borderRadius: scalaDownDependingOnDevice(25),
-            backgroundColor: colors.lightGray,
           }}
         />
       </View>
-      <Pressable
+      <View
         style={{
-          ...styles.button,
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
           elevation: 5,
           width: "100%",
           height: "100%",
@@ -80,21 +91,16 @@ const RoundButton: FC<RoundButtonProps> = ({
           borderRadius: scalaDownDependingOnDevice(20),
           backgroundColor: !isSelectable ? colors.gray : "transparent",
         }}
-        disabled={!isSelectable}
-        onPress={() => {
-          impactAsync(ImpactFeedbackStyle.Light);
-          onPress();
-        }}
       >
         <Text
           style={{
-            ...styles.text,
             zIndex: 1,
             color: "white",
             letterSpacing: 0.3,
             position: "absolute",
             opacity: !isSelectable ? 0.8 : 1,
             fontFamily: typography.primaryBoldFont,
+            fontSize: scalaDownDependingOnDevice(30),
           }}
         >
           {title}
@@ -114,22 +120,9 @@ const RoundButton: FC<RoundButtonProps> = ({
             />
           </View>
         )}
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    elevation: 5,
-    display: "flex",
-    textAlign: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: scalaDownDependingOnDevice(30),
-  },
-});
 
 export default RoundButton;

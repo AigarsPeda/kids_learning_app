@@ -27,11 +27,11 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
   };
 
   useEffect(() => {
-    if (isModalVisible && userData && userData?.user.lives < 3) {
+    if (isModalVisible && userData && userData?.user.lives.lives < 3) {
       const updateInterval = () => {
         const { hours, minutes, seconds, timeTillNextLife } =
           getTimePassedSince(
-            userData?.user.lastUpdate,
+            userData?.user.lives.lastUpdate,
             LEVEL_SETTINGS.livesRecoveryTimeInMinutes
           );
 
@@ -68,7 +68,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
               alignItems: "center",
             }}
           >
-            <DisplayHeart health={userData?.user.lives} />
+            <DisplayHeart health={userData?.user.lives?.lives} />
             <Text
               style={{
                 color: colors.incorrect,
@@ -78,7 +78,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
                 fontFamily: typography.primaryMediumFont,
               }}
             >
-              {userData?.user.lives}
+              {userData?.user.lives.lives}
             </Text>
           </View>
         }
@@ -90,7 +90,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
           numColumns={3}
           keyExtractor={(_item, index) => index.toString()}
           renderItem={({ item, index }) => {
-            const userLives = userData?.user.lives || 0;
+            const userLives = userData?.user.lives.lives || 0;
 
             return (
               <Ionicons

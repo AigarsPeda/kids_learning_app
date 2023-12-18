@@ -7,8 +7,10 @@ export type GameLevelType = {
 
 export type UserSettingsType = {
   [key: string]: {
-    lives: number;
-    lastUpdate: Date;
+    lives: {
+      lives: number;
+      lastUpdate: Date;
+    };
     experience: number;
   };
 };

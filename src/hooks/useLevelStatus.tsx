@@ -88,11 +88,11 @@ const useLevelStatus = (storedLevel: number) => {
   }, [gameData, level]);
 
   useEffect(() => {
-    if (!userData?.user?.lives) {
+    if (!userData?.user?.lives.lives) {
       return;
     }
-    setLives(userData.user.lives);
-  }, [userData?.user?.lives]);
+    setLives(userData.user.lives.lives);
+  }, [userData?.user?.lives?.lives]);
 
   useEffect(() => {
     setLevel(storedLevel);
