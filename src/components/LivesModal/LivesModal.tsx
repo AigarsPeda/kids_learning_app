@@ -1,7 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
+import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
-import MyButton from "components/MyButton/MyButton";
 import OpacityButton from "components/OpacityButton/OpacityButton";
 import TopModal from "components/TopModal/TopModal";
 import ZigIcon from "components/icons/Zig/Zig";
@@ -133,44 +133,29 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
               console.log("save");
             }}
           >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  color: "#fff",
-                  fontFamily: typography.primaryMediumFont,
-                  fontSize: scalaDownDependingOnDevice(20),
-                  marginTop: scalaDownDependingOnDevice(4),
-                  marginRight: scalaDownDependingOnDevice(5),
-                  letterSpacing: scalaDownDependingOnDevice(0.25),
-                }}
-              >
-                Uzpildīt dzīvības 300
-              </Text>
+            <>
+              <ChildrenButtonText text="Uzpildīt dzīvības 300" />
               <ZigIcon
                 fill="#fff"
                 width={scalaDownDependingOnDevice(20)}
                 height={scalaDownDependingOnDevice(20)}
               />
-            </View>
+            </>
           </ChildrenButton>
-          <MyButton
-            title="Dzīvības bez ierobežojumiem"
+          <ChildrenButton
             onPress={() => {
-              console.log("cancel");
+              console.log("save");
             }}
-          />
-          <MyButton
-            title="Noskatīties reklāmu"
+          >
+            <ChildrenButtonText text="Dzīvības bez ierobežojumiem" />
+          </ChildrenButton>
+          <ChildrenButton
             onPress={() => {
-              console.log("cancel");
+              console.log("save");
             }}
-          />
+          >
+            <ChildrenButtonText text="Noskatīties reklāmu" />
+          </ChildrenButton>
         </View>
       </TopModal>
     </>

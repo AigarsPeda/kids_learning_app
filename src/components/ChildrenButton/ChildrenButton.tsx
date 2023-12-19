@@ -1,7 +1,7 @@
 import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
 import useColors from "hooks/useStyles";
 import { type FC } from "react";
-import { Pressable, StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 import { KeyTypeOfColors } from "../../styles/styles";
 
@@ -35,18 +35,15 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
         onPress();
       }}
     >
-      {children}
-      {/* <Text
+      <View
         style={{
-          ...styles.text,
-          color: "#fff",
-          letterSpacing: 0.5,
-          opacity: isDisabled ? 0.5 : 1,
-          fontFamily: typography.primaryMediumFont,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
         }}
       >
-        {title}
-      </Text> */}
+        {children}
+      </View>
     </Pressable>
   );
 };
