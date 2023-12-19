@@ -31,7 +31,7 @@ const TopModal: FC<TopModalProps> = ({
       onBackdropPress={openCloseModal}
       backdropTransitionInTiming={400}
       backdropTransitionOutTiming={200}
-      backdropColor="rgba(16, 24, 39, 0.200)"
+      backdropColor="rgba(16, 24, 39, 0.000)"
       style={{
         margin: 0,
         position: "relative",
@@ -40,17 +40,18 @@ const TopModal: FC<TopModalProps> = ({
       <View
         style={{
           top: 0,
-          paddingTop: scalaDownDependingOnDevice(35),
+          // TODO: Get height of status bar
+          paddingTop: scalaDownDependingOnDevice(55),
           elevation: 5,
           shadowRadius: 4,
           shadowOpacity: 0.25,
           width: device.width,
           position: "absolute",
           alignItems: "center",
-          backgroundColor: "white",
+          shadowColor: "#0f172a",
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
-          shadowColor: "#0f172a",
+          backgroundColor: colors.lightGray,
           shadowOffset: {
             width: 0,
             height: 2,
@@ -73,7 +74,7 @@ const TopModal: FC<TopModalProps> = ({
             icon={
               <Ionicons
                 name="close"
-                color={colors.gray}
+                color={colors.text}
                 size={scalaDownDependingOnDevice(40)}
               />
             }

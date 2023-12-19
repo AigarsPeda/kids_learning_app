@@ -3,20 +3,27 @@ import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import { KeyTypeOfColors } from "../../styles/styles";
 
 type MyButton = {
   title?: string;
   onPress: () => void;
   isDisabled?: boolean;
+  color?: KeyTypeOfColors;
 };
 
-const MyButton: FC<MyButton> = ({ isDisabled, onPress, title = "Save" }) => {
+const MyButton: FC<MyButton> = ({
+  onPress,
+  isDisabled,
+  title = "Save",
+  color = "accent",
+}) => {
   const { colors, typography } = useColors();
   return (
     <Pressable
       style={{
         ...styles.button,
-        backgroundColor: colors.accent,
+        backgroundColor: isDisabled ? colors.gray : colors[color],
       }}
       disabled={isDisabled}
       onPress={() => {

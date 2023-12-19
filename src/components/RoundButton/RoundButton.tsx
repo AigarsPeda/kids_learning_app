@@ -79,14 +79,14 @@ const RoundButton: FC<RoundButtonProps> = ({
       </View>
       <View
         style={{
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
           elevation: 5,
           width: "100%",
           height: "100%",
+          display: "flex",
           shadowRadius: 2.9,
           overflow: "hidden",
+          alignItems: "center",
+          justifyContent: "center",
           shadowOpacity: isSelectable ? 0 : 0.4,
           borderRadius: scalaDownDependingOnDevice(20),
           backgroundColor: !isSelectable ? colors.gray : "transparent",

@@ -106,7 +106,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
           style={{
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(20),
+            fontSize: scalaDownDependingOnDevice(25),
             marginTop: scalaDownDependingOnDevice(20),
           }}
         >

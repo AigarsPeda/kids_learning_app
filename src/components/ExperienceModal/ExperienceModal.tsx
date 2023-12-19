@@ -6,6 +6,7 @@ import { Text, View } from "react-native";
 import { type UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 import TopModal from "../TopModal/TopModal";
+import MyButton from "../MyButton/MyButton";
 
 interface HomeScreenProps {
   userData: UserSettingsType | undefined;
@@ -56,12 +57,36 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
           style={{
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(20),
-            marginTop: scalaDownDependingOnDevice(10),
+            fontSize: scalaDownDependingOnDevice(25),
+            // marginTop: scalaDownDependingOnDevice(20),
           }}
         >
-          {userData?.user.experience}
+          Tev ir {userData?.user.experience} pieredze
         </Text>
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: scalaDownDependingOnDevice(10),
+            marginTop: scalaDownDependingOnDevice(10),
+            paddingHorizontal: scalaDownDependingOnDevice(40),
+          }}
+        >
+          <MyButton
+            // isDisabled
+            title="Uzpildīt dzīvības 300"
+            onPress={() => {
+              console.log("save");
+            }}
+          />
+          <MyButton
+            title="Noskatīties reklāmu"
+            onPress={() => {
+              console.log("cancel");
+            }}
+          />
+        </View>
       </TopModal>
     </>
   );

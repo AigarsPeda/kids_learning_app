@@ -1,15 +1,17 @@
 type Colors = {
   text: string;
   gray: string;
+  yellow: string;
   accent: string;
   correct: string;
   incorrect: string;
   lightGray: string;
+  completed: string;
   background: string;
   accentBackground: string;
-  completed: string;
-  yellow: string;
 };
+
+export type KeyTypeOfColors = keyof Colors;
 
 // Hey, I'm a comment!
 export const lightModeColors: Colors = {
