@@ -76,7 +76,7 @@ const TopModal: FC<TopModalProps> = ({
               <Ionicons
                 name="close"
                 color={colors.text}
-                size={scalaDownDependingOnDevice(40)}
+                size={scalaDownDependingOnDevice(30)}
               />
             }
           />

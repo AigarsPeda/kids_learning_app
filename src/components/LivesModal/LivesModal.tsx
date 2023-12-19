@@ -1,7 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import ChildrenButton from "components/ChildrenButton/ChildrenButton";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
+import MyButton from "components/MyButton/MyButton";
 import OpacityButton from "components/OpacityButton/OpacityButton";
 import TopModal from "components/TopModal/TopModal";
+import ZigIcon from "components/icons/Zig/Zig";
 import { LEVEL_SETTINGS } from "hardcoded";
 import useStyles from "hooks/useStyles";
 import { useEffect, useState, type FC } from "react";
@@ -106,14 +109,61 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
           style={{
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(25),
-            marginTop: scalaDownDependingOnDevice(20),
+            fontSize: scalaDownDependingOnDevice(20),
+            marginTop: scalaDownDependingOnDevice(10),
           }}
         >
           {timeTillNextLife !== ""
             ? `Nākamā dzīvība pēc ${timeTillNextLife}`
             : `Visas dzīvības ir atjaunotas`}
         </Text>
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: scalaDownDependingOnDevice(10),
+            marginTop: scalaDownDependingOnDevice(10),
+            paddingHorizontal: scalaDownDependingOnDevice(40),
+          }}
+        >
+          <ChildrenButton
+            onPress={() => {
+              console.log("save");
+            }}
+          >
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#fff",
+                  fontFamily: typography.primaryMediumFont,
+                  fontSize: scalaDownDependingOnDevice(22),
+                  marginTop: scalaDownDependingOnDevice(4),
+                  marginRight: scalaDownDependingOnDevice(5),
+                }}
+              >
+                Uzpildīt dzīvības 300
+              </Text>
+              <ZigIcon
+                fill="#fff"
+                width={scalaDownDependingOnDevice(22)}
+                height={scalaDownDependingOnDevice(22)}
+              />
+            </View>
+          </ChildrenButton>
+          <MyButton
+            title="Noskatīties reklāmu"
+            onPress={() => {
+              console.log("cancel");
+            }}
+          />
+        </View>
       </TopModal>
     </>
   );

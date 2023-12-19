@@ -67,7 +67,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader userData={userData} getGameData={getGameData} />
+        <HomeHeader userData={userData} />
       </View>
 
       <View
