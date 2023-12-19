@@ -23,6 +23,7 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
   return (
     <>
       <OpacityButton
+        isDisabled
         onPress={openCloseModal}
         icon={
           <View
@@ -58,7 +59,7 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
             fontSize: scalaDownDependingOnDevice(25),
-            // marginTop: scalaDownDependingOnDevice(20),
+            marginTop: scalaDownDependingOnDevice(10),
           }}
         >
           Tev ir {userData?.user.experience} pieredze
@@ -74,7 +75,6 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
           }}
         >
           <MyButton
-            // isDisabled
             title="Uzpildīt dzīvības 300"
             onPress={() => {
               console.log("save");

@@ -4,12 +4,18 @@ import { TouchableOpacity } from "react-native";
 
 interface OpacityButtonProps {
   icon: JSX.Element;
+  isDisabled?: boolean;
   onPress: () => void;
 }
 
-const OpacityButton: FC<OpacityButtonProps> = ({ icon, onPress }) => {
+const OpacityButton: FC<OpacityButtonProps> = ({
+  icon,
+  isDisabled,
+  onPress,
+}) => {
   return (
     <TouchableOpacity
+      disabled={isDisabled}
       onPress={() => {
         impactAsync(ImpactFeedbackStyle.Light);
         onPress();
