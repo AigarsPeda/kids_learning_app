@@ -1,10 +1,11 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import OpacityButton from "components/OpacityButton/OpacityButton";
+import useStatusBarHeight from "hooks/useStatusBarHeight";
 import useStyles from "hooks/useStyles";
-import React, { type FC } from "react";
+import { type FC } from "react";
 import { View } from "react-native";
 import Modal from "react-native-modal";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
-import OpacityButton from "../OpacityButton/OpacityButton";
 
 interface TopModalProps {
   isModalVisible: boolean;
@@ -17,7 +18,8 @@ const TopModal: FC<TopModalProps> = ({
   isModalVisible,
   openCloseModal,
 }) => {
-  const { colors, typography } = useStyles();
+  const { colors } = useStyles();
+  const { statusBarHeight } = useStatusBarHeight();
 
   return (
     <Modal
@@ -40,8 +42,6 @@ const TopModal: FC<TopModalProps> = ({
       <View
         style={{
           top: 0,
-          // TODO: Get height of status bar
-          paddingTop: scalaDownDependingOnDevice(55),
           elevation: 5,
           shadowRadius: 4,
           shadowOpacity: 0.25,
@@ -51,6 +51,7 @@ const TopModal: FC<TopModalProps> = ({
           shadowColor: "#0f172a",
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
+          paddingTop: statusBarHeight,
           backgroundColor: colors.lightGray,
           shadowOffset: {
             width: 0,

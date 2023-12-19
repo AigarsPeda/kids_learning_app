@@ -6,10 +6,11 @@ import DisplayTask from "components/DisplayTask/DisplayTask";
 import NoLives from "components/NoLives/NoLives";
 import Progressbar from "components/Progressbar/Progressbar";
 import useLevelStatus from "hooks/useLevelStatus";
+import useStatusBarHeight from "hooks/useStatusBarHeight";
 import useStyles from "hooks/useStyles";
 import useTasks from "hooks/useTasks";
 import { type FC } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
@@ -22,6 +23,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "LevelScreen">;
 const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { level } = route.params;
   const { colors, typography } = useStyles();
+  const { statusBarHeight } = useStatusBarHeight();
   const { tasks, taskKind, setTaskKind } = useTasks(parseInt(level));
 
   const {
@@ -63,6 +65,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     <SafeAreaView
       style={{
         ...styles.container,
+        paddingTop: statusBarHeight,
         backgroundColor: colors.background,
       }}
     >
@@ -118,7 +121,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: StatusBar.currentHeight || 0,
   },
   headLine: {
     margin: 16,

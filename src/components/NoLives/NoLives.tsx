@@ -1,6 +1,7 @@
 import useStyles from "hooks/useStyles";
 import { FC } from "react";
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
+import useStatusBarHeight from "hooks/useStatusBarHeight";
 
 interface NoLivesProps {
   goHome: () => void;
@@ -8,6 +9,7 @@ interface NoLivesProps {
 
 const NoLives: FC<NoLivesProps> = ({ goHome }) => {
   const { colors, typography } = useStyles();
+  const { statusBarHeight } = useStatusBarHeight();
   return (
     <View
       style={{
@@ -31,11 +33,6 @@ const NoLives: FC<NoLivesProps> = ({ goHome }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: StatusBar.currentHeight || 0,
-  },
   headLine: {
     margin: 16,
     fontSize: 20,
