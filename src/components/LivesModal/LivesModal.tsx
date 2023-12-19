@@ -91,6 +91,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
         <FlatList
           data={array}
           numColumns={3}
+          style={{ marginTop: scalaDownDependingOnDevice(10) }}
           keyExtractor={(_item, index) => index.toString()}
           renderItem={({ item, index }) => {
             const userLives = userData?.user.lives.lives || 0;
@@ -110,7 +111,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
             fontSize: scalaDownDependingOnDevice(20),
-            marginTop: scalaDownDependingOnDevice(10),
+            marginVertical: scalaDownDependingOnDevice(10),
           }}
         >
           {timeTillNextLife !== ""
@@ -124,7 +125,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             flexDirection: "column",
             gap: scalaDownDependingOnDevice(10),
             marginTop: scalaDownDependingOnDevice(10),
-            paddingHorizontal: scalaDownDependingOnDevice(40),
+            paddingHorizontal: scalaDownDependingOnDevice(20),
           }}
         >
           <ChildrenButton
@@ -143,20 +144,27 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
                 style={{
                   color: "#fff",
                   fontFamily: typography.primaryMediumFont,
-                  fontSize: scalaDownDependingOnDevice(22),
+                  fontSize: scalaDownDependingOnDevice(20),
                   marginTop: scalaDownDependingOnDevice(4),
                   marginRight: scalaDownDependingOnDevice(5),
+                  letterSpacing: scalaDownDependingOnDevice(0.25),
                 }}
               >
                 Uzpildīt dzīvības 300
               </Text>
               <ZigIcon
                 fill="#fff"
-                width={scalaDownDependingOnDevice(22)}
-                height={scalaDownDependingOnDevice(22)}
+                width={scalaDownDependingOnDevice(20)}
+                height={scalaDownDependingOnDevice(20)}
               />
             </View>
           </ChildrenButton>
+          <MyButton
+            title="Dzīvības bez ierobežojumiem"
+            onPress={() => {
+              console.log("cancel");
+            }}
+          />
           <MyButton
             title="Noskatīties reklāmu"
             onPress={() => {

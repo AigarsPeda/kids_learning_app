@@ -33,11 +33,11 @@ const MyButton: FC<MyButton> = ({
     >
       <Text
         style={{
-          ...styles.text,
           color: "#fff",
-          letterSpacing: 0.5,
           opacity: isDisabled ? 0.5 : 1,
+          fontSize: scalaDownDependingOnDevice(20),
           fontFamily: typography.primaryMediumFont,
+          letterSpacing: scalaDownDependingOnDevice(0.25),
         }}
       >
         {title}
@@ -54,11 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: scalaDownDependingOnDevice(10),
     paddingHorizontal: scalaDownDependingOnDevice(40),
-  },
-  text: {
-    fontSize: scalaDownDependingOnDevice(20),
-    lineHeight: scalaDownDependingOnDevice(21),
-    letterSpacing: scalaDownDependingOnDevice(0.25),
   },
 });
 
