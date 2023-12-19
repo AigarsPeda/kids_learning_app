@@ -1,25 +1,21 @@
 import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
 import useColors from "hooks/useStyles";
 import { type FC } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import { KeyTypeOfColors } from "styles/styles";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import { KeyTypeOfColors } from "../../styles/styles";
 
 type ChildrenButtonProps = {
-  // title?: string;
-
   onPress: () => void;
   isDisabled?: boolean;
-  children: JSX.Element;
   color?: KeyTypeOfColors;
+  children: JSX.Element | JSX.Element[];
 };
 
 const ChildrenButton: FC<ChildrenButtonProps> = ({
   onPress,
   children,
   isDisabled,
-
-  // title = "Save",
   color = "accent",
 }) => {
   const { colors, typography } = useColors();

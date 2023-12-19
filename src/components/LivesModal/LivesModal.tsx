@@ -133,14 +133,12 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
               console.log("save");
             }}
           >
-            <>
-              <ChildrenButtonText text="Uzpildīt dzīvības 300" />
-              <ZigIcon
-                fill="#fff"
-                width={scalaDownDependingOnDevice(20)}
-                height={scalaDownDependingOnDevice(20)}
-              />
-            </>
+            <ChildrenButtonText text="Uzpildīt dzīvības 300" />
+            <ZigIcon
+              fill="#fff"
+              width={scalaDownDependingOnDevice(20)}
+              height={scalaDownDependingOnDevice(20)}
+            />
           </ChildrenButton>
           <ChildrenButton
             onPress={() => {
