@@ -26,7 +26,7 @@ const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
         style={{
           color: colors.text,
           fontFamily: typography.primaryMediumFont,
-          fontSize: scalaDownDependingOnDevice(40),
+          fontSize: scalaDownDependingOnDevice(35),
         }}
       >
         Choose Level

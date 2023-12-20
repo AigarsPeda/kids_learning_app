@@ -15,28 +15,32 @@ import formatTimeToString from "utils/formatTimeToString";
 import getTimePassedSince from "utils/getTimePassedSince";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
+const { defaultLives, livesRecoveryTimeInMinutes } = LEVEL_SETTINGS;
+
 interface LivesModalProps {
   userData: UserSettingsType | undefined;
 }
 
 const LivesModal: FC<LivesModalProps> = ({ userData }) => {
   const { colors, typography } = useStyles();
-  const array = createArray(LEVEL_SETTINGS.defaultLives);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [timeTillNextLife, setTimeTillNextLife] = useState("");
+
+  const array = createArray(defaultLives);
+  const isBuyLivesDisabled = userData?.user.lives.lives === defaultLives;
 
   const openCloseModal = () => {
     setIsModalVisible((state) => !state);
   };
 
   useEffect(() => {
-    if (isModalVisible && userData && userData?.user.lives.lives < 3) {
+    const { user } = userData || {};
+    const { lives } = user || {};
+
+    if (isModalVisible && lives?.lives < defaultLives) {
       const updateInterval = () => {
         const { hours, minutes, seconds, timeTillNextLife } =
-          getTimePassedSince(
-            userData?.user.lives.lastUpdate,
-            LEVEL_SETTINGS.livesRecoveryTimeInMinutes
-          );
+          getTimePassedSince(lives.lastUpdate, livesRecoveryTimeInMinutes);
 
         if (timeTillNextLife <= 0) {
           setTimeTillNextLife("");
@@ -75,10 +79,10 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             <Text
               style={{
                 color: colors.incorrect,
-                marginTop: scalaDownDependingOnDevice(4),
-                fontSize: scalaDownDependingOnDevice(22),
-                marginLeft: scalaDownDependingOnDevice(5),
                 fontFamily: typography.primaryMediumFont,
+                marginTop: scalaDownDependingOnDevice(4),
+                fontSize: scalaDownDependingOnDevice(20),
+                marginLeft: scalaDownDependingOnDevice(5),
               }}
             >
               {userData?.user.lives.lives}
@@ -101,7 +105,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
                 key={index}
                 name="heart"
                 color={index < userLives ? colors.incorrect : colors.gray}
-                size={scalaDownDependingOnDevice(30)}
+                size={scalaDownDependingOnDevice(28)}
               />
             );
           }}
@@ -129,6 +133,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
           }}
         >
           <ChildrenButton
+            isDisabled={isBuyLivesDisabled}
             onPress={() => {
               console.log("save");
             }}
@@ -148,6 +153,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             <ChildrenButtonText text="Dzīvības bez ierobežojumiem" />
           </ChildrenButton>
           <ChildrenButton
+            isDisabled={isBuyLivesDisabled}
             onPress={() => {
               console.log("save");
             }}

@@ -35,14 +35,14 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
           >
             <ZigIcon
               fill={colors.accent}
-              width={scalaDownDependingOnDevice(30)}
-              height={scalaDownDependingOnDevice(30)}
+              width={scalaDownDependingOnDevice(28)}
+              height={scalaDownDependingOnDevice(28)}
             />
             <Text
               style={{
                 color: colors.accent,
                 fontFamily: typography.primaryMediumFont,
-                fontSize: scalaDownDependingOnDevice(22),
+                fontSize: scalaDownDependingOnDevice(20),
                 marginLeft: scalaDownDependingOnDevice(5),
                 marginTop: scalaDownDependingOnDevice(4),
                 marginRight: scalaDownDependingOnDevice(10),
