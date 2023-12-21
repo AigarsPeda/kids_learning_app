@@ -30,36 +30,51 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     lives,
     isFinished,
     startTimer,
-    isLivesFinished,
     currentLevelStep,
     decrementLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   } = useLevelStatus(parseInt(level));
 
-  // if (isLivesFinished) {
-  //   return (
-  //     <NoLives
-  //       goHome={() => {
-  //         navigation.goBack();
-  //       }}
-  //     />
-  //   );
-  // }
+  if (lives <= 0) {
+    return (
+      <SafeAreaView
+        style={{
+          ...styles.container,
+          paddingTop: statusBarHeight,
+          backgroundColor: colors.background,
+        }}
+      >
+        <NoLives
+          goHome={() => {
+            navigation.goBack();
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
 
-  // if (isFinished) {
-  //   return (
-  //     <DisplaySummery
-  //       startTimer={startTimer}
-  //       isLivesFinished={isLivesFinished}
-  //       handleNextLevel={handleNextLevel}
-  //       goHome={() => {
-  //         handleNextLevel();
-  //         navigation.goBack();
-  //       }}
-  //     />
-  //   );
-  // }
+  if (isFinished) {
+    return (
+      <SafeAreaView
+        style={{
+          ...styles.container,
+          paddingTop: statusBarHeight,
+          backgroundColor: colors.background,
+        }}
+      >
+        <DisplaySummery
+          startTimer={startTimer}
+          // isLivesFinished={isLivesFinished}
+          handleNextLevel={handleNextLevel}
+          goHome={() => {
+            handleNextLevel();
+            navigation.goBack();
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView

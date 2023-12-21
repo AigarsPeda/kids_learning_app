@@ -102,7 +102,7 @@ const useLevelStatus = (storedLevel: number) => {
     lives,
     isFinished,
     currentLevelStep,
-    isLivesFinished: lives <= 0,
+
     startTimer: startTimer.current,
     decrementLives,
     handleNextLevel,
