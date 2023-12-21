@@ -25,6 +25,8 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { gameData, getGameData, removeAllGameData } = useGameData();
   const { userData, getUserData, removeAllUserData } = useUserSettings();
 
+  const isLivesFinished = userData?.user.lives.lives === 0;
+
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
     setTimeout(() => {
@@ -82,6 +84,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           onRefresh={onRefresh}
           navigation={navigation}
           isRefreshing={isRefreshing}
+          isLivesFinished={isLivesFinished}
           handleScroll={(event) => {
             const offsetY = event.nativeEvent.contentOffset.y;
             // Check the value of offsetY to determine if the FlatList is scrolled

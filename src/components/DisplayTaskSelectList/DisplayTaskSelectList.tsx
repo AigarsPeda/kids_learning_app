@@ -7,7 +7,7 @@ import {
   RefreshControl,
   View,
 } from "react-native";
-import { GameLevelType } from "types/game";
+import { type GameLevelType } from "types/game";
 import { LevelScreenPropsType } from "types/screen";
 import createArray from "utils/createArray";
 import handleLeftMargin from "utils/handleLeftMargin";
@@ -15,8 +15,9 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayTaskSelectListProps {
   isRefreshing: boolean;
-  onRefresh: () => void;
+  isLivesFinished: boolean;
   gameData: GameLevelType | undefined;
+  onRefresh: () => void;
   handleScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   navigation: {
     navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
@@ -25,9 +26,10 @@ interface DisplayTaskSelectListProps {
 
 const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   gameData,
-  onRefresh,
   navigation,
   isRefreshing,
+  isLivesFinished,
+  onRefresh,
   handleScroll,
 }) => {
   const array = createArray(20);
@@ -81,10 +83,10 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
           <View
             style={{
               marginLeft: handleLeftMargin(index, 32, 5),
+              marginBottom: isLast ? scalaDownDependingOnDevice(170) : 0,
               marginTop: isFirst
                 ? scalaDownDependingOnDevice(25)
                 : scalaDownDependingOnDevice(60),
-              marginBottom: isLast ? scalaDownDependingOnDevice(170) : 0,
             }}
           >
             <RoundButton
@@ -93,11 +95,15 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
               title={(index + 1).toString()}
               isCompleted={level?.isLevelCompleted}
               levelProgress={level?.levelStep || 0.86}
-              onPress={() =>
+              onPress={() => {
+                if (isLivesFinished) {
+                  return;
+                }
+
                 navigation.navigate("LevelScreen", {
                   level: (index + 1).toString(),
-                })
-              }
+                });
+              }}
             />
           </View>
         );
