@@ -74,6 +74,7 @@ const useUserSettings = () => {
     getUserData: getData,
     updateUserData: setNewData,
     removeAllUserData: clearData,
+    isLivesFinished: data?.user.lives.lives === 0,
   };
 };
 

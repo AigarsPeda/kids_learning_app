@@ -30,13 +30,14 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     lives,
     isFinished,
     startTimer,
+    isLivesFinished,
     currentLevelStep,
     decrementLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   } = useLevelStatus(parseInt(level));
 
-  if (lives <= 0) {
+  if (isLivesFinished) {
     return (
       <SafeAreaView
         style={{

@@ -9,8 +9,9 @@ const useLevelStatus = (storedLevel: number) => {
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
   const [isFinished, setIsFinished] = useState(false);
-  const { userData, updateUserData, decrementLives } = useUserSettings();
   const [currentLevelStep, setCurrentLevelStep] = useState(0);
+  const { userData, isLivesFinished, updateUserData, decrementLives } =
+    useUserSettings();
 
   const handleSavingCurrentLevelProgress = () => {
     const nextStep = currentLevelStep + 1;
@@ -101,8 +102,8 @@ const useLevelStatus = (storedLevel: number) => {
   return {
     lives,
     isFinished,
+    isLivesFinished,
     currentLevelStep,
-
     startTimer: startTimer.current,
     decrementLives,
     handleNextLevel,
