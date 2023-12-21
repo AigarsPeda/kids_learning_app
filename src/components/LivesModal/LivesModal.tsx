@@ -155,7 +155,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
           <ChildrenButton
             isDisabled={isBuyLivesDisabled}
             onPress={() => {
-              console.log("save");
+              console.log("save 111");
             }}
           >
             <ChildrenButtonText text="Noskatīties reklāmu" />
