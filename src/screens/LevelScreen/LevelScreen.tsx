@@ -1,5 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import BuyLives from "components/BuyLives/BuyLives";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";
@@ -46,6 +47,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           backgroundColor: colors.background,
         }}
       >
+        <BuyLives />
         <NoLives
           goHome={() => {
             navigation.goBack();
@@ -66,7 +68,6 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
       >
         <DisplaySummery
           startTimer={startTimer}
-          // isLivesFinished={isLivesFinished}
           handleNextLevel={handleNextLevel}
           goHome={() => {
             handleNextLevel();

@@ -14,6 +14,7 @@ import createArray from "utils/createArray";
 import formatTimeToString from "utils/formatTimeToString";
 import getTimePassedSince from "utils/getTimePassedSince";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import BuyLives from "../BuyLives/BuyLives";
 
 const { defaultLives, livesRecoveryTimeInMinutes } = LEVEL_SETTINGS;
 
@@ -122,45 +123,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             ? `Nākamā dzīvība pēc ${timeTillNextLife}`
             : `Visas dzīvības ir atjaunotas`}
         </Text>
-        <View
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: scalaDownDependingOnDevice(10),
-            marginTop: scalaDownDependingOnDevice(10),
-            paddingHorizontal: scalaDownDependingOnDevice(20),
-          }}
-        >
-          <ChildrenButton
-            isDisabled={isBuyLivesDisabled}
-            onPress={() => {
-              console.log("save");
-            }}
-          >
-            <ChildrenButtonText text="Uzpildīt dzīvības 300" />
-            <ZigIcon
-              fill="#fff"
-              width={scalaDownDependingOnDevice(20)}
-              height={scalaDownDependingOnDevice(20)}
-            />
-          </ChildrenButton>
-          <ChildrenButton
-            onPress={() => {
-              console.log("save");
-            }}
-          >
-            <ChildrenButtonText text="Dzīvības bez ierobežojumiem" />
-          </ChildrenButton>
-          <ChildrenButton
-            isDisabled={isBuyLivesDisabled}
-            onPress={() => {
-              console.log("save 111");
-            }}
-          >
-            <ChildrenButtonText text="Noskatīties reklāmu" />
-          </ChildrenButton>
-        </View>
+        <BuyLives isBuyLivesDisabled={isBuyLivesDisabled} />
       </TopModal>
     </>
   );
