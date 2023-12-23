@@ -14,6 +14,7 @@ import { type FC } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+// import PinkMonster from "../../monster/PinkMonster";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
@@ -122,7 +123,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           {tasks.description}
         </Text>
       </View>
-
+      {/* <PinkMonster /> */}
       <DisplayTask
         kind={taskKind}
         tasks={tasks.tasks}
