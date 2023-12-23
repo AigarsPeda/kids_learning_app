@@ -14,10 +14,10 @@ import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayTaskSelectListProps {
+  onRefresh: () => void;
   isRefreshing: boolean;
   isLivesFinished: boolean;
   gameData: GameLevelType | undefined;
-  onRefresh: () => void;
   handleScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   navigation: {
     navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
@@ -26,11 +26,11 @@ interface DisplayTaskSelectListProps {
 
 const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   gameData,
+  onRefresh,
   navigation,
+  handleScroll,
   isRefreshing,
   isLivesFinished,
-  onRefresh,
-  handleScroll,
 }) => {
   const array = createArray(20);
   const flatListRef = useRef<FlatList>(null);
