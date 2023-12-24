@@ -123,7 +123,6 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           {tasks.description}
         </Text>
       </View>
-      {/* <PinkMonster /> */}
       <DisplayTask
         kind={taskKind}
         tasks={tasks.tasks}

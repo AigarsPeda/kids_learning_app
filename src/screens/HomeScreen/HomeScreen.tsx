@@ -19,7 +19,7 @@ interface LevelScreenProps {
 
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
-  const { statusBarHeight } = useStatusBarHeight();
+  // const { statusBarHeight } = useStatusBarHeight();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { gameData, getGameData, removeAllGameData } = useGameData();

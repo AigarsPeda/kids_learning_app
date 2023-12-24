@@ -1,5 +1,6 @@
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
 import DisplayWrongAnswers from "components/DisplayWrongAnswers/DisplayWrongAnswers";
+import Confetti from "components/Confetti/Confetti";
 import MyButton from "components/MyButton/MyButton";
 import useMissingNumberInputs from "hooks/useMissingNumberInputs";
 import usePreviousState from "hooks/usePreviousState";
@@ -55,6 +56,8 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   const [currentFocusedId, setCurrentFocusedId] = useState("");
   const prevFocusedId = usePreviousState(currentFocusedId);
 
+  const isConfetti = wrongAnswers.length === 0 && isAllAnswered && isChecked;
+
   const isUnknownNumber =
     kind === "missingNumberAddition" ||
     kind === "getResultOfAddition" ||
@@ -71,7 +74,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     }
 
     // save if no wrong answers
-    if (wrongAnswers.length === 0) {
+    if (2) {
       handleSavingCurrentLevelProgress();
     }
 
@@ -151,7 +154,6 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       )}
 
       <DisplayWrongAnswers
-        // isChecked={isChecked}
         wrongAnswers={wrongAnswers}
         handleNextTask={handleNextStep}
       />
@@ -162,8 +164,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
           marginBottom: scalaDownDependingOnDevice(20),
         }}
       >
+        {isConfetti && <Confetti />}
         <View
           style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             paddingBottom: scalaDownDependingOnDevice(20),
           }}
         >

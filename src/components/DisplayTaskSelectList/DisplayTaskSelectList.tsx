@@ -60,9 +60,9 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
       data={array}
       ref={flatListRef}
       getItemLayout={(_data, index) => ({
-        length: 100, // Specify the height of your item
-        offset: 100 * index,
         index,
+        length: scalaDownDependingOnDevice(115), // Specify the height of your item
+        offset: scalaDownDependingOnDevice(115 * index),
       })}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
