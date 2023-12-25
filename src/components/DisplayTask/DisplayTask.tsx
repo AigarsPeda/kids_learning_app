@@ -1,6 +1,6 @@
+import Confetti from "components/Confetti/Confetti";
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
 import DisplayWrongAnswers from "components/DisplayWrongAnswers/DisplayWrongAnswers";
-import Confetti from "components/Confetti/Confetti";
 import MyButton from "components/MyButton/MyButton";
 import useMissingNumberInputs from "hooks/useMissingNumberInputs";
 import usePreviousState from "hooks/usePreviousState";
@@ -74,7 +74,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     }
 
     // save if no wrong answers
-    if (2) {
+    if (wrongAnswers.length === 0) {
       handleSavingCurrentLevelProgress();
     }
 

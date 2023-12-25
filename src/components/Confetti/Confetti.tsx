@@ -13,7 +13,6 @@ const Confetti = () => {
         count={200}
         fadeOut={true}
         fallSpeed={2500}
-        // explosionSpeed={1000}
         autoStartDelay={100}
         origin={{ x: device.width / 2, y: -20 }}
         onAnimationEnd={() => {
