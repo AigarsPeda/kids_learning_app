@@ -1,6 +1,6 @@
 import Confetti from "components/Confetti/Confetti";
+import DisplayAnswers from "components/DisplayAnswers/DisplayAnswers";
 import DisplayUnknownNumberAddition from "components/DisplayUnknownNumberAddition/DisplayUnknownNumberAddition";
-import DisplayWrongAnswers from "components/DisplayWrongAnswers/DisplayWrongAnswers";
 import MyButton from "components/MyButton/MyButton";
 import useMissingNumberInputs from "hooks/useMissingNumberInputs";
 import usePreviousState from "hooks/usePreviousState";
@@ -44,8 +44,9 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   const {
     inputs,
     isChecked,
-    wrongAnswers,
+    allAnswers,
     isAllAnswered,
+    isWrongAnswer,
     checkAnswers,
     setIsChecked,
     checkAnswersById,
@@ -56,7 +57,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   const [currentFocusedId, setCurrentFocusedId] = useState("");
   const prevFocusedId = usePreviousState(currentFocusedId);
 
-  const isConfetti = wrongAnswers.length === 0 && isAllAnswered && isChecked;
+  const isConfetti = !isWrongAnswer && isAllAnswered && isChecked;
 
   const isUnknownNumber =
     kind === "missingNumberAddition" ||
@@ -69,12 +70,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     const nextStepIndex = currentStepIndex + 1;
     const nextStep = steps[nextStepIndex] || steps[0];
 
-    if (wrongAnswers.length !== 0) {
+    if (isWrongAnswer) {
       decrementLives();
     }
 
     // save if no wrong answers
-    if (wrongAnswers.length === 0) {
+    if (!isWrongAnswer) {
       handleSavingCurrentLevelProgress();
     }
 
@@ -153,10 +154,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
         />
       )}
 
-      <DisplayWrongAnswers
-        wrongAnswers={wrongAnswers}
-        handleNextTask={handleNextStep}
-      />
+      {isWrongAnswer && (
+        <DisplayAnswers
+          allAnswers={allAnswers}
+          handleNextTask={handleNextStep}
+        />
+      )}
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -11,23 +11,23 @@ import {
 import Modal from "react-native-modal";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
-interface DisplayWrongAnswersProps {
-  wrongAnswers: number[];
+interface DisplayAnswersProps {
+  allAnswers: number[];
   handleNextTask: () => void;
 }
 
-const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
-  wrongAnswers,
+const DisplayAnswers: FC<DisplayAnswersProps> = ({
+  allAnswers,
   handleNextTask,
 }) => {
   const { colors } = useColors();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    if (Boolean(wrongAnswers.length !== 0)) {
+    if (Boolean(allAnswers.length !== 0)) {
       setIsModalVisible(true);
     }
-  }, [wrongAnswers]);
+  }, [allAnswers]);
 
   return (
     <View style={styles.centeredView}>
@@ -85,7 +85,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
                   Pareizās atbildes:
                 </Text>
                 <FlatList
-                  data={wrongAnswers}
+                  data={allAnswers}
                   numColumns={3}
                   style={{
                     width: "100%",
@@ -95,7 +95,7 @@ const DisplayWrongAnswers: FC<DisplayWrongAnswersProps> = ({
                   keyExtractor={(item) => item.toString()}
                   renderItem={({ item, index }) => {
                     const isFirstItem = index === 0;
-                    const isLastItem = index === wrongAnswers.length - 1;
+                    const isLastItem = index === allAnswers.length - 1;
                     return (
                       <Text
                         style={{
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DisplayWrongAnswers;
+export default DisplayAnswers;

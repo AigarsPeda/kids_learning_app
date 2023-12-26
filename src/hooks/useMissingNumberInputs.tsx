@@ -12,7 +12,8 @@ export type InputObjType = {
 const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState<InputObjType>({});
-  const [wrongAnswers, setWrongAnswers] = useState<number[]>([]);
+  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
+  const [allAnswers, setAllAnswers] = useState<number[]>([]);
   const [initialInputs, setInitialInputs] = useState<InputObjType>({});
 
   const createInputs = useCallback(
@@ -101,7 +102,7 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
 
   const checkAnswers = () => {
     const newInputs = { ...inputs };
-    const newWrongAnswers = [...wrongAnswers];
+    const newWrongAnswers = [...allAnswers];
 
     for (const key in newInputs) {
       const input = newInputs[key];
@@ -114,23 +115,41 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
       };
 
       if (answer !== "correct") {
-        const wrongAnswer = initialInputs[key];
+        setIsWrongAnswer(true);
+        // const wrongAnswer = initialInputs[key];
 
-        for (const ky in wrongAnswer) {
-          const k = ky as keyof InputType;
+        // for (const ky in wrongAnswer) {
+        //   const k = ky as keyof InputType;
 
-          if (wrongAnswer[k] === undefined) {
-            const missingNumber = findMissingNumber(wrongAnswer);
+        //   if (wrongAnswer[k] === undefined) {
+        //     const missingNumber = findMissingNumber(wrongAnswer);
 
-            if (missingNumber) {
-              newWrongAnswers.push(missingNumber);
-            }
+        //     if (missingNumber) {
+        //       newWrongAnswers.push(missingNumber);
+        //     }
+        //   }
+        // }
+      }
+
+      // if (answer !== "correct") {
+      const wrongAnswer = initialInputs[key];
+
+      for (const ky in wrongAnswer) {
+        const k = ky as keyof InputType;
+
+        if (wrongAnswer[k] === undefined) {
+          const missingNumber = findMissingNumber(wrongAnswer);
+
+          if (missingNumber) {
+            newWrongAnswers.push(missingNumber);
           }
         }
       }
+      // }
     }
 
-    setWrongAnswers(newWrongAnswers);
+    // setWrongAnswers(newWrongAnswers);
+    setAllAnswers(newWrongAnswers);
     setInputs(newInputs);
     setIsChecked(true);
   };
@@ -147,7 +166,8 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
 
   useEffect(() => {
     createInputs(tasks);
-    setWrongAnswers([]);
+    // setWrongAnswers([]);
+    setAllAnswers([]);
   }, [tasks]);
 
   return {
@@ -155,8 +175,9 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     isChecked,
     setIsChecked,
     checkAnswers,
-    wrongAnswers,
-    setWrongAnswers,
+    allAnswers,
+    isWrongAnswer,
+    // setIsWrongAnswer,
     checkAnswersById,
     updateInputsValue,
     isAllAnswered: checkIsAnswered(inputs),
