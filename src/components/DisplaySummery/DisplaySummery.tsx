@@ -1,15 +1,13 @@
+import ChildrenButton from "components/ChildrenButton/ChildrenButton";
+import HouseIcon from "components/icons/HouseIcon/HouseIcon";
+import NextIcon from "components/icons/NextIcon/NextIcon";
 import useColors from "hooks/useStyles";
+import PinkMonster from "monster/PinkMonster";
+import RedMonster from "monster/RedMonster";
 import { type FC } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
-import PinkMonster from "../../monster/PinkMonster";
-import { scalaDownDependingOnDevice } from "../../utils/metrics";
-import RedMonster from "../../monster/RedMonster";
-import ChildrenButton from "../ChildrenButton/ChildrenButton";
-import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import NextIcon from "../icons/NextIcon/NextIcon";
-import HouseIcon from "../icons/HouseIcon/HouseIcon";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -70,7 +68,6 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         {getMinHoursPassed(startTimer)}
       </Text>
-      {/* <Button title="Next Level" onPress={handleNextLevel} /> */}
       <View
         style={{
           display: "flex",
@@ -79,11 +76,6 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
-          {/* <Ionicons
-            name="home"
-            color={"#fff"}
-            size={scalaDownDependingOnDevice(20)}
-          /> */}
           <HouseIcon
             stroke={"#fff"}
             width={scalaDownDependingOnDevice(30)}
@@ -91,11 +83,6 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           />
         </ChildrenButton>
         <ChildrenButton onPress={handleNextLevel}>
-          {/* <Ionicons
-            color={"#fff"}
-            name="arrow-forward"
-            size={scalaDownDependingOnDevice(20)}
-          /> */}
           <NextIcon
             stroke={"#fff"}
             width={scalaDownDependingOnDevice(30)}

@@ -4,9 +4,9 @@ const RedMonster = (props: SvgProps) => (
   <Svg
     fillRule="evenodd"
     clipRule="evenodd"
-    strokeLinejoin="round"
     strokeMiterlimit={2}
     viewBox="0 0 604 619"
+    strokeLinejoin="round"
     {...props}
   >
     <G transform="translate(-3802.63 -1600)">
