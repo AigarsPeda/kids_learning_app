@@ -46,14 +46,14 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
+  text: {
+    letterSpacing: scalaDownDependingOnDevice(0.25),
+  },
   button: {
     elevation: 5,
     borderRadius: 4,
     paddingVertical: scalaDownDependingOnDevice(10),
     paddingHorizontal: scalaDownDependingOnDevice(35),
-  },
-  text: {
-    letterSpacing: scalaDownDependingOnDevice(0.25),
   },
 });
 
