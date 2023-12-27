@@ -2,6 +2,13 @@ import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
+import PinkMonster from "../../monster/PinkMonster";
+import { scalaDownDependingOnDevice } from "../../utils/metrics";
+import RedMonster from "../../monster/RedMonster";
+import ChildrenButton from "../ChildrenButton/ChildrenButton";
+import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
+import ZigIcon from "../icons/Zig/Zig";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -23,10 +30,31 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         padding: 16,
       }}
     >
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
+        <PinkMonster
+          width={scalaDownDependingOnDevice(150)}
+          height={scalaDownDependingOnDevice(150)}
+        />
+        <RedMonster
+          width={scalaDownDependingOnDevice(90)}
+          height={scalaDownDependingOnDevice(90)}
+        />
+      </View>
       <Text
         style={{
           ...styles.headLine,
-          color: colors.text,
+          color: colors.accent,
+          fontWeight: "bold",
+          textAlign: "center",
+          fontFamily: typography.primaryBoldFont,
+          fontSize: scalaDownDependingOnDevice(30),
         }}
       >
         Level Completed
@@ -41,9 +69,29 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         {getMinHoursPassed(startTimer)}
       </Text>
-      <Button title="Next Level" onPress={handleNextLevel} />
-
-      <Button title="Home" onPress={goHome} />
+      {/* <Button title="Next Level" onPress={handleNextLevel} /> */}
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <ChildrenButton color="gray" onPress={goHome}>
+          <Ionicons
+            name="home"
+            color={"#fff"}
+            size={scalaDownDependingOnDevice(20)}
+          />
+        </ChildrenButton>
+        <ChildrenButton onPress={handleNextLevel}>
+          <Ionicons
+            color={"#fff"}
+            name="arrow-forward"
+            size={scalaDownDependingOnDevice(20)}
+          />
+        </ChildrenButton>
+      </View>
     </View>
   );
 };
