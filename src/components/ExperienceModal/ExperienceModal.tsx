@@ -1,12 +1,12 @@
+import MyButton from "components/MyButton/MyButton";
 import OpacityButton from "components/OpacityButton/OpacityButton";
-import ZigIcon from "components/icons/Zig/ZigIcon";
+import TopModal from "components/TopModal/TopModal";
+import ZigIcon from "components/icons/ZigIcon/ZigIcon";
 import useStyles from "hooks/useStyles";
 import { useState, type FC } from "react";
 import { Text, View } from "react-native";
 import { type UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import TopModal from "../TopModal/TopModal";
-import MyButton from "../MyButton/MyButton";
 
 interface HomeScreenProps {
   userData: UserSettingsType | undefined;
