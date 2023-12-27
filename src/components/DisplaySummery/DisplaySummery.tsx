@@ -7,8 +7,9 @@ import { scalaDownDependingOnDevice } from "../../utils/metrics";
 import RedMonster from "../../monster/RedMonster";
 import ChildrenButton from "../ChildrenButton/ChildrenButton";
 import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
-import ZigIcon from "../icons/Zig/Zig";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import NextIcon from "../icons/NextIcon/NextIcon";
+import HouseIcon from "../icons/HouseIcon/HouseIcon";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -78,17 +79,27 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
-          <Ionicons
+          {/* <Ionicons
             name="home"
             color={"#fff"}
             size={scalaDownDependingOnDevice(20)}
+          /> */}
+          <HouseIcon
+            stroke={"#fff"}
+            width={scalaDownDependingOnDevice(30)}
+            height={scalaDownDependingOnDevice(30)}
           />
         </ChildrenButton>
         <ChildrenButton onPress={handleNextLevel}>
-          <Ionicons
+          {/* <Ionicons
             color={"#fff"}
             name="arrow-forward"
             size={scalaDownDependingOnDevice(20)}
+          /> */}
+          <NextIcon
+            stroke={"#fff"}
+            width={scalaDownDependingOnDevice(30)}
+            height={scalaDownDependingOnDevice(30)}
           />
         </ChildrenButton>
       </View>

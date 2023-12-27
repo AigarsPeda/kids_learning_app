@@ -1,6 +1,6 @@
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
 import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
-import ZigIcon from "components/icons/Zig/Zig";
+import ZigIcon from "components/icons/ZigIcon/ZigIcon";
 import { type FC } from "react";
 import { View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";

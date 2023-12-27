@@ -4,7 +4,7 @@ import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import OpacityButton from "components/OpacityButton/OpacityButton";
 import TopModal from "components/TopModal/TopModal";
-import ZigIcon from "components/icons/Zig/Zig";
+import ZigIcon from "components/icons/Zig/ZigIcon";
 import { LEVEL_SETTINGS } from "hardcoded";
 import useStyles from "hooks/useStyles";
 import { useEffect, useState, type FC } from "react";

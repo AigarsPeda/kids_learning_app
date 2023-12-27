@@ -1,5 +1,5 @@
 import OpacityButton from "components/OpacityButton/OpacityButton";
-import ZigIcon from "components/icons/Zig/Zig";
+import ZigIcon from "components/icons/Zig/ZigIcon";
 import useStyles from "hooks/useStyles";
 import { useState, type FC } from "react";
 import { Text, View } from "react-native";
