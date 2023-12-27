@@ -18,7 +18,7 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
   isDisabled,
   color = "accent",
 }) => {
-  const { colors, typography } = useColors();
+  const { colors } = useColors();
   return (
     <Pressable
       style={{
@@ -36,6 +36,7 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
+          // justifyContent: "center",
         }}
       >
         {children}
@@ -48,14 +49,12 @@ const styles = StyleSheet.create({
   button: {
     elevation: 5,
     borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
     paddingVertical: scalaDownDependingOnDevice(10),
-    paddingHorizontal: scalaDownDependingOnDevice(40),
+    paddingHorizontal: scalaDownDependingOnDevice(35),
   },
   text: {
-    fontSize: scalaDownDependingOnDevice(20),
-    lineHeight: scalaDownDependingOnDevice(21),
+    // fontSize: scalaDownDependingOnDevice(20),
+    // lineHeight: scalaDownDependingOnDevice(21),
     letterSpacing: scalaDownDependingOnDevice(0.25),
   },
 });

@@ -33,8 +33,8 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
           alignItems: "flex-end",
+          justifyContent: "space-between",
         }}
       >
         <PinkMonster
@@ -76,17 +76,41 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
+          <Text
+            style={{
+              display: "flex",
+              color: colors.text,
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: typography.primaryBoldFont,
+              fontSize: scalaDownDependingOnDevice(18),
+            }}
+          >
+            Mājas
+          </Text>
           <HouseIcon
             stroke={"#fff"}
-            width={scalaDownDependingOnDevice(30)}
-            height={scalaDownDependingOnDevice(30)}
+            width={scalaDownDependingOnDevice(32)}
+            height={scalaDownDependingOnDevice(32)}
           />
         </ChildrenButton>
         <ChildrenButton onPress={handleNextLevel}>
+          <Text
+            style={{
+              display: "flex",
+              color: colors.text,
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: typography.primaryBoldFont,
+              fontSize: scalaDownDependingOnDevice(18),
+            }}
+          >
+            Nākamais
+          </Text>
           <NextIcon
             stroke={"#fff"}
-            width={scalaDownDependingOnDevice(30)}
-            height={scalaDownDependingOnDevice(30)}
+            width={scalaDownDependingOnDevice(36)}
+            height={scalaDownDependingOnDevice(36)}
           />
         </ChildrenButton>
       </View>
