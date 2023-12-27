@@ -173,7 +173,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingBottom: scalaDownDependingOnDevice(20),
+            paddingBottom: scalaDownDependingOnDevice(15),
           }}
         >
           <MyButton

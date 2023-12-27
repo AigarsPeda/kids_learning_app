@@ -72,6 +72,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         style={{
           display: "flex",
           flexDirection: "row",
+          gap: 16,
           justifyContent: "space-between",
         }}
       >

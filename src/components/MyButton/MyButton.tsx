@@ -40,6 +40,7 @@ const MyButton: FC<MyButton> = ({
           opacity: isDisabled ? 0.5 : 1,
           fontSize: scalaDownDependingOnDevice(20),
           fontFamily: typography.primaryMediumFont,
+          paddingVertical: scalaDownDependingOnDevice(4),
           letterSpacing: scalaDownDependingOnDevice(0.25),
         }}
       >

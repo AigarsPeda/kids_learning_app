@@ -36,7 +36,7 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          // justifyContent: "center",
+          gap: scalaDownDependingOnDevice(10),
         }}
       >
         {children}
@@ -53,8 +53,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: scalaDownDependingOnDevice(35),
   },
   text: {
-    // fontSize: scalaDownDependingOnDevice(20),
-    // lineHeight: scalaDownDependingOnDevice(21),
     letterSpacing: scalaDownDependingOnDevice(0.25),
   },
 });
