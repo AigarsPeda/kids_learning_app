@@ -58,16 +58,43 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         Level Completed
       </Text>
-      <Text
+      <View
         style={{
-          ...styles.headLine,
-          color: colors.text,
-          fontWeight: "bold",
-          fontFamily: typography.primaryBoldFont,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginVertical: scalaDownDependingOnDevice(20),
         }}
       >
-        {getMinHoursPassed(startTimer)}
-      </Text>
+        <View
+          style={{
+            borderColor: colors.accent,
+            borderWidth: 3,
+            borderRadius: 4,
+          }}
+        >
+          <Text
+            style={{
+              ...styles.headLine,
+              color: colors.text,
+              fontWeight: "bold",
+              fontFamily: typography.primaryBoldFont,
+            }}
+          >
+            Laiks
+          </Text>
+          <Text
+            style={{
+              ...styles.headLine,
+              color: colors.text,
+              fontWeight: "bold",
+              fontFamily: typography.primaryBoldFont,
+            }}
+          >
+            {getMinHoursPassed(startTimer)}
+          </Text>
+        </View>
+      </View>
       <View
         style={{
           display: "flex",
