@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 4,
     paddingVertical: scalaDownDependingOnDevice(10),
-    paddingHorizontal: scalaDownDependingOnDevice(35),
+    paddingHorizontal: scalaDownDependingOnDevice(30),
   },
 });
 

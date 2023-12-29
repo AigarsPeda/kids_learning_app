@@ -1,7 +1,7 @@
 import Svg, { Path, SvgProps } from "react-native-svg";
 
 const HouseIcon = (props: SvgProps) => (
-  <Svg width={800} height={800} fill="none" viewBox="0 0 24 24" {...props}>
+  <Svg fill="none" viewBox="0 0 27 27" {...props}>
     <Path
       strokeWidth={2}
       strokeLinecap="round"

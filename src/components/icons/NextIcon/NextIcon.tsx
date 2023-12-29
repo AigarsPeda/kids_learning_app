@@ -1,9 +1,8 @@
 import Svg, { SvgProps, Path } from "react-native-svg";
 
 const NextIcon = (props: SvgProps) => (
-  <Svg width={800} height={800} fill="none" viewBox="0 0 24 24" {...props}>
+  <Svg fill="none" viewBox="0 0 25 25" {...props}>
     <Path
-      // stroke="#000"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

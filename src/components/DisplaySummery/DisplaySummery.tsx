@@ -1,12 +1,12 @@
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
+import DisplayStats from "components/DisplayStats/DisplayStats";
 import HouseIcon from "components/icons/HouseIcon/HouseIcon";
-import NextIcon from "components/icons/NextIcon/NextIcon";
+import PlayIcon from "components/icons/PlayIcon/PlayIcon";
 import useColors from "hooks/useStyles";
 import PinkMonster from "monster/PinkMonster";
 import RedMonster from "monster/RedMonster";
 import { type FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import getMinHoursPassed from "utils/getMinHoursPassed";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplaySummeryProps {
@@ -26,7 +26,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
     <View
       style={{
         ...styles.headLine,
-        padding: 16,
+        padding: scalaDownDependingOnDevice(16),
       }}
     >
       <View
@@ -58,56 +58,21 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         Level Completed
       </Text>
+      <DisplayStats startTimer={startTimer} />
+
       <View
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          marginVertical: scalaDownDependingOnDevice(20),
-        }}
-      >
-        <View
-          style={{
-            borderColor: colors.accent,
-            borderWidth: 3,
-            borderRadius: 4,
-          }}
-        >
-          <Text
-            style={{
-              ...styles.headLine,
-              color: colors.text,
-              fontWeight: "bold",
-              fontFamily: typography.primaryBoldFont,
-            }}
-          >
-            Laiks
-          </Text>
-          <Text
-            style={{
-              ...styles.headLine,
-              color: colors.text,
-              fontWeight: "bold",
-              fontFamily: typography.primaryBoldFont,
-            }}
-          >
-            {getMinHoursPassed(startTimer)}
-          </Text>
-        </View>
-      </View>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: 16,
-          justifyContent: "space-between",
+          gap: scalaDownDependingOnDevice(10),
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
           <Text
             style={{
               display: "flex",
-              color: colors.text,
+              color: "#fff",
               alignItems: "center",
               justifyContent: "center",
               fontFamily: typography.primaryBoldFont,
@@ -118,15 +83,15 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           </Text>
           <HouseIcon
             stroke={"#fff"}
-            width={scalaDownDependingOnDevice(32)}
-            height={scalaDownDependingOnDevice(32)}
+            width={scalaDownDependingOnDevice(25)}
+            height={scalaDownDependingOnDevice(25)}
           />
         </ChildrenButton>
         <ChildrenButton onPress={handleNextLevel}>
           <Text
             style={{
               display: "flex",
-              color: colors.text,
+              color: "#fff",
               alignItems: "center",
               justifyContent: "center",
               fontFamily: typography.primaryBoldFont,
@@ -135,10 +100,10 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           >
             Nākamais
           </Text>
-          <NextIcon
+          <PlayIcon
             stroke={"#fff"}
-            width={scalaDownDependingOnDevice(36)}
-            height={scalaDownDependingOnDevice(36)}
+            width={scalaDownDependingOnDevice(25)}
+            height={scalaDownDependingOnDevice(25)}
           />
         </ChildrenButton>
       </View>
