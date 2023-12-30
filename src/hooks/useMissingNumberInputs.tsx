@@ -24,12 +24,12 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
 
         inputs[i] = {
           id: task.id,
+          kind: task.kind,
           isAnswered: false,
           correct: "unknown",
           a: task.a || undefined,
           b: task.b || undefined,
           result: task.result || undefined,
-          kind: task.kind,
         };
       }
       setInputs(inputs);
@@ -116,22 +116,8 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
 
       if (answer !== "correct") {
         setIsWrongAnswer(true);
-        // const wrongAnswer = initialInputs[key];
-
-        // for (const ky in wrongAnswer) {
-        //   const k = ky as keyof InputType;
-
-        //   if (wrongAnswer[k] === undefined) {
-        //     const missingNumber = findMissingNumber(wrongAnswer);
-
-        //     if (missingNumber) {
-        //       newWrongAnswers.push(missingNumber);
-        //     }
-        //   }
-        // }
       }
 
-      // if (answer !== "correct") {
       const wrongAnswer = initialInputs[key];
 
       for (const ky in wrongAnswer) {
@@ -165,9 +151,9 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
   };
 
   useEffect(() => {
-    createInputs(tasks);
-    // setWrongAnswers([]);
     setAllAnswers([]);
+    createInputs(tasks);
+    setIsWrongAnswer(false);
   }, [tasks]);
 
   return {
@@ -177,7 +163,6 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     checkAnswers,
     allAnswers,
     isWrongAnswer,
-    // setIsWrongAnswer,
     checkAnswersById,
     updateInputsValue,
     isAllAnswered: checkIsAnswered(inputs),

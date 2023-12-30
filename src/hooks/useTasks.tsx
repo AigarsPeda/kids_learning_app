@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   type EquationArgumentType,
   type MathObjKeysType,
@@ -30,7 +30,7 @@ const useTasks = (level: number) => {
     return "1";
   };
 
-  useEffect(() => {
+  const getNewTasks = useCallback(() => {
     setTasks(
       findTasks({
         taskKind,
@@ -38,12 +38,17 @@ const useTasks = (level: number) => {
         difficulty: getDifficulty(level),
       })
     );
-  }, [level, taskKind]);
+  }, [taskKind, level]);
+
+  useEffect(() => {
+    getNewTasks();
+  }, [getNewTasks]);
 
   return {
     tasks,
     taskKind,
     setTaskKind,
+    getNewTasks,
   };
 };
 

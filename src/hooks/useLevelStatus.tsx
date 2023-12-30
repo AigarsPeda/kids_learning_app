@@ -9,39 +9,58 @@ const useLevelStatus = (storedLevel: number) => {
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
   const [isFinished, setIsFinished] = useState(false);
-  const [currentLevelStep, setCurrentLevelStep] = useState(0);
   const { userData, isLivesFinished, updateUserData, decrementLives } =
     useUserSettings();
 
   const handleSavingCurrentLevelProgress = () => {
-    const nextStep = currentLevelStep + 1;
-
     const newData = { ...gameData };
+    const nextStep = newData[level].levelStep + 1;
     const s = nextStep === LEVEL_SETTINGS.levelParts ? 0 : nextStep;
 
     // Save the current level only if it is not completed yet
     if (!newData[level].isLevelCompleted) {
       newData[level] = {
-        // step in witch user is
+        ...newData[level],
         levelStep: s,
         isLevelCompleted: nextStep === LEVEL_SETTINGS.levelParts,
       };
 
+      console.log("saving", newData[level]);
+
       updateGameData(newData);
     }
 
-    setCurrentLevelStep(nextStep);
+    // setCurrentLevelStep(nextStep);
 
     if (nextStep === LEVEL_SETTINGS.levelParts) {
       // add experience if level is completed to the user
       const newUserData = { ...userData };
 
       newUserData.user.experience =
-        newUserData.user.experience + LEVEL_SETTINGS.experiencePerLevel;
+        newUserData.user.experience + newData[level].experienceInLevel;
 
       updateUserData(newUserData);
       setIsFinished(true);
     }
+  };
+
+  const decreesLives = () => {
+    const newData = { ...gameData };
+
+    if (!newData[level].isLevelCompleted) {
+      const newExperience =
+        newData[level].experienceInLevel -
+        LEVEL_SETTINGS.experienceCostForMistake;
+
+      newData[level] = {
+        ...newData[level],
+        isLevelCompleted: false,
+        experienceInLevel: newExperience <= 0 ? 0 : newExperience,
+      };
+      updateGameData(newData);
+    }
+
+    decrementLives();
   };
 
   const handleNextLevel = () => {
@@ -50,43 +69,37 @@ const useLevelStatus = (storedLevel: number) => {
     const currenLevel = newGameData[level];
     const nextLevelData = newGameData[nextLevel];
 
-    // const isLevelFinished = currenLevel.levelStep >= LEVEL_SETTINGS.levelParts;
-
     if (!currenLevel.isLevelCompleted) {
       setIsFinished(false);
-      setCurrentLevelStep(0);
       updateGameData(newGameData);
       startTimer.current = new Date();
       return;
     }
-
-    // add experience if level is completed to the user
-    // const newUserData = { ...userData };
 
     if (!nextLevelData) {
       // create new level data if it does not exist
       newGameData[nextLevel.toString()] = {
         levelStep: 0,
         isLevelCompleted: false,
+        experienceInLevel: LEVEL_SETTINGS.defaultLevelExperience,
       };
     }
 
     setLevel(nextLevel);
     setIsFinished(false);
-    setCurrentLevelStep(0);
     updateGameData(newGameData);
     startTimer.current = new Date();
   };
 
-  useEffect(() => {
-    const thisLevel = gameData?.[level];
+  // useEffect(() => {
+  //   const thisLevel = gameData?.[level];
 
-    if (!thisLevel) {
-      return;
-    }
+  //   if (!thisLevel) {
+  //     return;
+  //   }
 
-    setCurrentLevelStep(thisLevel.levelStep);
-  }, [gameData, level]);
+  //   // setCurrentLevelStep(thisLevel.levelStep);
+  // }, [gameData, level]);
 
   useEffect(() => {
     if (!userData?.user?.lives.lives) {
@@ -103,9 +116,9 @@ const useLevelStatus = (storedLevel: number) => {
     lives,
     isFinished,
     isLivesFinished,
-    currentLevelStep,
+    task: gameData?.[level],
     startTimer: startTimer.current,
-    decrementLives,
+    decreesLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   };

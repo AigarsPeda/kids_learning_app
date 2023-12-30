@@ -1,3 +1,4 @@
+import { LEVEL_SETTINGS } from "hardcoded";
 import useAsyncStorage from "hooks/useAsyncStorage";
 import { GameLevelType } from "types/game";
 
@@ -8,8 +9,8 @@ const useGameData = () => {
       initialValue: {
         "1": {
           levelStep: 0,
-          // levelProgress: 0,
           isLevelCompleted: false,
+          experienceInLevel: LEVEL_SETTINGS.defaultLevelExperience,
         },
       },
     });

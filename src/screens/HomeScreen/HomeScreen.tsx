@@ -7,7 +7,6 @@ import useUserSettings from "hooks/useUserSettings";
 import { useCallback, useEffect, useState, type FC } from "react";
 import { SafeAreaView, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
-import useStatusBarHeight from "../../hooks/useStatusBarHeight";
 
 interface LevelScreenProps {
   navigation: {
@@ -19,7 +18,6 @@ interface LevelScreenProps {
 
 const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
-  // const { statusBarHeight } = useStatusBarHeight();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { gameData, getGameData, removeAllGameData } = useGameData();

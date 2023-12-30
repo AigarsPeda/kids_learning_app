@@ -14,7 +14,6 @@ import { type FC } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-// import PinkMonster from "../../monster/PinkMonster";
 
 type RootStackParamList = {
   LevelScreen: LevelScreenPropsType;
@@ -26,15 +25,17 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { level } = route.params;
   const { colors, typography } = useStyles();
   const { statusBarHeight } = useStatusBarHeight();
-  const { tasks, taskKind, setTaskKind } = useTasks(parseInt(level));
+  const { tasks, taskKind, getNewTasks, setTaskKind } = useTasks(
+    parseInt(level)
+  );
 
   const {
+    task,
     lives,
     isFinished,
     startTimer,
     isLivesFinished,
-    currentLevelStep,
-    decrementLives,
+    decreesLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   } = useLevelStatus(parseInt(level));
@@ -70,6 +71,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         <DisplaySummery
           startTimer={startTimer}
           handleNextLevel={handleNextLevel}
+          experience={task?.experienceInLevel}
           goHome={() => {
             handleNextLevel();
             navigation.goBack();
@@ -103,7 +105,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           onPress={() => navigation.goBack()}
           size={scalaDownDependingOnDevice(40)}
         />
-        <Progressbar currentLevelStep={currentLevelStep} />
+        <Progressbar currentLevelStep={task?.levelStep || 0} />
         <DisplayHeart health={lives} />
       </View>
       <View
@@ -127,7 +129,8 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         kind={taskKind}
         tasks={tasks.tasks}
         changeTask={setTaskKind}
-        decrementLives={decrementLives}
+        getNewTasks={getNewTasks}
+        decrementLives={decreesLives}
         handleSavingCurrentLevelProgress={handleSavingCurrentLevelProgress}
       />
     </SafeAreaView>

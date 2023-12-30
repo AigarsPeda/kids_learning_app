@@ -20,6 +20,7 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface DisplayTaskProps {
   kind: TaskKindType;
   tasks: EquationArgumentType[];
+  getNewTasks: () => void;
   decrementLives: () => void;
   changeTask: (kind: TaskKindType) => void;
   handleSavingCurrentLevelProgress: () => void;
@@ -36,6 +37,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
   kind,
   tasks,
   changeTask,
+  getNewTasks,
   decrementLives,
   handleSavingCurrentLevelProgress,
 }) => {
@@ -71,17 +73,20 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     const nextStep = steps[nextStepIndex] || steps[0];
 
     if (isWrongAnswer) {
+      console.log("wrong answer");
+      getNewTasks();
       decrementLives();
     }
 
     // save if no wrong answers
     if (!isWrongAnswer) {
+      console.log("no wrong answer");
+      changeTask(nextStep);
+      setCurrentStep(nextStep);
       handleSavingCurrentLevelProgress();
     }
 
     setIsChecked(false);
-    changeTask(nextStep);
-    setCurrentStep(nextStep);
   };
 
   const handleButtonState = () => {

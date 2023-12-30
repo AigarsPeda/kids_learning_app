@@ -2,6 +2,7 @@ export type GameLevelType = {
   [key: string]: {
     levelStep: number; // In LEVEL_SETTINGS.levelParts is completed add 1 to levelProgress
     isLevelCompleted: boolean;
+    experienceInLevel: number;
   };
 };
 

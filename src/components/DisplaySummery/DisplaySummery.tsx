@@ -12,12 +12,14 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface DisplaySummeryProps {
   goHome: () => void;
   handleNextLevel: () => void;
+  experience: number | undefined;
   startTimer: Date | null | undefined;
 }
 
 const DisplaySummery: FC<DisplaySummeryProps> = ({
   goHome,
   startTimer,
+  experience,
   handleNextLevel,
 }) => {
   const { colors, typography } = useColors();
@@ -34,7 +36,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-end",
-          justifyContent: "space-between",
+          justifyContent: "center",
         }}
       >
         <PinkMonster
@@ -58,7 +60,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       >
         Level Completed
       </Text>
-      <DisplayStats startTimer={startTimer} />
+      <DisplayStats startTimer={startTimer} experience={experience} />
 
       <View
         style={{
