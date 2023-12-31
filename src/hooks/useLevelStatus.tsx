@@ -25,12 +25,8 @@ const useLevelStatus = (storedLevel: number) => {
         isLevelCompleted: nextStep === LEVEL_SETTINGS.levelParts,
       };
 
-      console.log("saving", newData[level]);
-
       updateGameData(newData);
     }
-
-    // setCurrentLevelStep(nextStep);
 
     if (nextStep === LEVEL_SETTINGS.levelParts) {
       // add experience if level is completed to the user
@@ -44,7 +40,7 @@ const useLevelStatus = (storedLevel: number) => {
     }
   };
 
-  const decreesLives = () => {
+  const decreaseLives = () => {
     const newData = { ...gameData };
 
     if (!newData[level].isLevelCompleted) {
@@ -118,7 +114,7 @@ const useLevelStatus = (storedLevel: number) => {
     isLivesFinished,
     task: gameData?.[level],
     startTimer: startTimer.current,
-    decreesLives,
+    decreaseLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   };

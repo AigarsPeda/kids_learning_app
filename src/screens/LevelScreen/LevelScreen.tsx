@@ -35,7 +35,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     isFinished,
     startTimer,
     isLivesFinished,
-    decreesLives,
+    decreaseLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   } = useLevelStatus(parseInt(level));
@@ -130,7 +130,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         tasks={tasks.tasks}
         changeTask={setTaskKind}
         getNewTasks={getNewTasks}
-        decrementLives={decreesLives}
+        decrementLives={decreaseLives}
         handleSavingCurrentLevelProgress={handleSavingCurrentLevelProgress}
       />
     </SafeAreaView>

@@ -86,17 +86,9 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
     input: InputType;
     index: number;
   }) => {
-    // const answer = isAdditionSubtractionAnswerCorrect(input);
-
-    const newInput = {
-      ...input,
-      // correct: answer,
-      // isAnswered: answer === "correct",
-    };
-
     setInputs((prev) => ({
       ...prev,
-      [index]: newInput,
+      [index]: input,
     }));
   };
 
@@ -131,13 +123,11 @@ const useMissingNumberInputs = (tasks: EquationArgumentType[]) => {
           }
         }
       }
-      // }
     }
 
-    // setWrongAnswers(newWrongAnswers);
-    setAllAnswers(newWrongAnswers);
-    setInputs(newInputs);
     setIsChecked(true);
+    setInputs(newInputs);
+    setAllAnswers(newWrongAnswers);
   };
 
   const isAllAnsweredCorrectly = (inputs: InputObjType) => {

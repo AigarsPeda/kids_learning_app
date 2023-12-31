@@ -73,14 +73,12 @@ const DisplayTask: FC<DisplayTaskProps> = ({
     const nextStep = steps[nextStepIndex] || steps[0];
 
     if (isWrongAnswer) {
-      console.log("wrong answer");
       getNewTasks();
       decrementLives();
     }
 
     // save if no wrong answers
     if (!isWrongAnswer) {
-      console.log("no wrong answer");
       changeTask(nextStep);
       setCurrentStep(nextStep);
       handleSavingCurrentLevelProgress();
