@@ -3,5 +3,5 @@ export const LEVEL_SETTINGS = {
   defaultLives: 3,
   defaultLevelExperience: 110,
   livesRecoveryTimeInMinutes: 5,
-  experienceCostForMistake: 20,
+  experienceCostForMistake: 10,
 };
