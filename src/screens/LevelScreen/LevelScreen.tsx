@@ -59,7 +59,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     );
   }
 
-  if (isFinished) {
+  if (!isFinished) {
     return (
       <SafeAreaView
         style={{

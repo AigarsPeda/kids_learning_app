@@ -3,7 +3,7 @@ import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { Text, View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
-import { device, scalaDownDependingOnDevice } from "utils/metrics";
+import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayStatsProps {
   experience: number | undefined;
@@ -28,9 +28,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
   return (
     <View
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
         gap: scalaDownDependingOnDevice(10),
         marginVertical: scalaDownDependingOnDevice(20),
       }}
@@ -39,7 +36,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 3.5,
           borderColor: colors.accent,
           padding: scalaDownDependingOnDevice(10),
         }}
@@ -72,7 +68,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 3.5,
           borderColor: colors.correct,
           padding: scalaDownDependingOnDevice(10),
         }}
@@ -105,7 +100,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 3.5,
           borderColor: colors.incorrect,
           padding: scalaDownDependingOnDevice(10),
         }}
