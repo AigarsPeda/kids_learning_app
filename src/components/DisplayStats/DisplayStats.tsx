@@ -21,6 +21,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
     const precisionPercentage = Math.round(
       (endExperience / LEVEL_SETTINGS.defaultLevelExperience) * 100
     );
+
     return precisionPercentage;
   };
 
@@ -30,6 +31,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+        gap: scalaDownDependingOnDevice(10),
         marginVertical: scalaDownDependingOnDevice(20),
       }}
     >
@@ -37,7 +39,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 4,
+          width: device.width / 3.5,
           borderColor: colors.accent,
           padding: scalaDownDependingOnDevice(10),
         }}
@@ -70,7 +72,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 4,
+          width: device.width / 3.5,
           borderColor: colors.correct,
           padding: scalaDownDependingOnDevice(10),
         }}
@@ -103,7 +105,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         style={{
           borderWidth: 3,
           borderRadius: 10,
-          width: device.width / 4,
+          width: device.width / 3.5,
           borderColor: colors.incorrect,
           padding: scalaDownDependingOnDevice(10),
         }}
