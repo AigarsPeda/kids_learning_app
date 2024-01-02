@@ -34,20 +34,20 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
     >
       <View
         style={{
-          borderWidth: 3,
-          borderRadius: 10,
-          borderColor: colors.accent,
-          padding: scalaDownDependingOnDevice(10),
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingVertical: scalaDownDependingOnDevice(10),
+          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
           style={{
-            fontWeight: "bold",
             textAlign: "center",
-            color: colors.accent,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(16),
-            marginBottom: scalaDownDependingOnDevice(10),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
           Laiks
@@ -56,9 +56,9 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           style={{
             fontWeight: "bold",
             textAlign: "center",
-            color: colors.accent,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(20),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
           {getMinHoursPassed(startTimer)}
@@ -66,20 +66,22 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
       </View>
       <View
         style={{
-          borderWidth: 3,
-          borderRadius: 10,
-          borderColor: colors.correct,
-          padding: scalaDownDependingOnDevice(10),
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          // backgroundColor: "white",
+          justifyContent: "space-between",
+          paddingVertical: scalaDownDependingOnDevice(10),
+          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
           style={{
             fontWeight: "bold",
             textAlign: "center",
-            color: colors.correct,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(16),
-            marginBottom: scalaDownDependingOnDevice(10),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
           Pieredze
@@ -88,9 +90,9 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           style={{
             fontWeight: "bold",
             textAlign: "center",
-            color: colors.correct,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(20),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
           {experience || 0}
@@ -98,20 +100,22 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
       </View>
       <View
         style={{
-          borderWidth: 3,
-          borderRadius: 10,
-          borderColor: colors.incorrect,
-          padding: scalaDownDependingOnDevice(10),
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          // backgroundColor: "white",
+          justifyContent: "space-between",
+          paddingVertical: scalaDownDependingOnDevice(10),
+          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
           style={{
             fontWeight: "bold",
             textAlign: "center",
-            color: colors.incorrect,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(16),
-            marginBottom: scalaDownDependingOnDevice(10),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
           Precizitāte
@@ -120,12 +124,12 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           style={{
             fontWeight: "bold",
             textAlign: "center",
-            color: colors.incorrect,
-            fontFamily: typography.primaryBoldFont,
-            fontSize: scalaDownDependingOnDevice(20),
+            color: colors.text,
+            fontFamily: typography.primaryMediumFont,
+            fontSize: scalaDownDependingOnDevice(18),
           }}
         >
-          {getPrecisionPercentage(experience)} %
+          {getPrecisionPercentage(experience)}%
         </Text>
       </View>
     </View>
