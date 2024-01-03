@@ -6,8 +6,9 @@ import useColors from "hooks/useStyles";
 import PinkMonster from "monster/PinkMonster";
 import RedMonster from "monster/RedMonster";
 import { type FC } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -27,8 +28,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
   return (
     <View
       style={{
-        ...styles.headLine,
-        padding: scalaDownDependingOnDevice(16),
+        padding: scalaDownDependingOnDevice(25),
       }}
     >
       <View
@@ -50,12 +50,13 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
       </View>
       <Text
         style={{
-          ...styles.headLine,
-          color: colors.accent,
           fontWeight: "bold",
           textAlign: "center",
+          color: colors.accent,
           fontFamily: typography.primaryBoldFont,
-          fontSize: scalaDownDependingOnDevice(30),
+          fontSize: scalaDownDependingOnDevice(35),
+          marginTop: scalaDownDependingOnDevice(40),
+          marginBottom: scalaDownDependingOnDevice(20),
         }}
       >
         Level Completed
@@ -68,21 +69,11 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           flexDirection: "row",
           justifyContent: "space-between",
           gap: scalaDownDependingOnDevice(10),
+          marginTop: scalaDownDependingOnDevice(40),
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
-          <Text
-            style={{
-              display: "flex",
-              color: "#fff",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: typography.primaryBoldFont,
-              fontSize: scalaDownDependingOnDevice(18),
-            }}
-          >
-            Mājas
-          </Text>
+          <ChildrenButtonText text="Mājas" />
           <HouseIcon
             stroke={"#fff"}
             width={scalaDownDependingOnDevice(25)}
@@ -90,18 +81,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           />
         </ChildrenButton>
         <ChildrenButton onPress={handleNextLevel}>
-          <Text
-            style={{
-              display: "flex",
-              color: "#fff",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: typography.primaryBoldFont,
-              fontSize: scalaDownDependingOnDevice(18),
-            }}
-          >
-            Nākamais
-          </Text>
+          <ChildrenButtonText text="Nākamais" />
           <PlayIcon
             stroke={"#fff"}
             width={scalaDownDependingOnDevice(25)}
@@ -112,12 +92,5 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  headLine: {
-    margin: 16,
-    fontSize: 20,
-  },
-});
 
 export default DisplaySummery;

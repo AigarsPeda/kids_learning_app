@@ -23,12 +23,12 @@ const MyButton: FC<MyButton> = ({
     <Pressable
       style={{
         ...styles.button,
-        width: device.width * 0.85,
-        marginHorizontal: scalaDownDependingOnDevice(10),
+        width: device.width - scalaDownDependingOnDevice(24),
         backgroundColor: isDisabled ? colors.gray : colors[color],
       }}
       disabled={isDisabled}
       onPress={() => {
+        if (isDisabled) return;
         impactAsync(ImpactFeedbackStyle.Light);
         onPress();
       }}
@@ -38,9 +38,8 @@ const MyButton: FC<MyButton> = ({
           color: "#fff",
           textAlign: "center",
           opacity: isDisabled ? 0.5 : 1,
-          fontSize: scalaDownDependingOnDevice(20),
+          fontSize: scalaDownDependingOnDevice(18),
           fontFamily: typography.primaryMediumFont,
-          paddingVertical: scalaDownDependingOnDevice(4),
           letterSpacing: scalaDownDependingOnDevice(0.25),
         }}
       >
@@ -56,8 +55,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: scalaDownDependingOnDevice(10),
-    paddingHorizontal: scalaDownDependingOnDevice(40),
+    paddingVertical: scalaDownDependingOnDevice(9),
+    // paddingHorizontal: scalaDownDependingOnDevice(40),3
   },
 });
 

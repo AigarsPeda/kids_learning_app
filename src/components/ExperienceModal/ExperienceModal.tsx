@@ -5,14 +5,14 @@ import ZigIcon from "components/icons/ZigIcon/ZigIcon";
 import useStyles from "hooks/useStyles";
 import { useState, type FC } from "react";
 import { Text, View } from "react-native";
-import { type UserSettingsType } from "types/game";
+import { UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
-interface HomeScreenProps {
+interface ExperienceModalProps {
   userData: UserSettingsType | undefined;
 }
 
-const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
+const ExperienceModal: FC<ExperienceModalProps> = ({ userData }) => {
   const { colors, typography } = useStyles();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -76,6 +76,7 @@ const ExperienceModal: FC<HomeScreenProps> = ({ userData }) => {
         >
           <MyButton
             title="Uzpildīt dzīvības 300"
+            isDisabled={(userData?.user.experience || 0) < 300}
             onPress={() => {
               console.log("save");
             }}

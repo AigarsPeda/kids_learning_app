@@ -1,8 +1,8 @@
 import { ImpactFeedbackStyle, impactAsync } from "expo-haptics";
 import useColors from "hooks/useStyles";
 import { type FC } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { KeyTypeOfColors } from "styles/styles";
+import { Pressable } from "react-native";
+import { type KeyTypeOfColors } from "styles/styles";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 type ChildrenButtonProps = {
@@ -22,39 +22,38 @@ const ChildrenButton: FC<ChildrenButtonProps> = ({
   return (
     <Pressable
       style={{
-        ...styles.button,
+        elevation: 5,
+        borderRadius: 4,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: scalaDownDependingOnDevice(5),
+        paddingVertical: scalaDownDependingOnDevice(8),
+        paddingHorizontal: scalaDownDependingOnDevice(20),
         backgroundColor: isDisabled ? colors.gray : colors[color],
       }}
       disabled={isDisabled}
       onPress={() => {
-        impactAsync(ImpactFeedbackStyle.Light);
         onPress();
+        impactAsync(ImpactFeedbackStyle.Light);
       }}
     >
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: scalaDownDependingOnDevice(10),
-        }}
-      >
-        {children}
-      </View>
+      {children}
     </Pressable>
   );
 };
 
-const styles = StyleSheet.create({
-  text: {
-    letterSpacing: scalaDownDependingOnDevice(0.25),
-  },
-  button: {
-    elevation: 5,
-    borderRadius: 4,
-    paddingVertical: scalaDownDependingOnDevice(10),
-    paddingHorizontal: scalaDownDependingOnDevice(30),
-  },
-});
+// const styles = StyleSheet.create({
+//   text: {
+//     letterSpacing: scalaDownDependingOnDevice(0.25),
+//   },
+//   // button: {
+//   //   elevation: 5,
+//   //   borderRadius: 4,
+//   //   paddingVertical: scalaDownDependingOnDevice(8),
+//   //   paddingHorizontal: scalaDownDependingOnDevice(20),
+//   // },
+// });
 
 export default ChildrenButton;

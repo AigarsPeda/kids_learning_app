@@ -10,6 +10,7 @@ import useLevelStatus from "hooks/useLevelStatus";
 import useStatusBarHeight from "hooks/useStatusBarHeight";
 import useStyles from "hooks/useStyles";
 import useTasks from "hooks/useTasks";
+import useUserSettings from "hooks/useUserSettings";
 import { type FC } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
@@ -23,6 +24,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "LevelScreen">;
 
 const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { level } = route.params;
+  const { userData } = useUserSettings();
   const { colors, typography } = useStyles();
   const { statusBarHeight } = useStatusBarHeight();
   const { tasks, taskKind, getNewTasks, setTaskKind } = useTasks(
@@ -49,7 +51,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           backgroundColor: colors.background,
         }}
       >
-        <BuyLives />
+        <BuyLives userData={userData} />
         <NoLives
           goHome={() => {
             navigation.goBack();
@@ -143,9 +145,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headLine: {
-    margin: 16,
-    fontSize: 20,
     fontWeight: "bold",
+    margin: scalaDownDependingOnDevice(16),
+    fontSize: scalaDownDependingOnDevice(20),
   },
 });
 

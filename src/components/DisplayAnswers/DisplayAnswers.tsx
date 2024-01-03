@@ -62,7 +62,8 @@ const DisplayAnswers: FC<DisplayAnswersProps> = ({
                   textAlign: "left",
                   fontWeight: "bold",
                   color: colors.incorrect,
-                  fontSize: scalaDownDependingOnDevice(25),
+                  // fontSize: scalaDownDependingOnDevice(25),
+                  fontSize: scalaDownDependingOnDevice(20),
                   paddingBottom: scalaDownDependingOnDevice(4),
                 }}
               >
@@ -79,7 +80,8 @@ const DisplayAnswers: FC<DisplayAnswersProps> = ({
                 <Text
                   style={{
                     color: colors.incorrect,
-                    fontSize: scalaDownDependingOnDevice(20),
+                    fontSize: scalaDownDependingOnDevice(15),
+                    paddingRight: scalaDownDependingOnDevice(5),
                   }}
                 >
                   Pareizās atbildes:
@@ -100,7 +102,8 @@ const DisplayAnswers: FC<DisplayAnswersProps> = ({
                       <Text
                         style={{
                           color: colors.incorrect,
-                          fontSize: scalaDownDependingOnDevice(20),
+                          // fontSize: scalaDownDependingOnDevice(20),
+                          fontSize: scalaDownDependingOnDevice(15),
                           paddingLeft: isFirstItem
                             ? 0
                             : scalaDownDependingOnDevice(4),

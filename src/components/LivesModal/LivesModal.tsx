@@ -1,20 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import ChildrenButton from "components/ChildrenButton/ChildrenButton";
-import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
+import BuyLives from "components/BuyLives/BuyLives";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import OpacityButton from "components/OpacityButton/OpacityButton";
 import TopModal from "components/TopModal/TopModal";
-import ZigIcon from "components/icons/Zig/ZigIcon";
 import { LEVEL_SETTINGS } from "hardcoded";
 import useStyles from "hooks/useStyles";
 import { useEffect, useState, type FC } from "react";
 import { FlatList, Text, View } from "react-native";
-import { type UserSettingsType } from "types/game";
 import createArray from "utils/createArray";
 import formatTimeToString from "utils/formatTimeToString";
 import getTimePassedSince from "utils/getTimePassedSince";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import BuyLives from "../BuyLives/BuyLives";
+import { UserSettingsType } from "types/game";
 
 const { defaultLives, livesRecoveryTimeInMinutes } = LEVEL_SETTINGS;
 
@@ -28,7 +25,6 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
   const [timeTillNextLife, setTimeTillNextLife] = useState("");
 
   const array = createArray(defaultLives);
-  const isBuyLivesDisabled = userData?.user.lives.lives === defaultLives;
 
   const openCloseModal = () => {
     setIsModalVisible((state) => !state);
@@ -123,7 +119,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             ? `Nākamā dzīvība pēc ${timeTillNextLife}`
             : `Visas dzīvības ir atjaunotas`}
         </Text>
-        <BuyLives isBuyLivesDisabled={isBuyLivesDisabled} />
+        <BuyLives userData={userData} />
       </TopModal>
     </>
   );
