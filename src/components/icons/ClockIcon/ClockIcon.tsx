@@ -1,7 +1,7 @@
 import Svg, { SvgProps, Path } from "react-native-svg";
 
 const ClockIcon = (props: SvgProps) => (
-  <Svg fill="none" viewBox="0 0 21 21" {...props}>
+  <Svg fill="none" viewBox="3 3 21 21" {...props}>
     <Path
       strokeWidth={2.3}
       strokeLinecap="round"
