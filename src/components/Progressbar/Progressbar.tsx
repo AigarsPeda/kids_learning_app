@@ -24,22 +24,12 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
 
     console.log(">>>>>>", currentLevelStep);
 
-    const nextStep = currentLevelStep + 1;
-    const newWidth = (WIDTH / LEVEL_SETTINGS.levelParts) * nextStep;
-
-    // if (currentLevelStep === LEVEL_SETTINGS.levelParts) {
-    //   Animated.timing(progressBarWidth, {
-    //     toValue: 0,
-    //     duration: 0,
-    //     useNativeDriver: false,
-    //   }).start();
-    //   return;
-    // }
+    const newWidth = (WIDTH / LEVEL_SETTINGS.levelParts) * currentLevelStep;
 
     // Animate to the new width
     Animated.timing(progressBarWidth, {
+      duration: 500,
       toValue: newWidth,
-      duration: 500, // Duration in milliseconds
       useNativeDriver: false,
     }).start();
   }, [currentLevelStep]);
@@ -48,10 +38,10 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
     <View
       style={{
         width: WIDTH,
-        backgroundColor: colors.accentBackground,
-        height: scalaDownDependingOnDevice(8),
-        borderRadius: scalaDownDependingOnDevice(8),
         overflow: "hidden",
+        height: scalaDownDependingOnDevice(8),
+        backgroundColor: colors.accentBackground,
+        borderRadius: scalaDownDependingOnDevice(8),
       }}
     >
       <Animated.View
