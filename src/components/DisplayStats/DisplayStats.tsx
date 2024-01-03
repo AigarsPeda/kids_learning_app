@@ -41,7 +41,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           alignItems: "center",
           justifyContent: "space-between",
           paddingVertical: scalaDownDependingOnDevice(10),
-          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
@@ -55,24 +54,24 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         >
           Pieredze
         </Text>
-        <Text
+        <View
           style={{
-            fontWeight: "bold",
-            textAlign: "center",
-            color: colors.text,
-            fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(18),
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          {experience || 0}
-          {/* <TargetIcon
-            width={20}
-            height={20}
-            stroke={colors.text}
+          <Text
             style={{
-              marginLeft: scalaDownDependingOnDevice(15),
+              fontWeight: "bold",
+              textAlign: "center",
+              color: colors.text,
+              fontFamily: typography.primaryMediumFont,
+              fontSize: scalaDownDependingOnDevice(18),
             }}
-          /> */}
+          >
+            {experience || 0}
+          </Text>
           <ZigIcon
             fill={colors.text}
             width={20}
@@ -82,7 +81,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
               marginLeft: scalaDownDependingOnDevice(15),
             }}
           />
-        </Text>
+        </View>
       </View>
       <View
         style={{
@@ -91,7 +90,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           alignItems: "center",
           justifyContent: "space-between",
           paddingVertical: scalaDownDependingOnDevice(10),
-          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
@@ -105,16 +103,24 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         >
           Precizitāte
         </Text>
-        <Text
+        <View
           style={{
-            fontWeight: "bold",
-            textAlign: "center",
-            color: colors.text,
-            fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(18),
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          {getPrecisionPercentage(experience)}
+          <Text
+            style={{
+              fontWeight: "bold",
+              textAlign: "center",
+              color: colors.text,
+              fontFamily: typography.primaryMediumFont,
+              fontSize: scalaDownDependingOnDevice(18),
+            }}
+          >
+            {getPrecisionPercentage(experience)}
+          </Text>
           <PercentIcon
             width={20}
             height={20}
@@ -123,7 +129,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
               marginLeft: scalaDownDependingOnDevice(15),
             }}
           />
-        </Text>
+        </View>
       </View>
       <View
         style={{
@@ -132,7 +138,6 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
           alignItems: "center",
           justifyContent: "space-between",
           paddingVertical: scalaDownDependingOnDevice(10),
-          paddingHorizontal: scalaDownDependingOnDevice(52),
         }}
       >
         <Text
@@ -145,16 +150,23 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         >
           Laiks
         </Text>
-        <Text
+        <View
           style={{
-            fontWeight: "bold",
-            textAlign: "center",
-            color: colors.text,
-            fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(18),
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          {getMinHoursPassed(startTimer)}
+          <Text
+            style={{
+              textAlign: "center",
+              color: colors.text,
+              fontFamily: typography.primaryMediumFont,
+              fontSize: scalaDownDependingOnDevice(18),
+            }}
+          >
+            {getMinHoursPassed(startTimer)}
+          </Text>
           <ClockIcon
             width={20}
             height={20}
@@ -163,7 +175,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
               marginLeft: scalaDownDependingOnDevice(15),
             }}
           />
-        </Text>
+        </View>
       </View>
     </View>
   );
