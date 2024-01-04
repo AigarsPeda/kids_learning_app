@@ -26,7 +26,7 @@ const useLevelStatus = (initialLevel: number) => {
       });
     }
 
-    // If the level is completed, then update the user experience
+    // If the level is completed, then update the user experience and create a new level
     if (updatedLevel.isLevelCompleted) {
       const newUserData = { ...userData };
       const user = newUserData.user;
