@@ -101,8 +101,8 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
               <Ionicons
                 key={index}
                 name="heart"
-                color={index < userLives ? colors.incorrect : colors.gray}
                 size={scalaDownDependingOnDevice(28)}
+                color={index < userLives ? colors.incorrect : colors.gray}
               />
             );
           }}
@@ -112,7 +112,7 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
             fontSize: scalaDownDependingOnDevice(20),
-            marginVertical: scalaDownDependingOnDevice(10),
+            marginVertical: scalaDownDependingOnDevice(15),
           }}
         >
           {timeTillNextLife !== ""
