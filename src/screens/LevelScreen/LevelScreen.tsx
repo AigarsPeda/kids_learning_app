@@ -23,24 +23,24 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList, "LevelScreen">;
 
 const LevelScreen: FC<Props> = ({ route, navigation }) => {
-  const { level } = route.params;
+  const { paramLevel } = route.params;
   const { userData } = useUserSettings();
   const { colors, typography } = useStyles();
   const { statusBarHeight } = useStatusBarHeight();
-  const { tasks, taskKind, getNewTasks, setTaskKind } = useTasks(
-    parseInt(level)
-  );
 
   const {
     task,
     lives,
+    level,
     isFinished,
     startTimer,
     isLivesFinished,
     decreaseLives,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
-  } = useLevelStatus(parseInt(level));
+  } = useLevelStatus(paramLevel);
+
+  const { tasks, taskKind, getNewTasks, setTaskKind } = useTasks(level);
 
   if (isLivesFinished) {
     return (

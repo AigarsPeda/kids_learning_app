@@ -18,18 +18,22 @@ const useLevelStatus = (initialLevel: number) => {
     const newGameData = { ...gameData };
     const currentLevel = newGameData[level];
 
+    // console.log("currentLevel >>>>>", currentLevel);
+
     const updatedLevel = updateLevelProgress(currentLevel);
+
+    // console.log("updatedLevel >>>>>", updatedLevel);3
 
     const isFirstTimeCompleted =
       !currentLevel.isLevelCompleted && updatedLevel.isLevelCompleted;
 
-    const isAddNextLevel =
+    const isCreateNextLevel =
       isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
 
     // Update the user experience if the level is completed for the first time
     if (isFirstTimeCompleted) {
       const newUserData = { ...userData };
-      let { experience } = newUserData.user;
+      const { experience } = newUserData.user;
 
       updateUserData({
         ...newUserData,
@@ -43,7 +47,7 @@ const useLevelStatus = (initialLevel: number) => {
     updateGameData({
       ...newGameData,
       [level]: updatedLevel,
-      ...(isAddNextLevel && { [level + 1]: createNewLevel() }), // add next level if does not exist
+      ...(isCreateNextLevel && { [level + 1]: createNewLevel() }), // add next level if does not exist
     });
 
     setIsFinished(isFirstTimeCompleted);
@@ -61,18 +65,19 @@ const useLevelStatus = (initialLevel: number) => {
 
     decrementLives();
   };
-  1;
 
   const handleNextLevel = () => {
     const nextLevel = level + 1;
     const newGameData = { ...gameData };
-    const nextLevelData = newGameData[nextLevel];
 
-    if (!nextLevelData)
+    const isNextLevelExist = Boolean(newGameData[nextLevel]?.levelStep);
+
+    if (!isNextLevelExist) {
       updateGameData({
         ...newGameData,
         [nextLevel]: createNewLevel(),
       });
+    }
 
     setLevel(nextLevel);
     setIsFinished(false);
@@ -92,6 +97,7 @@ const useLevelStatus = (initialLevel: number) => {
 
   return {
     lives,
+    level,
     isFinished,
     isLivesFinished,
     task: gameData?.[level],

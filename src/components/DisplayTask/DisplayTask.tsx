@@ -102,7 +102,7 @@ const DisplayTask: FC<DisplayTaskProps> = ({
       return {
         isDisabled: false,
         title: "Nākamais uzdevums",
-        function: handleNextStep,
+        function: () => handleNextStep(),
       };
     }
 

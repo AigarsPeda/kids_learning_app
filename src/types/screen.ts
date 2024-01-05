@@ -1,4 +1,4 @@
 export type LevelScreenPropsType = {
-  level: string;
+  paramLevel: number;
   // storedLives: number;
 };

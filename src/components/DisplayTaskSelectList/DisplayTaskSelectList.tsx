@@ -106,7 +106,7 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
                 }
 
                 navigation.navigate("LevelScreen", {
-                  level: (index + 1).toString(),
+                  paramLevel: index + 1,
                 });
               }}
             />
