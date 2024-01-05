@@ -17,12 +17,7 @@ const useLevelStatus = (initialLevel: number) => {
   const handleSavingCurrentLevelProgress = () => {
     const newGameData = { ...gameData };
     const currentLevel = newGameData[level];
-
-    // console.log("currentLevel >>>>>", currentLevel);
-
     const updatedLevel = updateLevelProgress(currentLevel);
-
-    // console.log("updatedLevel >>>>>", updatedLevel);3
 
     const isFirstTimeCompleted =
       !currentLevel.isLevelCompleted && updatedLevel.isLevelCompleted;

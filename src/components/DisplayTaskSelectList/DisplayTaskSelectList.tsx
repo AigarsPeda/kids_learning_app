@@ -1,5 +1,5 @@
 import RoundButton from "components/RoundButton/RoundButton";
-import { useEffect, useMemo, useRef, type FC, useCallback } from "react";
+import { useCallback, useEffect, useRef, type FC } from "react";
 import {
   FlatList,
   NativeScrollEvent,
@@ -47,28 +47,29 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   }, [gameData]);
 
   useEffect(() => {
-    if (lastCompletedLevelIndex() !== -1) {
-      console.log("lastCompletedLevelIndex", lastCompletedLevelIndex());
-      // Calculate the index of the next element
-      const nextIndex = Math.min(
-        lastCompletedLevelIndex() + 1,
-        array.length - 1
-      );
+    const lastIndex = lastCompletedLevelIndex();
 
-      // Scroll to the next element after the last completed level
-      flatListRef.current?.scrollToIndex({ animated: true, index: nextIndex });
+    if (lastIndex !== -1) {
+      flatListRef.current?.scrollToIndex({
+        animated: true,
+        index: lastIndex + 1,
+      });
     }
-  }, [lastCompletedLevelIndex, gameData]);
+  }, [lastCompletedLevelIndex]);
 
   return (
     <FlatList
       data={array}
       ref={flatListRef}
-      getItemLayout={(_data, index) => ({
-        index,
-        length: scalaDownDependingOnDevice(115), // Specify the height of your item
-        offset: scalaDownDependingOnDevice(115 * index),
-      })}
+      getItemLayout={(_data, index) => {
+        const height = scalaDownDependingOnDevice(120 + 30 + index);
+
+        return {
+          index,
+          length: height,
+          offset: height * index,
+        };
+      }}
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }
@@ -86,6 +87,7 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
 
         return (
           <View
+            id={`${index}`}
             style={{
               marginLeft: handleLeftMargin(index, 32, 5),
               marginBottom: isLast ? scalaDownDependingOnDevice(170) : 0,
