@@ -34,35 +34,35 @@ const LivesModal: FC<LivesModalProps> = ({
     setIsModalVisible((state) => !state);
   };
 
-  useEffect(() => {
-    const { user } = userData || {};
-    const { lives } = user || {};
+  // useEffect(() => {
+  //   const { user } = userData || {};
+  //   const { lives } = user || {};
 
-    if (isModalVisible && lives?.lives < defaultLives) {
-      const updateInterval = () => {
-        const { hours, minutes, seconds, timeTillNextLife } =
-          getTimePassedSince(lives.lastUpdate, livesRecoveryTimeInMinutes);
+  //   if (isModalVisible && lives?.lives < defaultLives) {
+  //     const updateInterval = () => {
+  //       const { hours, minutes, seconds, timeTillNextLife } =
+  //         getTimePassedSince(lives.lastUpdate, livesRecoveryTimeInMinutes);
 
-        if (timeTillNextLife <= 0) {
-          setTimeTillNextLife("");
-          return;
-        }
+  //       if (timeTillNextLife <= 0) {
+  //         setTimeTillNextLife("");
+  //         return;
+  //       }
 
-        setTimeTillNextLife(formatTimeToString({ hours, minutes, seconds }));
-      };
+  //       setTimeTillNextLife(formatTimeToString({ hours, minutes, seconds }));
+  //     };
 
-      // Run the function immediately
-      updateInterval();
+  //     // Run the function immediately
+  //     updateInterval();
 
-      // Set up the interval to run the function every second
-      const interval = setInterval(updateInterval, 1000);
+  //     // Set up the interval to run the function every second
+  //     const interval = setInterval(updateInterval, 1000);
 
-      // Clean up the interval on component unmount or when dependencies change
-      return () => clearInterval(interval);
-    } else {
-      setTimeTillNextLife("");
-    }
-  }, [isModalVisible, userData]);
+  //     // Clean up the interval on component unmount or when dependencies change
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     setTimeTillNextLife("");
+  //   }
+  // }, [isModalVisible, userData]);
 
   return (
     <>
@@ -93,7 +93,7 @@ const LivesModal: FC<LivesModalProps> = ({
       />
 
       <TopModal isModalVisible={isModalVisible} openCloseModal={openCloseModal}>
-        <FlatList
+        {/* <FlatList
           data={array}
           numColumns={3}
           style={{ marginTop: scalaDownDependingOnDevice(10) }}
@@ -122,9 +122,10 @@ const LivesModal: FC<LivesModalProps> = ({
           {timeTillNextLife !== ""
             ? `Nākamā dzīvība pēc ${timeTillNextLife}`
             : `Visas dzīvības ir atjaunotas`}
-        </Text>
+        </Text> */}
         <BuyLives
           userData={userData}
+          isModalVisible={isModalVisible}
           buyLivesUsingExperience={buyLivesUsingExperience}
         />
       </TopModal>

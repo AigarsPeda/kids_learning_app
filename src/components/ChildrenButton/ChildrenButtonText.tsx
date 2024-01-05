@@ -1,18 +1,23 @@
 import useStyles from "hooks/useStyles";
-import { FC } from "react";
+import { type FC } from "react";
 import { Text } from "react-native";
+import { type KeyTypeOfColors } from "styles/styles";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface ChildrenButtonTextProps {
   text: string;
+  color?: KeyTypeOfColors;
 }
 
-const ChildrenButtonText: FC<ChildrenButtonTextProps> = ({ text }) => {
-  const { typography } = useStyles();
+const ChildrenButtonText: FC<ChildrenButtonTextProps> = ({
+  text,
+  color = "white",
+}) => {
+  const { typography, colors } = useStyles();
   return (
     <Text
       style={{
-        color: "#fff",
+        color: colors[color],
         fontFamily: typography.primaryMediumFont,
         fontSize: scalaDownDependingOnDevice(18),
         marginTop: scalaDownDependingOnDevice(4),

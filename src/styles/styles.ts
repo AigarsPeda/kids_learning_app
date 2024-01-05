@@ -10,6 +10,7 @@ type Colors = {
   background: string;
   accentBackground: string;
   transparent: string;
+  white: string;
 };
 
 export type KeyTypeOfColors = keyof Colors;
@@ -27,6 +28,7 @@ export const lightModeColors: Colors = {
   yellow: "#fef400",
   accentBackground: "#f3f4f6",
   transparent: "transparent",
+  white: "#fff",
 };
 
 export const darkModeColors: Colors = {
@@ -41,6 +43,7 @@ export const darkModeColors: Colors = {
   yellow: "#fef400",
   accentBackground: "#020617",
   transparent: "transparent",
+  white: "#fff",
 };
 
 export const typography = {
