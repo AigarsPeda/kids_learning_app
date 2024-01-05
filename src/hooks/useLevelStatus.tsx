@@ -16,30 +16,37 @@ const useLevelStatus = (initialLevel: number) => {
 
   const handleSavingCurrentLevelProgress = () => {
     const newGameData = { ...gameData };
-    const updatedLevel = updateLevelProgress(newGameData[level]);
+    const currentLevel = newGameData[level];
 
-    // Save the current level only if it is not completed yet
-    if (!updatedLevel.isLevelCompleted) {
-      updateGameData({
-        ...newGameData,
-        [level]: updatedLevel,
-      });
-    }
+    const updatedLevel = updateLevelProgress(currentLevel);
 
-    // If the level is completed, then update the user experience and create a new level
-    if (updatedLevel.isLevelCompleted) {
+    const isFirstTimeCompleted =
+      !currentLevel.isLevelCompleted && updatedLevel.isLevelCompleted;
+
+    const isAddNextLevel =
+      isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
+
+    // Update the user experience if the level is completed for the first time
+    if (isFirstTimeCompleted) {
       const newUserData = { ...userData };
-      const user = newUserData.user;
+      let { experience } = newUserData.user;
 
-      user.experience = user.experience + updatedLevel.experienceInLevel;
-
-      setIsFinished(true);
-      updateUserData(newUserData);
-      updateGameData({
-        ...newGameData,
-        [level + 1]: createNewLevel(),
+      updateUserData({
+        ...newUserData,
+        user: {
+          ...newUserData.user,
+          experience: experience + updatedLevel.experienceInLevel,
+        },
       });
     }
+
+    updateGameData({
+      ...newGameData,
+      [level]: updatedLevel,
+      ...(isAddNextLevel && { [level + 1]: createNewLevel() }), // add next level if does not exist
+    });
+
+    setIsFinished(isFirstTimeCompleted);
   };
 
   const decreaseLives = () => {

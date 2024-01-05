@@ -22,9 +22,8 @@ const Progressbar: FC<ProgressbarProps> = ({ currentLevelStep }) => {
       return;
     }
 
-    console.log(">>>>>>", currentLevelStep);
-
-    const newWidth = (WIDTH / LEVEL_SETTINGS.levelParts) * currentLevelStep;
+    const newWidth =
+      (WIDTH / LEVEL_SETTINGS.levelParts) * (currentLevelStep - 1);
 
     // Animate to the new width
     Animated.timing(progressBarWidth, {

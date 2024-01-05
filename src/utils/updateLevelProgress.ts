@@ -1,18 +1,20 @@
 import { LEVEL_SETTINGS } from "hardcoded";
 import { type LevelType } from "types/game";
+import deepCopyObject from "utils/deepCopyObject";
 
 const { levelParts } = LEVEL_SETTINGS;
 
 const updateLevelProgress = (lvl: LevelType) => {
   const step = lvl.levelStep;
   const s = step === levelParts ? 0 : step + 1;
+  const isAlreadyCompleted = lvl.isLevelCompleted;
+
+  const d = deepCopyObject(lvl);
 
   return {
-    // [key.toString()]: {
-    ...lvl,
+    ...d,
     levelStep: s,
-    isLevelCompleted: step === levelParts,
-    // },
+    isLevelCompleted: isAlreadyCompleted || step === levelParts, // if already completed, keep it completed
   };
 };
 

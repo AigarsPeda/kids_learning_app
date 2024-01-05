@@ -7,8 +7,8 @@ import useColors from "hooks/useStyles";
 import { type FC } from "react";
 import { View } from "react-native";
 import getMinHoursPassed from "utils/getMinHoursPassed";
+import getPrecisionPercentage from "utils/getPrecisionPercentage";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import getPrecisionPercentage from "../../utils/getPrecisionPercentage";
 
 interface DisplayStatsProps {
   experience: number | undefined;
@@ -17,18 +17,6 @@ interface DisplayStatsProps {
 
 const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
   const { colors } = useColors();
-
-  // const getPrecisionPercentage = (endExperience: number | undefined) => {
-  //   if (!endExperience) {
-  //     return 0;
-  //   }
-
-  //   const precisionPercentage = Math.round(
-  //     (endExperience / LEVEL_SETTINGS.defaultLevelExperience) * 100
-  //   );
-
-  //   return precisionPercentage;
-  // };
 
   return (
     <View

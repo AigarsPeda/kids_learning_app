@@ -1,4 +1,5 @@
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
+import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import DisplayStats from "components/DisplayStats/DisplayStats";
 import HouseIcon from "components/icons/HouseIcon/HouseIcon";
 import PlayIcon from "components/icons/PlayIcon/PlayIcon";
@@ -8,7 +9,6 @@ import RedMonster from "monster/RedMonster";
 import { type FC } from "react";
 import { Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
 
 interface DisplaySummeryProps {
   goHome: () => void;

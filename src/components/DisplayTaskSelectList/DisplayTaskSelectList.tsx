@@ -1,5 +1,5 @@
 import RoundButton from "components/RoundButton/RoundButton";
-import { useEffect, useMemo, useRef, type FC } from "react";
+import { useEffect, useMemo, useRef, type FC, useCallback } from "react";
 import {
   FlatList,
   NativeScrollEvent,
@@ -35,9 +35,10 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   const array = createArray(20);
   const flatListRef = useRef<FlatList>(null);
 
-  const lastCompletedLevelIndex = useMemo(() => {
+  const lastCompletedLevelIndex = useCallback(() => {
     for (let i = array.length - 1; i >= 0; i--) {
       const level = gameData && gameData[(i + 1).toString()];
+
       if (level && level.isLevelCompleted) {
         return i;
       }
@@ -46,14 +47,18 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   }, [gameData]);
 
   useEffect(() => {
-    if (lastCompletedLevelIndex !== -1) {
+    if (lastCompletedLevelIndex() !== -1) {
+      console.log("lastCompletedLevelIndex", lastCompletedLevelIndex());
       // Calculate the index of the next element
-      const nextIndex = Math.min(lastCompletedLevelIndex + 1, array.length - 1);
+      const nextIndex = Math.min(
+        lastCompletedLevelIndex() + 1,
+        array.length - 1
+      );
 
       // Scroll to the next element after the last completed level
       flatListRef.current?.scrollToIndex({ animated: true, index: nextIndex });
     }
-  }, [lastCompletedLevelIndex]);
+  }, [lastCompletedLevelIndex, gameData]);
 
   return (
     <FlatList
