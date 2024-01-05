@@ -1,10 +1,12 @@
 import { LEVEL_SETTINGS } from "hardcoded";
 import useAsyncStorage from "hooks/useAsyncStorage";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { type UserSettingsType } from "types/game";
 import getTimePassedSince from "utils/getTimePassedSince";
 
 const useUserSettings = () => {
+  const [isLivesFinished, setIsLivesFinished] = useState(false);
+
   const { data, setNewData, clearData, getData } =
     useAsyncStorage<UserSettingsType>({
       key: "v1_user",
@@ -22,9 +24,6 @@ const useUserSettings = () => {
   const decrementLives = () => {
     const newUserData = { ...data };
 
-    // newUserData.user.lives = newUserData.user.lives - 1;
-    // newUserData.user.lastUpdate = new Date();
-
     newUserData.user.lives = {
       lives: newUserData.user.lives.lives - 1,
       lastUpdate: new Date(),
@@ -36,9 +35,6 @@ const useUserSettings = () => {
   const incrementLives = useCallback(() => {
     const newUserData = { ...data };
 
-    // newUserData.user.lives = newUserData.user.lives + 1;
-    // newUserData.user.lastUpdate = new Date();
-
     newUserData.user.lives = {
       lives: newUserData.user.lives.lives + 1,
       lastUpdate: new Date(),
@@ -46,6 +42,19 @@ const useUserSettings = () => {
 
     setNewData(newUserData);
   }, [data]);
+
+  const buyLivesUsingExperience = () => {
+    const newUserData = { ...data };
+
+    newUserData.user.experience -= LEVEL_SETTINGS.buyLivesWithExperience;
+    newUserData.user.lives = {
+      lastUpdate: new Date(),
+      lives: newUserData.user.lives.lives + 1,
+    };
+
+    setNewData(newUserData);
+    setIsLivesFinished(false);
+  };
 
   useEffect(() => {
     if (data && data.user.lives.lives < 3) {
@@ -68,13 +77,22 @@ const useUserSettings = () => {
     }
   }, [data, incrementLives]);
 
+  useEffect(() => {
+    if (data?.user.lives.lives === 0) {
+      setIsLivesFinished(true);
+    } else {
+      setIsLivesFinished(false);
+    }
+  }, [data?.user.lives.lives]);
+
   return {
     userData: data,
     decrementLives,
+    isLivesFinished,
     getUserData: getData,
+    buyLivesUsingExperience,
     updateUserData: setNewData,
     removeAllUserData: clearData,
-    isLivesFinished: data?.user.lives.lives === 0,
   };
 };
 

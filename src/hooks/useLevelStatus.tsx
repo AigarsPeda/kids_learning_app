@@ -6,13 +6,10 @@ import removeExperienceFromLevel from "utils/removeExperienceFromLevel";
 import updateLevelProgress from "utils/updateLevelProgress";
 
 const useLevelStatus = (initialLevel: number) => {
-  const [lives, setLives] = useState(0);
   const [level, setLevel] = useState(1);
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
-  const [isFinished, setIsFinished] = useState(false);
-  const { userData, isLivesFinished, updateUserData, decrementLives } =
-    useUserSettings();
+  const [isLevelFinished, setIsLevelFinished] = useState(false);
 
   const handleSavingCurrentLevelProgress = () => {
     const newGameData = { ...gameData };
@@ -26,18 +23,18 @@ const useLevelStatus = (initialLevel: number) => {
       isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
 
     // Update the user experience if the level is completed for the first time
-    if (isFirstTimeCompleted) {
-      const newUserData = { ...userData };
-      const { experience } = newUserData.user;
+    // if (isFirstTimeCompleted) {
+    //   const newUserData = { ...userData };
+    //   const { experience } = newUserData.user;
 
-      updateUserData({
-        ...newUserData,
-        user: {
-          ...newUserData.user,
-          experience: experience + updatedLevel.experienceInLevel,
-        },
-      });
-    }
+    //   updateUserData({
+    //     ...newUserData,
+    //     user: {
+    //       ...newUserData.user,
+    //       experience: experience + updatedLevel.experienceInLevel,
+    //     },
+    //   });
+    // }
 
     updateGameData({
       ...newGameData,
@@ -45,10 +42,10 @@ const useLevelStatus = (initialLevel: number) => {
       ...(isCreateNextLevel && { [level + 1]: createNewLevel() }), // add next level if does not exist
     });
 
-    setIsFinished(isFirstTimeCompleted);
+    setIsLevelFinished(isFirstTimeCompleted);
   };
 
-  const decreaseLives = () => {
+  const removeExperience = () => {
     const newData = { ...gameData };
 
     if (!newData[level].isLevelCompleted) {
@@ -57,8 +54,6 @@ const useLevelStatus = (initialLevel: number) => {
         [level]: removeExperienceFromLevel(newData[level]),
       });
     }
-
-    decrementLives();
   };
 
   const handleNextLevel = () => {
@@ -75,29 +70,20 @@ const useLevelStatus = (initialLevel: number) => {
     }
 
     setLevel(nextLevel);
-    setIsFinished(false);
+    setIsLevelFinished(false);
     startTimer.current = new Date();
   };
-
-  useEffect(() => {
-    if (!userData?.user?.lives.lives) {
-      return;
-    }
-    setLives(userData.user.lives.lives);
-  }, [userData?.user?.lives?.lives]);
 
   useEffect(() => {
     setLevel(initialLevel);
   }, [initialLevel]);
 
   return {
-    lives,
     level,
-    isFinished,
-    isLivesFinished,
+    isLevelFinished,
     task: gameData?.[level],
     startTimer: startTimer.current,
-    decreaseLives,
+    removeExperience,
     handleNextLevel,
     handleSavingCurrentLevelProgress,
   };

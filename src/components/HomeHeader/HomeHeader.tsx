@@ -1,17 +1,26 @@
+import { useFocusEffect } from "@react-navigation/native";
 import ExperienceModal from "components/ExperienceModal/ExperienceModal";
 import LivesModal from "components/LivesModal/LivesModal";
 import useStyles from "hooks/useStyles";
-import { type FC } from "react";
+import useUserSettings from "hooks/useUserSettings";
+import { useCallback, type FC } from "react";
 import { Text, View } from "react-native";
-import { type UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface HomeScreenProps {
-  userData: UserSettingsType | undefined;
+  // buyLivesUsingExperience: () => void;
+  // userData: UserSettingsType | undefined;
 }
 
-const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
+const HomeHeader: FC<HomeScreenProps> = () => {
   const { colors, typography } = useStyles();
+  const { userData, getUserData, buyLivesUsingExperience } = useUserSettings();
+
+  useFocusEffect(
+    useCallback(() => {
+      getUserData();
+    }, [])
+  );
 
   return (
     <View
@@ -39,7 +48,10 @@ const HomeHeader: FC<HomeScreenProps> = ({ userData }) => {
         }}
       >
         <ExperienceModal userData={userData} />
-        <LivesModal userData={userData} />
+        <LivesModal
+          userData={userData}
+          buyLivesUsingExperience={buyLivesUsingExperience}
+        />
       </View>
     </View>
   );

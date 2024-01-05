@@ -11,7 +11,7 @@ import useStatusBarHeight from "hooks/useStatusBarHeight";
 import useStyles from "hooks/useStyles";
 import useTasks from "hooks/useTasks";
 import useUserSettings from "hooks/useUserSettings";
-import { type FC } from "react";
+import { useEffect, type FC } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
@@ -24,25 +24,44 @@ type Props = NativeStackScreenProps<RootStackParamList, "LevelScreen">;
 
 const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { paramLevel } = route.params;
-  const { userData } = useUserSettings();
   const { colors, typography } = useStyles();
   const { statusBarHeight } = useStatusBarHeight();
+  const {
+    userData,
+    isLivesFinished,
+    decrementLives,
+    updateUserData,
+    buyLivesUsingExperience,
+  } = useUserSettings();
 
   const {
     task,
-    lives,
     level,
-    isFinished,
     startTimer,
-    isLivesFinished,
-    decreaseLives,
+    isLevelFinished,
     handleNextLevel,
+    removeExperience,
     handleSavingCurrentLevelProgress,
   } = useLevelStatus(paramLevel);
 
   const { tasks, taskKind, getNewTasks, setTaskKind } = useTasks(level);
 
-  if (isLivesFinished) {
+  useEffect(() => {
+    if (isLevelFinished) {
+      const newUserData = { ...userData };
+      const { experience } = newUserData.user;
+
+      updateUserData({
+        ...newUserData,
+        user: {
+          ...newUserData.user,
+          experience: experience + (task?.experienceInLevel || 0),
+        },
+      });
+    }
+  }, [isLevelFinished]);
+
+  if (!isLivesFinished) {
     return (
       <SafeAreaView
         style={{
@@ -51,7 +70,10 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           backgroundColor: colors.background,
         }}
       >
-        <BuyLives userData={userData} />
+        <BuyLives
+          userData={userData}
+          buyLivesUsingExperience={buyLivesUsingExperience}
+        />
         <NoLives
           goHome={() => {
             navigation.goBack();
@@ -61,7 +83,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
     );
   }
 
-  if (isFinished) {
+  if (isLevelFinished) {
     return (
       <SafeAreaView
         style={{
@@ -108,7 +130,7 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
           size={scalaDownDependingOnDevice(40)}
         />
         <Progressbar currentLevelStep={task?.levelStep || 0} />
-        <DisplayHeart health={lives} />
+        <DisplayHeart health={userData?.user.lives.lives || 0} />
       </View>
       <View
         style={{
@@ -132,8 +154,11 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         tasks={tasks.tasks}
         changeTask={setTaskKind}
         getNewTasks={getNewTasks}
-        decrementLives={decreaseLives}
         handleSavingCurrentLevelProgress={handleSavingCurrentLevelProgress}
+        decrementLives={() => {
+          decrementLives();
+          removeExperience();
+        }}
       />
     </SafeAreaView>
   );

@@ -2,19 +2,19 @@ import ChildrenButton from "components/ChildrenButton/ChildrenButton";
 import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import ZigIcon from "components/icons/ZigIcon/ZigIcon";
 import { LEVEL_SETTINGS } from "hardcoded";
-import useUserSettings from "hooks/useUserSettings";
 import { type FC } from "react";
 import { View } from "react-native";
+import { type UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import { UserSettingsType } from "../../types/game";
 
 const { defaultLives, buyLivesWithExperience } = LEVEL_SETTINGS;
 
 interface BuyLivesProps {
+  buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
 
-const BuyLives: FC<BuyLivesProps> = ({ userData }) => {
+const BuyLives: FC<BuyLivesProps> = ({ userData, buyLivesUsingExperience }) => {
   const isBuyLivesDisabled = userData?.user.lives.lives === defaultLives;
   const isUserEnoughExperience =
     (userData?.user.experience || 0) >= buyLivesWithExperience;
@@ -32,11 +32,9 @@ const BuyLives: FC<BuyLivesProps> = ({ userData }) => {
     >
       <ChildrenButton
         isDisabled={isBuyLivesDisabled || !isUserEnoughExperience}
-        onPress={() => {
-          console.log("Buy lives with experience");
-        }}
+        onPress={buyLivesUsingExperience}
       >
-        <ChildrenButtonText text="Uzpildīt dzīvības 300" />
+        <ChildrenButtonText text="Pirkt dzīvību 300" />
         <ZigIcon
           fill="#fff"
           width={scalaDownDependingOnDevice(20)}

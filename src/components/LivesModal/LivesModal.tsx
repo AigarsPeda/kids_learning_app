@@ -16,10 +16,14 @@ import { UserSettingsType } from "types/game";
 const { defaultLives, livesRecoveryTimeInMinutes } = LEVEL_SETTINGS;
 
 interface LivesModalProps {
+  buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
 
-const LivesModal: FC<LivesModalProps> = ({ userData }) => {
+const LivesModal: FC<LivesModalProps> = ({
+  userData,
+  buyLivesUsingExperience,
+}) => {
   const { colors, typography } = useStyles();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [timeTillNextLife, setTimeTillNextLife] = useState("");
@@ -119,7 +123,10 @@ const LivesModal: FC<LivesModalProps> = ({ userData }) => {
             ? `Nākamā dzīvība pēc ${timeTillNextLife}`
             : `Visas dzīvības ir atjaunotas`}
         </Text>
-        <BuyLives userData={userData} />
+        <BuyLives
+          userData={userData}
+          buyLivesUsingExperience={buyLivesUsingExperience}
+        />
       </TopModal>
     </>
   );

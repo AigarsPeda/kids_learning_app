@@ -2,6 +2,10 @@ import useStyles from "hooks/useStyles";
 import { FC } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import useStatusBarHeight from "hooks/useStatusBarHeight";
+import { scalaDownDependingOnDevice } from "../../utils/metrics";
+import ChildrenButton from "../ChildrenButton/ChildrenButton";
+import ChildrenButtonText from "../ChildrenButton/ChildrenButtonText";
+import HouseIcon from "../icons/HouseIcon/HouseIcon";
 
 interface NoLivesProps {
   goHome: () => void;
@@ -13,21 +17,19 @@ const NoLives: FC<NoLivesProps> = ({ goHome }) => {
   return (
     <View
       style={{
-        ...styles.headLine,
-        padding: 16,
-        // borderRadius: 8,
-        // backgroundColor: colors.accentBackground,
+        width: "100%",
+        paddingVertical: scalaDownDependingOnDevice(20),
+        paddingHorizontal: scalaDownDependingOnDevice(20),
       }}
     >
-      <Text
-        style={{
-          ...styles.headLine,
-          color: colors.text,
-        }}
-      >
-        No Lives Left
-      </Text>
-      <Button title="Atpakaļ uz sākumu" onPress={goHome} />
+      <ChildrenButton color="transparent" onPress={goHome}>
+        <ChildrenButtonText text="Mājas" />
+        <HouseIcon
+          stroke={"#fff"}
+          width={scalaDownDependingOnDevice(25)}
+          height={scalaDownDependingOnDevice(25)}
+        />
+      </ChildrenButton>
     </View>
   );
 };

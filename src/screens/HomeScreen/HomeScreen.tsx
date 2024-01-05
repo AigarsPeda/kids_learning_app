@@ -21,15 +21,16 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { gameData, getGameData, removeAllGameData } = useGameData();
-  const { userData, getUserData, removeAllUserData } = useUserSettings();
+  // const { userData, getUserData, buyLivesUsingExperience, removeAllUserData } =
+  //   useUserSettings();
 
-  const isLivesFinished = userData?.user.lives.lives === 0;
+  // const isLivesFinished = userData?.user.lives.lives === 0;
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
     setTimeout(() => {
       getGameData();
-      getUserData();
+      // getUserData();
       setIsRefreshing(false);
     }, 1000);
   }, []);
@@ -38,15 +39,15 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     useCallback(() => {
       // removeAllGameData();
       // removeAllUserData()
-      getUserData();
+      // getUserData();
       getGameData();
     }, [])
   );
 
-  useEffect(() => {
-    console.log("userData", userData);
-    console.log("gameData", gameData);
-  }, [gameData, userData]);
+  // useEffect(() => {
+  //   console.log("userData", userData);
+  //   console.log("gameData", gameData);
+  // }, [gameData, userData]);
 
   return (
     <SafeAreaView
@@ -67,7 +68,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader userData={userData} />
+        <HomeHeader />
       </View>
 
       <View
@@ -82,7 +83,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           onRefresh={onRefresh}
           navigation={navigation}
           isRefreshing={isRefreshing}
-          isLivesFinished={isLivesFinished}
           handleScroll={(event) => {
             const offsetY = event.nativeEvent.contentOffset.y;
             // Check the value of offsetY to determine if the FlatList is scrolled

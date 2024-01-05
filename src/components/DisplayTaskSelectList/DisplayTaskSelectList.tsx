@@ -12,11 +12,12 @@ import { LevelScreenPropsType } from "types/screen";
 import createArray from "utils/createArray";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
+import useUserSettings from "../../hooks/useUserSettings";
 
 interface DisplayTaskSelectListProps {
   onRefresh: () => void;
   isRefreshing: boolean;
-  isLivesFinished: boolean;
+  // isLivesFinished: boolean;
   gameData: GameLevelType | undefined;
   handleScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   navigation: {
@@ -30,10 +31,13 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   navigation,
   handleScroll,
   isRefreshing,
-  isLivesFinished,
+  // isLivesFinished,
 }) => {
   const array = createArray(20);
+  const { userData, isLivesFinished } = useUserSettings();
   const flatListRef = useRef<FlatList>(null);
+
+  // const isLivesFinished = userData?.user.lives.lives === 0;
 
   const lastCompletedLevelIndex = useCallback(() => {
     for (let i = array.length - 1; i >= 0; i--) {
@@ -103,9 +107,9 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
               isCompleted={level?.isLevelCompleted}
               levelProgress={level?.levelStep || 0.86}
               onPress={() => {
-                if (isLivesFinished) {
-                  return;
-                }
+                // if (isLivesFinished) {
+                //   return;
+                // }
 
                 navigation.navigate("LevelScreen", {
                   paramLevel: index + 1,

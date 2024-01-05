@@ -59,7 +59,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           marginBottom: scalaDownDependingOnDevice(20),
         }}
       >
-        Apsveicu! Tu pabeidzi uzdevumus!
+        Līmenis pabeigts!
       </Text>
       <DisplayStats startTimer={startTimer} experience={experience} />
 
