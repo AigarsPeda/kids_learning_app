@@ -8,7 +8,7 @@ const removeExperienceFromLevel = (lvl: LevelType) => {
 
   return {
     ...lvl,
-    experienceInLevel: newExperience,
+    experienceInLevel: newExperience < 0 ? 0 : newExperience,
   };
 };
 

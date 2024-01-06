@@ -9,8 +9,8 @@ import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
 interface TopModalProps {
   isModalVisible: boolean;
-  openCloseModal: () => void;
   children: React.ReactNode;
+  openCloseModal: () => void;
 }
 
 const TopModal: FC<TopModalProps> = ({
@@ -67,7 +67,7 @@ const TopModal: FC<TopModalProps> = ({
             alignItems: "flex-end",
             justifyContent: "flex-end",
             paddingVertical: scalaDownDependingOnDevice(8),
-            paddingHorizontal: scalaDownDependingOnDevice(8),
+            paddingHorizontal: scalaDownDependingOnDevice(13),
           }}
         >
           <OpacityButton
@@ -75,7 +75,7 @@ const TopModal: FC<TopModalProps> = ({
             icon={
               <Ionicons
                 name="close"
-                color={colors.text}
+                color={colors.gray}
                 size={scalaDownDependingOnDevice(30)}
               />
             }

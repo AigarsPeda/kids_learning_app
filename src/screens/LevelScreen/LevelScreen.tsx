@@ -63,31 +63,14 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
 
   if (isLivesFinished) {
     return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: colors.background,
+      <NoLives
+        userData={userData}
+        isLivesFinished={isLivesFinished}
+        buyLivesUsingExperience={buyLivesUsingExperience}
+        goHome={() => {
+          navigation.goBack();
         }}
-      >
-        <View
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <BuyLives
-            userData={userData}
-            isModalVisible={isLivesFinished}
-            buyLivesUsingExperience={buyLivesUsingExperience}
-          />
-          <NoLives
-            goHome={() => {
-              navigation.goBack();
-            }}
-          />
-        </View>
-      </SafeAreaView>
+      />
     );
   }
 

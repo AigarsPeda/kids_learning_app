@@ -4,5 +4,5 @@ export const LEVEL_SETTINGS = {
   defaultLevelExperience: 110, // user have a chance to get this experience for completing level without mistakes
   experienceCostForMistake: 10, // user will lose this experience for each mistake
   livesRecoveryTimeInMinutes: 5, // user will get 1 live for each 5 minutes
-  buyLivesWithExperience: 10, // user can buy 1 live for 300 experience
+  buyLivesWithExperience: 250, // user can buy 1 live for 250 experience
 };
