@@ -1,6 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import BuyLives from "components/BuyLives/BuyLives";
 import DisplayHeart from "components/DisplayHeart/DisplayHeart";
 import DisplaySummery from "components/DisplaySummery/DisplaySummery";
 import DisplayTask from "components/DisplayTask/DisplayTask";

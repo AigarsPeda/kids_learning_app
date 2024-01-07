@@ -9,6 +9,7 @@ import RedMonster from "monster/RedMonster";
 import { useEffect, useRef, type FC } from "react";
 import { Animated, Easing, Text, View } from "react-native";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
+import YellowMonster from "../../monster/YellowMonster";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -55,7 +56,11 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           width={scalaDownDependingOnDevice(150)}
           height={scalaDownDependingOnDevice(150)}
         />
-        <RedMonster
+        {/* <RedMonster
+          width={scalaDownDependingOnDevice(90)}
+          height={scalaDownDependingOnDevice(90)}
+        /> */}
+        <YellowMonster
           width={scalaDownDependingOnDevice(90)}
           height={scalaDownDependingOnDevice(90)}
         />
