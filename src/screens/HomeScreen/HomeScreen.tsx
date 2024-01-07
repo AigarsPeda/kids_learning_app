@@ -20,9 +20,8 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   const { colors } = useStyles();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const { getUserData, removeAllUserData } = useUserSettings();
   const { gameData, getGameData, removeAllGameData } = useGameData();
-  // const { userData, getUserData, buyLivesUsingExperience, removeAllUserData } =
-  //   useUserSettings();
 
   // const isLivesFinished = userData?.user.lives.lives === 0;
 
@@ -30,7 +29,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     setIsRefreshing(true);
     setTimeout(() => {
       getGameData();
-      // getUserData();
+      getUserData();
       setIsRefreshing(false);
     }, 1000);
   }, []);
@@ -44,15 +43,13 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     }, [])
   );
 
-  // useEffect(() => {
-  //   console.log("userData", userData);
-  //   console.log("gameData", gameData);
-  // }, [gameData, userData]);
+  useEffect(() => {
+    console.log("gameData", gameData);
+  }, [gameData]);
 
   return (
     <SafeAreaView
       style={{
-        // paddingTop: statusBarHeight,
         backgroundColor: colors.background,
       }}
     >

@@ -6,9 +6,9 @@ import PlayIcon from "components/icons/PlayIcon/PlayIcon";
 import useColors from "hooks/useStyles";
 import PinkMonster from "monster/PinkMonster";
 import RedMonster from "monster/RedMonster";
-import { type FC } from "react";
-import { Text, View } from "react-native";
-import { scalaDownDependingOnDevice } from "utils/metrics";
+import { useEffect, useRef, type FC } from "react";
+import { Animated, Easing, Text, View } from "react-native";
+import { device, scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplaySummeryProps {
   goHome: () => void;
@@ -24,10 +24,22 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
   handleNextLevel,
 }) => {
   const { colors, typography } = useColors();
+  const slideAnim = useRef(new Animated.Value(device.width)).current;
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      delay: 50,
+      duration: 600, // Adjust the duration as needed
+      easing: Easing.elastic(0.9),
+      useNativeDriver: false, // You need to set this to false for layout animation
+    }).start();
+  }, [slideAnim]);
 
   return (
-    <View
+    <Animated.View
       style={{
+        transform: [{ translateX: slideAnim }],
         padding: scalaDownDependingOnDevice(25),
       }}
     >
@@ -73,9 +85,8 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
         }}
       >
         <ChildrenButton color="gray" onPress={goHome}>
-          <ChildrenButtonText text="Mājas" />
           <HouseIcon
-            stroke={"#fff"}
+            stroke={colors.white}
             width={scalaDownDependingOnDevice(25)}
             height={scalaDownDependingOnDevice(25)}
           />
@@ -89,7 +100,7 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           />
         </ChildrenButton>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

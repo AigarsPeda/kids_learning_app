@@ -1,5 +1,5 @@
+import { LEVEL_SETTINGS } from "hardcoded";
 import useGameData from "hooks/useGameData";
-import useUserSettings from "hooks/useUserSettings";
 import { useEffect, useRef, useState } from "react";
 import createNewLevel from "utils/createNewLevel";
 import removeExperienceFromLevel from "utils/removeExperienceFromLevel";
@@ -42,7 +42,7 @@ const useLevelStatus = (initialLevel: number) => {
       ...(isCreateNextLevel && { [level + 1]: createNewLevel() }), // add next level if does not exist
     });
 
-    setIsLevelFinished(isFirstTimeCompleted);
+    setIsLevelFinished(updatedLevel.levelStep === LEVEL_SETTINGS.levelParts);
   };
 
   const removeExperience = () => {

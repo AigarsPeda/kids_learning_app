@@ -1,13 +1,7 @@
 import StatsCard from "components/DisplayStats/StatsCard";
-import ClockIcon from "components/icons/ClockIcon/ClockIcon";
-import PercentIcon from "components/icons/PercentIcon/PercentIcon";
-import ZigIcon from "components/icons/ZigIcon/ZigIcon";
-import { LEVEL_SETTINGS } from "hardcoded";
-import useColors from "hooks/useStyles";
-import { type FC } from "react";
-import { View } from "react-native";
-import getMinHoursPassed from "utils/getMinHoursPassed";
-import getPrecisionPercentage from "utils/getPrecisionPercentage";
+import useStats from "hooks/useStats";
+import { type FC, useRef, useEffect } from "react";
+import { FlatList, StyleSheet, View, Animated, Easing } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayStatsProps {
@@ -16,64 +10,78 @@ interface DisplayStatsProps {
 }
 
 const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
-  const { colors } = useColors();
+  const stats = useStats({ startTimer, experience });
+  const animations = useRef(stats.map(() => new Animated.Value(0))).current;
+
+  useEffect(() => {
+    Animated.stagger(
+      500,
+      animations.map((anim) =>
+        Animated.timing(anim, {
+          toValue: 1,
+          delay: 500,
+          duration: 650,
+          useNativeDriver: true,
+          easing: Easing.elastic(0.9),
+        })
+      )
+    ).start();
+  }, [animations, stats]);
 
   return (
-    <View
-      style={{
-        gap: scalaDownDependingOnDevice(3),
-      }}
-    >
-      <StatsCard
-        label="Pieredze"
-        title={experience?.toString() || "0"}
-        icon={
-          <ZigIcon
-            width={20}
-            height={20}
-            fill={colors.text}
-            stroke={colors.text}
+    <View>
+      <FlatList
+        data={stats}
+        horizontal
+        style={{
+          flexGrow: 0,
+          overflow: "visible",
+        }}
+        keyExtractor={(item) => item.label}
+        ItemSeparatorComponent={() => (
+          <View style={{ width: scalaDownDependingOnDevice(4) }} />
+        )}
+        renderItem={({ item, index }) => (
+          <Animated.View
             style={{
-              marginLeft: scalaDownDependingOnDevice(15),
+              width: scalaDownDependingOnDevice(100),
+              opacity: animations[index]?.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              }),
+              transform: [
+                {
+                  scale: animations[index]?.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.3, 1], // Adjust the initial position
+                  }),
+                },
+                {
+                  translateY: animations[index]?.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [50, 1], // Adjust the initial position
+                  }),
+                },
+              ],
             }}
-          />
-        }
-      />
-
-      <StatsCard
-        label="Precizitāte"
-        title={getPrecisionPercentage({
-          value: experience || 0,
-          precision: LEVEL_SETTINGS.defaultLevelExperience,
-        }).toString()}
-        icon={
-          <PercentIcon
-            width={20}
-            height={20}
-            stroke={colors.text}
-            style={{
-              marginLeft: scalaDownDependingOnDevice(15),
-            }}
-          />
-        }
-      />
-
-      <StatsCard
-        label="Laiks"
-        title={getMinHoursPassed(startTimer) || "N/A"}
-        icon={
-          <ClockIcon
-            width={20}
-            height={20}
-            stroke={colors.text}
-            style={{
-              marginLeft: scalaDownDependingOnDevice(15),
-            }}
-          />
-        }
+          >
+            <StatsCard
+              key={item.label}
+              icon={item.icon}
+              label={item.label}
+              title={item.value}
+            />
+          </Animated.View>
+        )}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  listStyle: {
+    flexGrow: 0,
+  },
+});
 
 export default DisplayStats;

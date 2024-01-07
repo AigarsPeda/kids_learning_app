@@ -14,11 +14,14 @@ const StatsCard: FC<StatsCardProps> = ({ label, title, icon }) => {
   return (
     <View
       style={{
+        borderWidth: 2,
         display: "flex",
-        flexDirection: "row",
+        borderRadius: 10,
         alignItems: "center",
+        borderColor: colors.completed,
         justifyContent: "space-between",
-        paddingVertical: scalaDownDependingOnDevice(10),
+        width: scalaDownDependingOnDevice(95),
+        padding: scalaDownDependingOnDevice(10),
       }}
     >
       <Text
@@ -26,7 +29,8 @@ const StatsCard: FC<StatsCardProps> = ({ label, title, icon }) => {
           textAlign: "center",
           color: colors.text,
           fontFamily: typography.primaryMediumFont,
-          fontSize: scalaDownDependingOnDevice(18),
+          fontSize: scalaDownDependingOnDevice(15),
+          paddingBottom: scalaDownDependingOnDevice(10),
         }}
       >
         {label}
@@ -36,7 +40,7 @@ const StatsCard: FC<StatsCardProps> = ({ label, title, icon }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          // backgroundColor: "#F2F2F2",
+          justifyContent: "space-between",
         }}
       >
         <Text
@@ -44,7 +48,7 @@ const StatsCard: FC<StatsCardProps> = ({ label, title, icon }) => {
             textAlign: "center",
             color: colors.text,
             fontFamily: typography.primaryMediumFont,
-            fontSize: scalaDownDependingOnDevice(18),
+            fontSize: scalaDownDependingOnDevice(22),
           }}
         >
           {title}

@@ -1,7 +1,7 @@
 import Svg, { Path, SvgProps } from "react-native-svg";
 
 const PercentIcon = (props: SvgProps) => (
-  <Svg fill="none" viewBox="0 0 24 24" {...props}>
+  <Svg fill="none" viewBox="2 2 24 24" {...props}>
     <Path
       strokeWidth={2.3}
       strokeLinecap="round"

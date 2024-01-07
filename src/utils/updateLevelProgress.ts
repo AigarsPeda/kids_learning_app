@@ -4,7 +4,7 @@ import deepCopyObject from "utils/deepCopyObject";
 
 const { levelParts } = LEVEL_SETTINGS;
 
-const updateLevelProgress = (lvl: LevelType) => {
+const updateLevelProgress = (lvl: LevelType): LevelType => {
   const step = lvl.levelStep;
   const s = step === levelParts ? 0 : step + 1;
   const isAlreadyCompleted = lvl.isLevelCompleted;
