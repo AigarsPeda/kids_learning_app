@@ -22,20 +22,6 @@ const useLevelStatus = (initialLevel: number) => {
     const isCreateNextLevel =
       isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
 
-    // Update the user experience if the level is completed for the first time
-    // if (isFirstTimeCompleted) {
-    //   const newUserData = { ...userData };
-    //   const { experience } = newUserData.user;
-
-    //   updateUserData({
-    //     ...newUserData,
-    //     user: {
-    //       ...newUserData.user,
-    //       experience: experience + updatedLevel.experienceInLevel,
-    //     },
-    //   });
-    // }
-
     updateGameData({
       ...newGameData,
       [level]: updatedLevel,
