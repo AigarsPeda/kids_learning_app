@@ -69,8 +69,8 @@ const useLevelStatus = (initialLevel: number) => {
     isLevelFinished,
     task: gameData?.[level],
     startTimer: startTimer.current,
-    removeExperience,
     handleNextLevel,
+    removeExperience,
     handleSavingCurrentLevelProgress,
   };
 };
