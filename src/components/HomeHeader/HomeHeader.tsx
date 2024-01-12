@@ -7,12 +7,7 @@ import { useCallback, type FC } from "react";
 import { Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
-interface HomeScreenProps {
-  // buyLivesUsingExperience: () => void;
-  // userData: UserSettingsType | undefined;
-}
-
-const HomeHeader: FC<HomeScreenProps> = () => {
+const HomeHeader: FC = () => {
   const { colors, typography } = useStyles();
   const { userData, getUserData, buyLivesUsingExperience } = useUserSettings();
 
