@@ -27,6 +27,10 @@ const useTasks = (level: number) => {
       return "2";
     }
 
+    if (level > 20 && level <= 30) {
+      return "3";
+    }
+
     return "1";
   };
 

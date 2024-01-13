@@ -7,17 +7,16 @@ import {
   RefreshControl,
   View,
 } from "react-native";
+import { AVAILABLE_LEVEL_COUNT } from "tasks/math";
 import { type GameLevelType } from "types/game";
 import { LevelScreenPropsType } from "types/screen";
 import createArray from "utils/createArray";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import useUserSettings from "../../hooks/useUserSettings";
 
 interface DisplayTaskSelectListProps {
   onRefresh: () => void;
   isRefreshing: boolean;
-  // isLivesFinished: boolean;
   gameData: GameLevelType | undefined;
   handleScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   navigation: {
@@ -31,10 +30,9 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   navigation,
   handleScroll,
   isRefreshing,
-  // isLivesFinished,
 }) => {
-  const array = createArray(20);
-  const { userData, isLivesFinished } = useUserSettings();
+  const array = createArray(AVAILABLE_LEVEL_COUNT);
+  // const { userData, isLivesFinished } = useUserSettings();
   const flatListRef = useRef<FlatList>(null);
 
   // const isLivesFinished = userData?.user.lives.lives === 0;

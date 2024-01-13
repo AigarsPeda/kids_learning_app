@@ -30,6 +30,7 @@ export type EquationArgumentType = {
 export type MathObjType = {
   "1": MathTasksType;
   "2": MathTasksType;
+  "3": MathTasksType;
 };
 
 export type MathObjKeysType = keyof MathObjType;
