@@ -5,4 +5,5 @@ export const LEVEL_SETTINGS = {
   experienceCostForMistake: 10, // user will lose this experience for each mistake
   livesRecoveryTimeInMinutes: 5, // user will get 1 live for each 5 minutes
   buyLivesWithExperience: 250, // user can buy 1 live for 250 experience
+  increaseLevelEvery: 10, // hardness will increase every 10 levels
 };

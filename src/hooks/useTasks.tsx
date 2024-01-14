@@ -1,3 +1,4 @@
+import { LEVEL_SETTINGS } from "hardcoded";
 import { useCallback, useEffect, useState } from "react";
 import {
   type EquationArgumentType,
@@ -5,6 +6,11 @@ import {
   type TaskKindType,
 } from "types/addition";
 import findTasks from "utils/findTasks";
+
+// create types guard
+const isMathObjKeysType = (obj: any): obj is MathObjKeysType => {
+  return typeof obj === "string";
+};
 
 const useTasks = (level: number) => {
   const [taskKind, setTaskKind] = useState<TaskKindType>(
@@ -18,17 +24,16 @@ const useTasks = (level: number) => {
     description: "No description",
   });
 
+  // get difficulty based on level on every 10th level difficulty increases
   const getDifficulty = (level: number): MathObjKeysType => {
-    if (level <= 10) {
-      return "1";
-    }
+    const difficulty = (
+      Math.floor(level / LEVEL_SETTINGS.increaseLevelEvery) + 1
+    ).toString();
 
-    if (level > 10 && level <= 20) {
-      return "2";
-    }
+    console.log("difficulty", difficulty);
 
-    if (level > 20 && level <= 30) {
-      return "3";
+    if (isMathObjKeysType(difficulty)) {
+      return difficulty;
     }
 
     return "1";
