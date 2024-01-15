@@ -7,7 +7,7 @@ const useGameData = () => {
     useAsyncStorage<GameLevelType>({
       key: "v1",
       initialValue: {
-        "1": {
+        "0": {
           levelStep: 0,
           isLevelCompleted: false,
           experienceInLevel: LEVEL_SETTINGS.defaultLevelExperience,

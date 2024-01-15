@@ -1,7 +1,7 @@
 import StatsCard from "components/DisplayStats/StatsCard";
 import useStats from "hooks/useStats";
-import { type FC, useRef, useEffect } from "react";
-import { FlatList, StyleSheet, View, Animated, Easing } from "react-native";
+import { useEffect, useRef, type FC } from "react";
+import { Animated, Easing, FlatList, StyleSheet, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface DisplayStatsProps {
@@ -20,7 +20,7 @@ const DisplayStats: FC<DisplayStatsProps> = ({ startTimer, experience }) => {
         Animated.timing(anim, {
           toValue: 1,
           delay: 500,
-          duration: 650,
+          duration: 500,
           useNativeDriver: true,
           easing: Easing.elastic(0.9),
         })

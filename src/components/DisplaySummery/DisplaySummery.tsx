@@ -56,10 +56,6 @@ const DisplaySummery: FC<DisplaySummeryProps> = ({
           width={scalaDownDependingOnDevice(150)}
           height={scalaDownDependingOnDevice(150)}
         />
-        {/* <RedMonster
-          width={scalaDownDependingOnDevice(90)}
-          height={scalaDownDependingOnDevice(90)}
-        /> */}
         <YellowMonster
           width={scalaDownDependingOnDevice(90)}
           height={scalaDownDependingOnDevice(90)}

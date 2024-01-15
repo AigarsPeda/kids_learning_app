@@ -8,7 +8,7 @@ import {
 import findTasks from "utils/findTasks";
 
 // create types guard
-const isMathObjKeysType = (obj: any): obj is MathObjKeysType => {
+const isMathObjKeysType = (obj: unknown): obj is MathObjKeysType => {
   return typeof obj === "string";
 };
 
@@ -26,6 +26,8 @@ const useTasks = (level: number) => {
 
   // get difficulty based on level on every 10th level difficulty increases
   const getDifficulty = (level: number): MathObjKeysType => {
+    console.log("level", level);
+
     const difficulty = (
       Math.floor(level / LEVEL_SETTINGS.increaseLevelEvery) + 1
     ).toString();
@@ -36,6 +38,7 @@ const useTasks = (level: number) => {
       return difficulty;
     }
 
+    console.error("Error in useTasks.tsx getDifficulty function");
     return "1";
   };
 

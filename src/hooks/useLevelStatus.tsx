@@ -6,7 +6,7 @@ import removeExperienceFromLevel from "utils/removeExperienceFromLevel";
 import updateLevelProgress from "utils/updateLevelProgress";
 
 const useLevelStatus = (initialLevel: number) => {
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(0);
   const startTimer = useRef<Date>(new Date());
   const { gameData, updateGameData } = useGameData();
   const [isLevelFinished, setIsLevelFinished] = useState(false);
@@ -21,6 +21,10 @@ const useLevelStatus = (initialLevel: number) => {
 
     const isCreateNextLevel =
       isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
+
+    console.log("isCreateNextLevel", isCreateNextLevel);
+    console.log("isFirstTimeCompleted", isFirstTimeCompleted);
+    console.log("updatedLevel", updatedLevel);
 
     updateGameData({
       ...newGameData,

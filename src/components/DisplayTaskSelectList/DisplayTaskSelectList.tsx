@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { AVAILABLE_LEVEL_COUNT } from "tasks/math";
 import { type GameLevelType } from "types/game";
-import { LevelScreenPropsType } from "types/screen";
+import { type LevelScreenPropsType } from "types/screen";
 import createArray from "utils/createArray";
 import handleLeftMargin from "utils/handleLeftMargin";
 import { scalaDownDependingOnDevice } from "utils/metrics";
@@ -31,11 +31,8 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
   handleScroll,
   isRefreshing,
 }) => {
-  const array = createArray(AVAILABLE_LEVEL_COUNT);
-  // const { userData, isLivesFinished } = useUserSettings();
   const flatListRef = useRef<FlatList>(null);
-
-  // const isLivesFinished = userData?.user.lives.lives === 0;
+  const array = createArray(AVAILABLE_LEVEL_COUNT);
 
   const lastCompletedLevelIndex = useCallback(() => {
     for (let i = array.length - 1; i >= 0; i--) {
@@ -81,10 +78,9 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
       keyExtractor={(_item, index) => index.toString()}
       renderItem={({ item, index }) => {
         const isFirst = index === 0;
-        const rotateAngle = index % 2 === 0 ? 10 : -10;
         const isLast = array.length - 1 === index;
-        const i = (index + 1).toString();
-        const level = gameData && gameData[i];
+        const level = gameData && gameData[index];
+        const rotateAngle = index % 2 === 0 ? 10 : -10;
         const isSelectable = Boolean(level) || index === 0;
 
         return (
@@ -110,7 +106,7 @@ const DisplayTaskSelectList: FC<DisplayTaskSelectListProps> = ({
                 // }
 
                 navigation.navigate("LevelScreen", {
-                  paramLevel: index + 1,
+                  paramLevel: index,
                 });
               }}
             />
