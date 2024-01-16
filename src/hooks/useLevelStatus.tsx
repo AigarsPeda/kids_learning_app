@@ -22,10 +22,6 @@ const useLevelStatus = (initialLevel: number) => {
     const isCreateNextLevel =
       isFirstTimeCompleted && !Boolean(newGameData[level + 1]?.levelStep);
 
-    console.log("isCreateNextLevel", isCreateNextLevel);
-    console.log("isFirstTimeCompleted", isFirstTimeCompleted);
-    console.log("updatedLevel", updatedLevel);
-
     updateGameData({
       ...newGameData,
       [level]: updatedLevel,

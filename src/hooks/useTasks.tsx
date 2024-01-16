@@ -26,19 +26,15 @@ const useTasks = (level: number) => {
 
   // get difficulty based on level on every 10th level difficulty increases
   const getDifficulty = (level: number): MathObjKeysType => {
-    console.log("level", level);
-
     const difficulty = (
       Math.floor(level / LEVEL_SETTINGS.increaseLevelEvery) + 1
     ).toString();
-
-    console.log("difficulty", difficulty);
 
     if (isMathObjKeysType(difficulty)) {
       return difficulty;
     }
 
-    console.error("Error in useTasks.tsx getDifficulty function");
+    console.error("Error getting difficulty");
     return "1";
   };
 

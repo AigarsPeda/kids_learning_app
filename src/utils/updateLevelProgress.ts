@@ -11,10 +11,6 @@ const updateLevelProgress = (lvl: LevelType): LevelType => {
 
   const d = deepCopyObject(lvl);
 
-  console.log("updateLevelProgress", step, levelParts);
-  console.log(">>>>>>", lvl);
-  console.log("222222", step === levelParts);
-
   return {
     ...d,
     levelStep: s,
