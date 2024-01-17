@@ -5,11 +5,10 @@ import HouseIcon from "components/icons/HouseIcon/HouseIcon";
 import PlayIcon from "components/icons/PlayIcon/PlayIcon";
 import useColors from "hooks/useStyles";
 import PinkMonster from "monster/PinkMonster";
-import RedMonster from "monster/RedMonster";
+import YellowMonster from "monster/YellowMonster";
 import { useEffect, useRef, type FC } from "react";
 import { Animated, Easing, Text, View } from "react-native";
 import { device, scalaDownDependingOnDevice } from "utils/metrics";
-import YellowMonster from "../../monster/YellowMonster";
 
 interface DisplaySummeryProps {
   goHome: () => void;
