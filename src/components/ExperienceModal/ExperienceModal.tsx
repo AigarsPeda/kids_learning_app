@@ -81,12 +81,13 @@ const ExperienceModal: FC<ExperienceModalProps> = ({ userData }) => {
               console.log("save");
             }}
           />
-          <MyButton
+          {/* <MyButton
             title="Noskatīties reklāmu"
             onPress={() => {
-              console.log("cancel");
+              // console.log("cancel");
+              navigation.push("AddScreen");
             }}
-          />
+          /> */}
         </View>
       </TopModal>
     </>

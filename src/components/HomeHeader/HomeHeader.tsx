@@ -7,7 +7,11 @@ import { useCallback, type FC } from "react";
 import { Text, View } from "react-native";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
-const HomeHeader: FC = () => {
+interface HomeHeaderProps {
+  goWatchAdScreen: () => void;
+}
+
+const HomeHeader: FC<HomeHeaderProps> = ({ goWatchAdScreen }) => {
   const { colors, typography } = useStyles();
   const { userData, getUserData, buyLivesUsingExperience } = useUserSettings();
 
@@ -45,6 +49,7 @@ const HomeHeader: FC = () => {
         <ExperienceModal userData={userData} />
         <LivesModal
           userData={userData}
+          goWatchAdScreen={goWatchAdScreen}
           buyLivesUsingExperience={buyLivesUsingExperience}
         />
       </View>

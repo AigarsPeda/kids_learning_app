@@ -5,10 +5,12 @@ import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
 import { useEffect, type FC } from "react";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
 import LevelScreen from "screens/LevelScreen/LevelScreen";
+import WatchAdScreen from "screens/WatchAdScreen/WatchAdScreen";
 import { type LevelScreenPropsType } from "types/screen";
 
 type RootStackParamList = {
   Home: undefined;
+  WatchAdScreen: undefined;
   LevelScreen: LevelScreenPropsType;
 };
 
@@ -45,11 +47,6 @@ const App: FC = () => {
 
   return (
     <NavigationContainer>
-      {/* <StatusBar /> */}
-      {/* <View style={styles.container}>
-        <Text>App to learn kids staff !!</Text>
-        <StatusBar style="auto" />
-      </View> */}
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
@@ -61,6 +58,13 @@ const App: FC = () => {
         <Stack.Screen
           name="LevelScreen"
           component={LevelScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="WatchAdScreen"
+          component={WatchAdScreen}
           options={{
             headerShown: false,
           }}

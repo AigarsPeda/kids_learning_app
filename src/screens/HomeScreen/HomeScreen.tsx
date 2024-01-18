@@ -10,6 +10,7 @@ import { type LevelScreenPropsType } from "types/screen";
 
 interface LevelScreenProps {
   navigation: {
+    push: (arg0: string) => void;
     addListener: (arg0: string, arg1: () => void) => void;
     removeListener: (arg0: string, arg1: () => void) => void;
     navigate: (arg0: string, arg1: LevelScreenPropsType) => void;
@@ -65,7 +66,11 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader />
+        <HomeHeader
+          goWatchAdScreen={() => {
+            navigation.push("WatchAdScreen");
+          }}
+        />
       </View>
 
       <View

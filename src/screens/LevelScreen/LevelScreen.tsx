@@ -16,6 +16,8 @@ import { type LevelScreenPropsType } from "types/screen";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 type RootStackParamList = {
+  WatchAdScreen: undefined;
+  goWatchAdScreen: () => void;
   LevelScreen: LevelScreenPropsType;
 };
 
@@ -27,9 +29,9 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
   const { statusBarHeight } = useStatusBarHeight();
   const {
     userData,
-    isLivesFinished,
     decrementLives,
     updateUserData,
+    isLivesFinished,
     buyLivesUsingExperience,
   } = useUserSettings();
 
@@ -66,6 +68,9 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         userData={userData}
         isLivesFinished={isLivesFinished}
         buyLivesUsingExperience={buyLivesUsingExperience}
+        goWatchAdScreen={() => {
+          navigation.push("WatchAdScreen");
+        }}
         goHome={() => {
           navigation.goBack();
         }}

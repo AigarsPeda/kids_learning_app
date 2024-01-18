@@ -10,6 +10,7 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface NoLivesProps {
   goHome: () => void;
   isLivesFinished: boolean;
+  goWatchAdScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
@@ -17,6 +18,7 @@ interface NoLivesProps {
 const NoLives: FC<NoLivesProps> = ({
   goHome,
   userData,
+  goWatchAdScreen,
   isLivesFinished,
   buyLivesUsingExperience,
 }) => {
@@ -39,6 +41,7 @@ const NoLives: FC<NoLivesProps> = ({
         <BuyLives
           userData={userData}
           isModalVisible={isLivesFinished}
+          goWatchAdScreen={goWatchAdScreen}
           buyLivesUsingExperience={buyLivesUsingExperience}
         />
         <View
