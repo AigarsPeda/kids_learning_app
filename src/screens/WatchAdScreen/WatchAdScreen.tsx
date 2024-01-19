@@ -47,17 +47,17 @@ const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   input: {
+    margin: 5,
+    padding: 5,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: "black",
     marginBottom: 15,
-    padding: 5,
-    margin: 5,
+    borderColor: "black",
   },
   label: {
     fontSize: 20,
-    marginBottom: 5,
     marginLeft: 5,
+    marginBottom: 5,
   },
 });
 
