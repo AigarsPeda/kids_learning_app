@@ -42,3 +42,23 @@ const buttonsArray = createButtonArray([
     },
   },
 ]);
+
+const buttonsArray2: ButtonType[] = [
+  {
+    icon: "home",
+    onClick: () => {},
+    searchParams: {
+      key: "tableHead",
+      value: "name",
+    },
+  },
+  {
+    icon: "settings",
+    onClick: () => {},
+    searchParams: {
+      key: "table",
+      value: "baz",
+      // value: "baz",
+    },
+  },
+];
