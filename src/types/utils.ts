@@ -1,21 +1,63 @@
-export type NonNullable<T> = {
-  [P in keyof T]-?: Exclude<T[P], undefined | null>;
+type Table = "foo" | "bar" | "baz";
+type TableHead = "address2" | "name" | "phone";
+
+type UIParamsType = {
+  table: Table;
+  tableHead: TableHead;
 };
 
-// this ?
-const PARAMS = {
-  UI: {
-    tableHead: "address",
-    table: "taxi",
-  },
-  API: {
-    color: "blue",
-    size: 10,
-  },
+type ParamsKeyType = keyof UIParamsType;
+type ValueForParamsKey<T extends ParamsKeyType> = UIParamsType[T];
+
+type ButtonType<T extends ParamsKeyType> = {
+  icon: string;
+  searchParams: {
+    key: T;
+    value: ValueForParamsKey<T>;
+  };
 };
 
-// type of params key is "UI" | "API"
-type ParamsKey = keyof typeof PARAMS;
+// Utility function to create a ButtonType instance
+function createButton<T extends ParamsKeyType>(
+  button: ButtonType<T>
+): ButtonType<T> {
+  return button;
+}
 
-// type of params value is { color: string, size: number }
-type ParamsValue = (typeof PARAMS)[ParamsKey];
+const validateSearchParams = <T extends ParamsKeyType>(
+  key: T,
+  value: ValueForParamsKey<T>
+): { key: T; value: ValueForParamsKey<T> } => {
+  return { key, value };
+};
+
+export const buttonsArray: ButtonType<ParamsKeyType>[] = [
+  {
+    icon: "home",
+    searchParams: validateSearchParams("tableHead", "name"),
+  },
+  {
+    icon: "settings",
+    searchParams: validateSearchParams("table", "foo"),
+  },
+];
+
+// Create an array of buttons
+// export const buttonsArray = [
+//   createButton({
+//     icon: "home",
+//     onClick: () => {},
+//     searchParams: {
+//       key: "tableHead",
+//       value: "address2",
+//     },
+//   }),
+//   createButton({
+//     icon: "settings",
+//     onClick: () => {},
+//     searchParams: {
+//       key: "table",
+//       value: "foo",
+//     },
+//   }),
+// ];
