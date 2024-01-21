@@ -24,7 +24,7 @@ function createButton<T extends ParamsKeyType>(
   return button;
 }
 
-const validateSearchParams = <T extends ParamsKeyType>(
+const createValidSearchParams = <T extends ParamsKeyType>(
   key: T,
   value: ValueForParamsKey<T>
 ): { key: T; value: ValueForParamsKey<T> } => {
@@ -34,11 +34,11 @@ const validateSearchParams = <T extends ParamsKeyType>(
 export const buttonsArray: ButtonType<ParamsKeyType>[] = [
   {
     icon: "home",
-    searchParams: validateSearchParams("tableHead", "name"),
+    searchParams: createValidSearchParams("tableHead", "name"),
   },
   {
     icon: "settings",
-    searchParams: validateSearchParams("table", "foo"),
+    searchParams: createValidSearchParams("table", "foo"),
   },
 ];
 
