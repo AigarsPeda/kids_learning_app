@@ -6,58 +6,39 @@ type UIParamsType = {
   tableHead: TableHead;
 };
 
-type ParamsKeyType = keyof UIParamsType;
-type ValueForParamsKey<T extends ParamsKeyType> = UIParamsType[T];
-
-type ButtonType<T extends ParamsKeyType> = {
+type ButtonType = {
   icon: string;
-  searchParams: {
-    key: T;
-    value: ValueForParamsKey<T>;
+  onClick: () => void;
+  searchParams: SearchParams;
+};
+
+type SearchParams = {
+  [K in keyof UIParamsType]: {
+    key: K;
+    value: UIParamsType[K];
   };
+}[keyof UIParamsType];
+
+const createButtonArray = (buttons: ButtonType[]): ButtonType[] => {
+  return buttons; // No transformation needed, just type checking
 };
 
-// Utility function to create a ButtonType instance
-function createButton<T extends ParamsKeyType>(
-  button: ButtonType<T>
-): ButtonType<T> {
-  return button;
-}
-
-const createValidSearchParams = <T extends ParamsKeyType>(
-  key: T,
-  value: ValueForParamsKey<T>
-): { key: T; value: ValueForParamsKey<T> } => {
-  return { key, value };
-};
-
-export const buttonsArray: ButtonType<ParamsKeyType>[] = [
+// Usage
+const buttonsArray = createButtonArray([
   {
     icon: "home",
-    searchParams: createValidSearchParams("tableHead", "name"),
+    onClick: () => {},
+    searchParams: {
+      key: "tableHead",
+      value: "address2",
+    },
   },
   {
     icon: "settings",
-    searchParams: createValidSearchParams("table", "foo"),
+    onClick: () => {},
+    searchParams: {
+      key: "table",
+      value: "foo",
+    },
   },
-];
-
-// Create an array of buttons
-// export const buttonsArray = [
-//   createButton({
-//     icon: "home",
-//     onClick: () => {},
-//     searchParams: {
-//       key: "tableHead",
-//       value: "address2",
-//     },
-//   }),
-//   createButton({
-//     icon: "settings",
-//     onClick: () => {},
-//     searchParams: {
-//       key: "table",
-//       value: "foo",
-//     },
-//   }),
-// ];
+]);
