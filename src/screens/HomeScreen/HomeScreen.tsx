@@ -7,7 +7,6 @@ import useUserSettings from "hooks/useUserSettings";
 import { useCallback, useEffect, useState, type FC } from "react";
 import { SafeAreaView, View } from "react-native";
 import { type LevelScreenPropsType } from "types/screen";
-import { buttonsArray } from "../../types/utils";
 
 interface LevelScreenProps {
   navigation: {
@@ -47,8 +46,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
 
   useEffect(() => {
     console.log("gameData", gameData);
-    console.log("buttonsArray", buttonsArray);
-  }, [gameData, buttonsArray]);
+  }, [gameData]);
 
   return (
     <SafeAreaView
@@ -68,11 +66,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader
-          goWatchAdScreen={() => {
-            navigation.push("WatchAdScreen");
-          }}
-        />
+        <HomeHeader />
       </View>
 
       <View

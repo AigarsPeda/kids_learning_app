@@ -18,7 +18,6 @@ const { defaultLives, buyLivesWithExperience, livesRecoveryTimeInMinutes } =
 
 interface BuyLivesProps {
   isModalVisible: boolean;
-  goWatchAdScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
@@ -26,7 +25,6 @@ interface BuyLivesProps {
 const BuyLives: FC<BuyLivesProps> = ({
   userData,
   isModalVisible,
-  goWatchAdScreen,
   buyLivesUsingExperience,
 }) => {
   const { colors, typography } = useStyles();
@@ -130,7 +128,10 @@ const BuyLives: FC<BuyLivesProps> = ({
           <ChildrenButtonText text="Dzīvības bez ierobežojumiem" />
         </ChildrenButton>
         <ChildrenButton
-          onPress={goWatchAdScreen}
+          onPress={() => {
+            // TODO: Implement watching ads
+            console.log("Noskatīties reklāmu pressed");
+          }}
           isDisabled={isBuyLivesDisabled}
         >
           <ChildrenButtonText text="Noskatīties reklāmu" />

@@ -34,31 +34,6 @@ const buttonsArray2: ButtonType[] = [
     searchParams: {
       key: "table",
       value: "baz",
-      // value: "baz",
     },
   },
 ];
-
-// const createButtonArray = (buttons: ButtonType[]): ButtonType[] => {
-//   return buttons; // No transformation needed, just type checking
-// };
-
-// Usage
-// const buttonsArray = createButtonArray([
-//   {
-//     icon: "home",
-//     onClick: () => {},
-//     searchParams: {
-//       key: "tableHead",
-//       value: "address2",
-//     },
-//   },
-//   {
-//     icon: "settings",
-//     onClick: () => {},
-//     searchParams: {
-//       key: "table",
-//       value: "foo",
-//     },
-//   },
-// ]);

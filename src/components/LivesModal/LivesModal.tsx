@@ -9,14 +9,12 @@ import { UserSettingsType } from "types/game";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface LivesModalProps {
-  goWatchAdScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
 
 const LivesModal: FC<LivesModalProps> = ({
   userData,
-  goWatchAdScreen,
   buyLivesUsingExperience,
 }) => {
   const { colors, typography } = useStyles();
@@ -59,10 +57,6 @@ const LivesModal: FC<LivesModalProps> = ({
           userData={userData}
           isModalVisible={isModalVisible}
           buyLivesUsingExperience={buyLivesUsingExperience}
-          goWatchAdScreen={() => {
-            goWatchAdScreen();
-            setIsModalVisible(false);
-          }}
         />
       </TopModal>
     </>

@@ -14,10 +14,49 @@ interface WatchAdScreenProps {
   };
 }
 
+// const adUnitId = __DEV__
+//   ? TestIds.APP_OPEN
+//   : "ca-app-pub-5238286944896076/9540669827";
+
+// const rewarded = RewardedAd.createForAdRequest(adUnitId, {
+//   keywords: ["fashion", "clothing"],
+// });
+
 const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const { colors, typography } = useStyles();
   const [content, setContent] = useState("");
+
+  const [loaded, setLoaded] = useState(false);
+
+  // useEffect(() => {
+  //   const unsubscribeLoaded = rewarded.addAdEventListener(
+  //     RewardedAdEventType.LOADED,
+  //     () => {
+  //       setLoaded(true);
+  //     }
+  //   );
+  //   const unsubscribeEarned = rewarded.addAdEventListener(
+  //     RewardedAdEventType.EARNED_REWARD,
+  //     (reward) => {
+  //       console.log("User earned reward of ", reward);
+  //     }
+  //   );
+
+  //   // Start loading the rewarded ad straight away
+  //   rewarded.load();
+
+  //   // Unsubscribe from events on unmount
+  //   return () => {
+  //     unsubscribeLoaded();
+  //     unsubscribeEarned();
+  //   };
+  // }, []);
+
+  // No advert ready to show yet
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView
@@ -26,7 +65,14 @@ const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
         backgroundColor: colors.background,
       }}
     >
-      <Text style={styles.label}>Enter Title:</Text>
+      <Text
+        style={{
+          color: colors.text,
+        }}
+      >
+        Watch Ad Screen
+      </Text>
+
       <TextInput style={styles.input} value={title} onChangeText={setTitle} />
       <Text style={styles.label}>Enter Content:</Text>
       <TextInput
@@ -35,12 +81,13 @@ const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
         onChangeText={setContent}
       />
 
-      <Button
-        title="Go to Home"
+      {/* <Button onPress={() => rewarded.show()} title="Display Rewarded Ads" /> */}
+      {/* <Button
+        title="Show Rewarded Ad"
         onPress={() => {
-          navigation.navigate("Home");
+          rewarded.show();
         }}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

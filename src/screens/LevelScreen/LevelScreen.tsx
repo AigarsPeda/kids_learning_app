@@ -68,9 +68,6 @@ const LevelScreen: FC<Props> = ({ route, navigation }) => {
         userData={userData}
         isLivesFinished={isLivesFinished}
         buyLivesUsingExperience={buyLivesUsingExperience}
-        goWatchAdScreen={() => {
-          navigation.push("WatchAdScreen");
-        }}
         goHome={() => {
           navigation.goBack();
         }}
