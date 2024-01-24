@@ -1,17 +1,16 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
 import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import ZigIcon from "components/icons/ZigIcon/ZigIcon";
 import { LEVEL_SETTINGS } from "hardcoded";
-import React, { useState, type FC, useEffect } from "react";
+import useStyles from "hooks/useStyles";
+import React, { useEffect, useState, type FC } from "react";
 import { FlatList, Text, View } from "react-native";
 import { type UserSettingsType } from "types/game";
+import createArray from "utils/createArray";
+import formatTimeToString from "utils/formatTimeToString";
+import getTimePassedSince from "utils/getTimePassedSince";
 import { scalaDownDependingOnDevice } from "utils/metrics";
-import { typography } from "../../styles/styles";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import useStyles from "../../hooks/useStyles";
-import createArray from "../../utils/createArray";
-import formatTimeToString from "../../utils/formatTimeToString";
-import getTimePassedSince from "../../utils/getTimePassedSince";
 
 const { defaultLives, buyLivesWithExperience, livesRecoveryTimeInMinutes } =
   LEVEL_SETTINGS;
