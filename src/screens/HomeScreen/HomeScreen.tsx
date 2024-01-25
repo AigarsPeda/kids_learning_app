@@ -48,48 +48,6 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
     console.log("gameData", gameData);
   }, [gameData]);
 
-  const KEY_ARRAY = ["NR", "FOO", "BAR"];
-
-  const OBJ_ARRAY = [
-    {
-      FOO: "FOO",
-      BAR: "BAR",
-      NR: "NR",
-    },
-    {
-      BAR: "BAR",
-      NR: "NR",
-      FOO: "FOO",
-    },
-    {
-      FOO: "FOO",
-      NR: "NR",
-      BAR: "BAR",
-    },
-  ];
-
-  const sortObjKeysByArray = (
-    array: string[],
-    objArray: {
-      [key: string]: unknown;
-    }[]
-  ) => {
-    const sorted = objArray.map((obj) => {
-      const newObj: {
-        [key: string]: unknown;
-      } = {};
-      array.forEach((key) => {
-        newObj[key] = obj[key];
-      });
-      return newObj;
-    });
-    return sorted;
-  };
-
-  // Sort object keys by array
-
-  console.log("sorted", sortObjKeysByArray(KEY_ARRAY, OBJ_ARRAY));
-
   return (
     <SafeAreaView
       style={{
