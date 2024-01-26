@@ -83,8 +83,8 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           isRefreshing={isRefreshing}
           handleScroll={(event) => {
             const offsetY = event.nativeEvent.contentOffset.y;
-            // Check the value of offsetY to determine if the FlatList is scrolled
-            if (offsetY > 0) {
+            const isScrolled = offsetY > 0;
+            if (isScrolled) {
               setIsScrolled(true);
             } else {
               setIsScrolled(false);
