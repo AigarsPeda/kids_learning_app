@@ -38,7 +38,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       // removeAllGameData();
-      // removeAllUserData() //
+      // removeAllUserData()
       // getUserData();
       getGameData();
     }, [])
