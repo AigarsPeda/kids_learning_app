@@ -62,6 +62,13 @@ const App: FC = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="WatchAdScreen"
+          component={WatchAdScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

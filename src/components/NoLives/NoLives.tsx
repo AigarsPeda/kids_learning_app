@@ -10,6 +10,7 @@ import { scalaDownDependingOnDevice } from "utils/metrics";
 interface NoLivesProps {
   goHome: () => void;
   isLivesFinished: boolean;
+  handleOpenAddScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
@@ -18,6 +19,7 @@ const NoLives: FC<NoLivesProps> = ({
   goHome,
   userData,
   isLivesFinished,
+  handleOpenAddScreen,
   buyLivesUsingExperience,
 }) => {
   const { colors, typography } = useStyles();
@@ -39,6 +41,7 @@ const NoLives: FC<NoLivesProps> = ({
         <BuyLives
           userData={userData}
           isModalVisible={isLivesFinished}
+          handleOpenAddScreen={handleOpenAddScreen}
           buyLivesUsingExperience={buyLivesUsingExperience}
         />
         <View

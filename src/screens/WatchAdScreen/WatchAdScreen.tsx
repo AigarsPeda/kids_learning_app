@@ -7,12 +7,13 @@ import {
   Text,
   TextInput,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-interface WatchAdScreenProps {
-  navigation: {
-    navigate: (arg: string) => void;
-  };
-}
+// interface WatchAdScreenProps {
+//   navigation: {
+//     navigate: (arg: string) => void;
+//   };
+// }
 
 // const adUnitId = __DEV__
 //   ? TestIds.APP_OPEN
@@ -22,12 +23,13 @@ interface WatchAdScreenProps {
 //   keywords: ["fashion", "clothing"],
 // });
 
-const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
+const WatchAdScreen: FC = () => {
+  // const navigation = useNavigation();
   const [title, setTitle] = useState("");
   const { colors, typography } = useStyles();
   const [content, setContent] = useState("");
 
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
   // useEffect(() => {
   //   const unsubscribeLoaded = rewarded.addAdEventListener(
@@ -54,9 +56,9 @@ const WatchAdScreen: FC<WatchAdScreenProps> = ({ navigation }) => {
   // }, []);
 
   // No advert ready to show yet
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
     <SafeAreaView
