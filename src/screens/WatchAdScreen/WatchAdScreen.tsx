@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
 import useStyles from "hooks/useStyles";
 import { useState, type FC } from "react";
 import {
@@ -7,7 +9,13 @@ import {
   Text,
   TextInput,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { type RootStackParamList } from "types/navigation";
+
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// type RootStackParamList = {
+//   Home: undefined; // Add other routes here as needed
+// };
 
 // interface WatchAdScreenProps {
 //   navigation: {
@@ -24,7 +32,8 @@ import { useNavigation } from "@react-navigation/native";
 // });
 
 const WatchAdScreen: FC = () => {
-  // const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [title, setTitle] = useState("");
   const { colors, typography } = useStyles();
   const [content, setContent] = useState("");
@@ -72,24 +81,23 @@ const WatchAdScreen: FC = () => {
           color: colors.text,
         }}
       >
-        Watch Ad Screen
+        Watch Ad Screen 2
       </Text>
 
       <TextInput style={styles.input} value={title} onChangeText={setTitle} />
       <Text style={styles.label}>Enter Content:</Text>
       <TextInput
-        style={styles.input}
         value={content}
+        style={styles.input}
         onChangeText={setContent}
       />
 
-      {/* <Button onPress={() => rewarded.show()} title="Display Rewarded Ads" /> */}
-      {/* <Button
-        title="Show Rewarded Ad"
+      <Button
+        title="Go to Home Screen"
         onPress={() => {
-          rewarded.show();
+          navigation.goBack();
         }}
-      /> */}
+      />
     </SafeAreaView>
   );
 };

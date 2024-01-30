@@ -6,13 +6,7 @@ import { useEffect, type FC } from "react";
 import HomeScreen from "screens/HomeScreen/HomeScreen";
 import LevelScreen from "screens/LevelScreen/LevelScreen";
 import WatchAdScreen from "screens/WatchAdScreen/WatchAdScreen";
-import { type LevelScreenPropsType } from "types/screen";
-
-type RootStackParamList = {
-  Home: undefined;
-  WatchAdScreen: undefined;
-  LevelScreen: LevelScreenPropsType;
-};
+import { type RootStackParamList } from "types/navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

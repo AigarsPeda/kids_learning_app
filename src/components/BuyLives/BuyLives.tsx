@@ -1,4 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
 import ChildrenButton from "components/ChildrenButton/ChildrenButton";
 import ChildrenButtonText from "components/ChildrenButton/ChildrenButtonText";
 import ZigIcon from "components/icons/ZigIcon/ZigIcon";
@@ -7,6 +9,7 @@ import useStyles from "hooks/useStyles";
 import React, { useEffect, useState, type FC } from "react";
 import { FlatList, Text, View } from "react-native";
 import { type UserSettingsType } from "types/game";
+import { type RootStackParamList } from "types/navigation";
 import createArray from "utils/createArray";
 import formatTimeToString from "utils/formatTimeToString";
 import getTimePassedSince from "utils/getTimePassedSince";
@@ -17,7 +20,6 @@ const { defaultLives, buyLivesWithExperience, livesRecoveryTimeInMinutes } =
 
 interface BuyLivesProps {
   isModalVisible: boolean;
-  handleOpenAddScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
@@ -25,12 +27,13 @@ interface BuyLivesProps {
 const BuyLives: FC<BuyLivesProps> = ({
   userData,
   isModalVisible,
-  handleOpenAddScreen,
   buyLivesUsingExperience,
 }) => {
   const array = createArray(defaultLives);
   const { colors, typography } = useStyles();
   const [timeTillNextLife, setTimeTillNextLife] = useState("");
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isBuyLivesDisabled = userData?.user.lives.lives === defaultLives;
   const isUserEnoughExperience =
@@ -127,8 +130,10 @@ const BuyLives: FC<BuyLivesProps> = ({
           <ChildrenButtonText text="Dzīvības bez ierobežojumiem" />
         </ChildrenButton>
         <ChildrenButton
-          onPress={handleOpenAddScreen}
           isDisabled={isBuyLivesDisabled}
+          onPress={() => {
+            navigation.navigate("WatchAdScreen");
+          }}
         >
           <ChildrenButtonText text="Noskatīties reklāmu" />
         </ChildrenButton>

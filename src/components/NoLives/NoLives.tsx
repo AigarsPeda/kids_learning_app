@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { type NativeStackNavigationProp } from "@react-navigation/native-stack";
 import BuyLives from "components/BuyLives/BuyLives";
 import OpacityButton from "components/OpacityButton/OpacityButton";
 import HouseIcon from "components/icons/HouseIcon/HouseIcon";
@@ -5,24 +7,23 @@ import useStyles from "hooks/useStyles";
 import { type FC } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import { type UserSettingsType } from "types/game";
+import { type RootStackParamList } from "types/navigation";
 import { scalaDownDependingOnDevice } from "utils/metrics";
 
 interface NoLivesProps {
-  goHome: () => void;
   isLivesFinished: boolean;
-  handleOpenAddScreen: () => void;
   buyLivesUsingExperience: () => void;
   userData: UserSettingsType | undefined;
 }
 
 const NoLives: FC<NoLivesProps> = ({
-  goHome,
   userData,
   isLivesFinished,
-  handleOpenAddScreen,
   buyLivesUsingExperience,
 }) => {
   const { colors, typography } = useStyles();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <SafeAreaView
@@ -41,7 +42,6 @@ const NoLives: FC<NoLivesProps> = ({
         <BuyLives
           userData={userData}
           isModalVisible={isLivesFinished}
-          handleOpenAddScreen={handleOpenAddScreen}
           buyLivesUsingExperience={buyLivesUsingExperience}
         />
         <View
@@ -61,7 +61,7 @@ const NoLives: FC<NoLivesProps> = ({
             }}
           >
             <OpacityButton
-              onPress={goHome}
+              onPress={() => navigation.goBack()}
               icon={
                 <View
                   style={{

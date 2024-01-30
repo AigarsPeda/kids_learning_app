@@ -66,13 +66,7 @@ const HomeScreen: FC<LevelScreenProps> = ({ navigation }) => {
           shadowOffset: { width: 0, height: 5 },
         }}
       >
-        <HomeHeader
-          handleOpenAddScreen={() => {
-            navigation.push("WatchAdScreen");
-
-            console.log("handleOpenAddScreen >>>>>>");
-          }}
-        />
+        <HomeHeader />
       </View>
 
       <View
