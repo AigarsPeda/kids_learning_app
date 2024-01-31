@@ -11,8 +11,6 @@ import {
 } from "react-native";
 import { type RootStackParamList } from "types/navigation";
 
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 // type RootStackParamList = {
 //   Home: undefined; // Add other routes here as needed
 // };
@@ -38,8 +36,6 @@ const WatchAdScreen: FC = () => {
   const { colors, typography } = useStyles();
   const [content, setContent] = useState("");
 
-  // const [loaded, setLoaded] = useState(false);
-
   // useEffect(() => {
   //   const unsubscribeLoaded = rewarded.addAdEventListener(
   //     RewardedAdEventType.LOADED,
@@ -63,11 +59,6 @@ const WatchAdScreen: FC = () => {
   //     unsubscribeEarned();
   //   };
   // }, []);
-
-  // No advert ready to show yet
-  // if (!loaded) {
-  //   return null;
-  // }
 
   return (
     <SafeAreaView
