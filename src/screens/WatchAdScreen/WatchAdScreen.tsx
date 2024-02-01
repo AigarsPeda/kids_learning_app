@@ -11,54 +11,12 @@ import {
 } from "react-native";
 import { type RootStackParamList } from "types/navigation";
 
-// type RootStackParamList = {
-//   Home: undefined; // Add other routes here as needed
-// };
-
-// interface WatchAdScreenProps {
-//   navigation: {
-//     navigate: (arg: string) => void;
-//   };
-// }
-
-// const adUnitId = __DEV__
-//   ? TestIds.APP_OPEN
-//   : "ca-app-pub-5238286944896076/9540669827";
-
-// const rewarded = RewardedAd.createForAdRequest(adUnitId, {
-//   keywords: ["fashion", "clothing"],
-// });
-
 const WatchAdScreen: FC = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [title, setTitle] = useState("");
   const { colors, typography } = useStyles();
   const [content, setContent] = useState("");
-
-  // useEffect(() => {
-  //   const unsubscribeLoaded = rewarded.addAdEventListener(
-  //     RewardedAdEventType.LOADED,
-  //     () => {
-  //       setLoaded(true);
-  //     }
-  //   );
-  //   const unsubscribeEarned = rewarded.addAdEventListener(
-  //     RewardedAdEventType.EARNED_REWARD,
-  //     (reward) => {
-  //       console.log("User earned reward of ", reward);
-  //     }
-  //   );
-
-  //   // Start loading the rewarded ad straight away
-  //   rewarded.load();
-
-  //   // Unsubscribe from events on unmount
-  //   return () => {
-  //     unsubscribeLoaded();
-  //     unsubscribeEarned();
-  //   };
-  // }, []);
 
   return (
     <SafeAreaView

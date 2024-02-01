@@ -23,9 +23,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "react-native-google-mobile-ads": {
-      "ios_app_id": "ca-app-pub-5238286944896076~6072715024"
     }
   }
 }
